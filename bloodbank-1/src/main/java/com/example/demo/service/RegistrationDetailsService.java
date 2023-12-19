@@ -21,6 +21,11 @@ public class RegistrationDetailsService {
 		return "Registered successfully";
 	}
 	
+	public RegistrationDetails updateUserProfile(RegistrationDetails user)
+	{
+		return repo.save(user);
+	}
+	
 	
 	public List<RegistrationDetails> getRegistrationDetails() {
 		return repo.findAll();

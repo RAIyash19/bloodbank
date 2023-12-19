@@ -1,12 +1,16 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,6 +22,7 @@ import com.example.demo.service.AdminService;
 import com.example.demo.service.DonorDetailsService;
 import com.example.demo.service.InventoryService;
 import com.example.demo.service.PatientDetailsService;
+import com.example.demo.service.RegistrationDetailsService;
 import com.example.demo.service.UserService;
 
 @RestController
@@ -35,6 +40,9 @@ public class AdminController {
 	
 	@Autowired
 	private PatientDetailsService patientDetailsService;
+	
+	@Autowired
+	private RegistrationDetailsService registrationDetailsService;
 	
 	@PostMapping("/verifyAdminLogin")
 	public String verifyAdminLogin(@RequestBody RegistrationDetails received) {
@@ -65,10 +73,13 @@ public class AdminController {
   
   
   @GetMapping("//getInventoryQuantityByBloodGroup")
-  public List<Object[]> getQuantityByBloodGroup() {
+  public Map<String, Integer> getBloodGroupCounts() {
       return inventoryService.findQuantityByBloodGroup();
   }
-  
+//  public List<Inventory> getQuantityByBloodGroup() {
+//      return inventoryService.findQuantityByBloodGroup();
+//  }
+//  
  
   @GetMapping("/getDonorDetails")
   public List<DonorDetails> getDonorDetails(){
@@ -100,6 +111,14 @@ public class AdminController {
       return donorDetailsService.checkEligibility(donors);
   }
   
-  
-  
+  @PostMapping("/updateDetails")
+	public ResponseEntity<RegistrationDetails> updateUserProfile(@RequestBody RegistrationDetails user) throws Exception
+	{
+	  registrationDetailsService.updateUserProfile(user);
+		return new ResponseEntity<RegistrationDetails>(user, HttpStatus.OK);
+	}
 }
+  
+  
+  
+

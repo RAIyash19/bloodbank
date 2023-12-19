@@ -3,7 +3,9 @@ package com.example.demo.service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,12 +38,12 @@ public class InventoryService {
 	
 	
 
-    public List<Object[]> findQuantityByBloodGroup() {
-    	
-    	
-    	
-        return repo.findQuantityByBloodGroup();
-    }
+//    public List<Inventory> findQuantityByBloodGroup() {
+//    	
+//    	
+//    	
+//        return repo.findQuantityByBloodGroup();
+//    }
 	
 //	 public List<Object[]> findQuantityByBloodGroup() {
 //	        return repo.findDistinctBloodGroupAndSumQuantityBy();
@@ -90,6 +92,26 @@ public class InventoryService {
 //		// TODO Auto-generated method stub
 //		return null;
 //	}
+    
+    
+    public Map<String, Integer> findQuantityByBloodGroup() {
+        List<Inventory> inventories = repo.findAll();
+
+        // Use a Map to store the count of each blood group
+        Map<String, Integer> bloodGroupCount = new HashMap<>();
+
+        // Iterate through the inventories and count the quantity for each blood group
+        for (Inventory inventory : inventories) {
+            String bloodGroup = inventory.getBloodGroup();
+            int quantity = inventory.getQuantity();
+
+            // Update the count for the blood group
+            bloodGroupCount.put(bloodGroup, bloodGroupCount.getOrDefault(bloodGroup, 0) + quantity);
+        }
+
+        return bloodGroupCount;
+    }
+    
 
 }
     
