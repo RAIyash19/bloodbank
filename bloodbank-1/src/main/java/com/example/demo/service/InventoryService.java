@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Inventory;
-import com.example.demo.entity.RegistrationDetails;
 import com.example.demo.repository.InventoryRepository;
 
 import jakarta.transaction.Transactional;

@@ -32,12 +32,12 @@ public class UserController {
 		return loginService.getProfileDetails(email);
 	}
 	
-	@GetMapping("/viewBloodRequestsDetails/{email}")
+	@GetMapping("/viewBloodRequestDetails/{email}")
 	public List<PatientDetails> viewBloodRequestsDetails(@PathVariable("email") String email) {
 		return loginService.getBloodRequestsDetails(email);
 	}
 	
-	@GetMapping("/viewDonateRequestsDetails/{email}")
+	@GetMapping("/viewDonateRequestDetails/{email}")
 	public List<DonorDetails> getDonateRequestsDerails(@PathVariable("email") String email) {
 		return loginService.getDonateRequestsDetails(email);
 	}
@@ -56,6 +56,11 @@ public class UserController {
 	public String donateRequest(@RequestBody DonorDetails received) {
 		System.out.println(received);
 		return loginService.donateRequest(received);
+	}
+	
+	@PostMapping("/bloodRequest")
+	public String bloodRequest(@RequestBody PatientDetails detail) {
+		return loginService.bloodRequest(detail);
 	}
 	
 

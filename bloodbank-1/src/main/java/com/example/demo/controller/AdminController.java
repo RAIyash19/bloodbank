@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
 import java.util.List;
+
 import java.util.Map;
 import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,8 +24,10 @@ import com.example.demo.service.AdminService;
 import com.example.demo.service.DonorDetailsService;
 import com.example.demo.service.InventoryService;
 import com.example.demo.service.PatientDetailsService;
+
 import com.example.demo.service.RegistrationDetailsService;
 import com.example.demo.service.UserService;
+
 
 @RestController
 public class AdminController {

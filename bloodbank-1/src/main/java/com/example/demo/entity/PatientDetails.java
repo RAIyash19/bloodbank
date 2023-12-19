@@ -18,14 +18,29 @@ public class PatientDetails {
 	private String firstname;
 	private String lastname;
 	private String gender;
-	private Date dateOfBirth;		// date of birth
-	
+	private String dateOfBirth;		// date of birth
+	private int bloodUnits; 
 	//private String bloodType;
 	private String bloodGroup;
 	private String city;
+	private String reason;
 	//private String Address;
 	private Date dateOfBlood; //date of blood request
 	private boolean status;
+	
+	
+	public String getReason() {
+		return reason;
+	}
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+	public int getBloodUnits() {
+		return bloodUnits;
+	}
+	public void setBloodUnits(int bloodUnits) {
+		this.bloodUnits = bloodUnits;
+	}
 	public Date getDateOfBlood() {
 		return dateOfBlood;
 	}
@@ -72,10 +87,10 @@ public class PatientDetails {
 		
 	}
 	
-	public Date getDateOfBirth() {
+	public String getDateOfBirth() {
 		return dateOfBirth;
 	}
-	public void setDateOfBirth(Date dateOfBirth) {
+	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 	
