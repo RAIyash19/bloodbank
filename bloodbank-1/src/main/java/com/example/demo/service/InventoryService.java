@@ -10,6 +10,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.entity.DonorDetails;
 import com.example.demo.entity.Inventory;
 import com.example.demo.repository.InventoryRepository;
 
@@ -25,8 +26,12 @@ public class InventoryService {
 	
 	public List<Inventory> getInventoryDetails(){
 		return repo.findAll();
-	
+
 	}
+	
+	 public Inventory updateStatus(Inventory detail) {
+			return repo.save(detail);
+		}
 	
 //	public List<Inventory> getInventoryDetailsByBloodGroup(String BloodGroup) {
 //		return repo.findByBloodGroup(BloodGroup);

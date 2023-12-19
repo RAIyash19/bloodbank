@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.DonorDetails;
+import com.example.demo.entity.Inventory;
 import com.example.demo.repository.DonorDetailsRepository;
 
 import jakarta.transaction.Transactional;
@@ -18,6 +19,9 @@ public class DonorDetailsService {
 	
 	@Autowired
 	private DonorDetailsRepository repo;
+	
+	@Autowired
+	private InventoryService inventoryrepo;
 	
 	public List<DonorDetails> getDonorDetails(){
 		return repo.findAll();
@@ -92,6 +96,30 @@ public class DonorDetailsService {
 	 public DonorDetails updateStatus(DonorDetails detail) {
 		return repo.save(detail);
 	}
+	 
+//	 public DonorDetails saveDetails(DonorDetails detail) {
+//		 return inventoryrepo.updateStatus(detail);
+//	 }
+	 
+	 
+	 
+	 
+	 
+	 public Inventory convertDonorDetailsToInventory(DonorDetails donorDetails) {
+	        Inventory inventory = new Inventory();
+	        // Set properties from donorDetails to inventory
+	        //inventory.setStatus(donorDetails.isStatus());
+	        inventory.setBloodGroup(donorDetails.getBloodGroup());
+	        inventory.setQuantity(1);	        // Set other properties as needed
+	        return inventory;
+	    }
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 	
 	public List<DonorDetails> acceptDonationRequest(){
 		List<DonorDetails> saved= getDonordetailsByStatus(false );
@@ -102,6 +130,9 @@ public class DonorDetailsService {
 				//saveDonorDetails(detail);
 				detail.setStatus(true);
 				updateStatus(detail);
+				Inventory inventory = convertDonorDetailsToInventory(detail);
+				inventoryrepo.updateStatus(inventory);
+				
 				
 			}
 		}
@@ -110,6 +141,7 @@ public class DonorDetailsService {
 		
 		
 	}
+
     
     
 
