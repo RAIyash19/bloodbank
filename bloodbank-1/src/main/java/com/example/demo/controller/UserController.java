@@ -14,7 +14,6 @@ import com.example.demo.entity.PatientDetails;
 import com.example.demo.entity.RegistrationDetails;
 import com.example.demo.service.UserService;
 
-
 @RestController
 public class UserController {
 	

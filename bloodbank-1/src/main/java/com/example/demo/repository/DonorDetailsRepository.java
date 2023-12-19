@@ -13,5 +13,7 @@ public interface DonorDetailsRepository extends JpaRepository<DonorDetails, Stri
 	
 	public List<DonorDetails> findByEmail(String email);
 	
+	public List<DonorDetails> findByStatus(Boolean status);
+	
 	//public List<RegistrationDetails> findByEmail(String email);
 }

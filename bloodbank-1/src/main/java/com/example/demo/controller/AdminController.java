@@ -121,6 +121,19 @@ public class AdminController {
 	  registrationDetailsService.updateUserProfile(user);
 		return new ResponseEntity<RegistrationDetails>(user, HttpStatus.OK);
 	}
+
+
+	@GetMapping("/acceptDonationRequest")
+	public List<DonorDetails> acceptDonationRequest(){
+		return donorDetailsService.acceptDonationRequest();
+		
+	}
+	
+	@GetMapping("/acceptBloodRequest")
+	public List<PatientDetails> acceptBloodRequest(){
+		return patientDetailsService.acceptBloodRequest();
+	}
+	
 }
   
   

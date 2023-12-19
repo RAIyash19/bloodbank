@@ -84,6 +84,32 @@ public class DonorDetailsService {
 	public List<DonorDetails> getDonorsDetailsByEmail(String email) {
 		return repo.findByEmail(email);
 	}
+	
+	public List<DonorDetails> getDonordetailsByStatus(boolean status){
+		return repo.findByStatus(status);
+	}
+	
+	 public DonorDetails updateStatus(DonorDetails detail) {
+		return repo.save(detail);
+	}
+	
+	public List<DonorDetails> acceptDonationRequest(){
+		List<DonorDetails> saved= getDonordetailsByStatus(false );
+		List<DonorDetails> donors = new ArrayList<>();
+		for (DonorDetails detail: saved) {
+			if(detail.isStatus()==false) {
+				donors.add(detail);
+				//saveDonorDetails(detail);
+				detail.setStatus(true);
+				updateStatus(detail);
+				
+			}
+		}
+		
+		return donors;
+		
+		
+	}
     
     
 

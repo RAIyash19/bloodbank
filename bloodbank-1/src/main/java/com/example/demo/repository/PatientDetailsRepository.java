@@ -10,6 +10,8 @@ import com.example.demo.entity.PatientDetails;
 public interface PatientDetailsRepository extends JpaRepository<PatientDetails, Integer>{
 
 	public List<PatientDetails> findByEmail(String email);
+
+	public List<PatientDetails> findByStatus(boolean status);
 	
 	
 
