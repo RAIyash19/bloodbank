@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.DonorDetails;
+import com.example.demo.entity.Inventory;
 import com.example.demo.entity.PatientDetails;
 import com.example.demo.entity.RegistrationDetails;
 
@@ -25,6 +26,9 @@ public class UserService {
 	
 	@Autowired
 	private DonorDetailsService donateService;
+	
+	@Autowired
+	private InventoryService inventoryService;
 	
 	public String verifyLogin(RegistrationDetails received) {
 		
@@ -135,7 +139,30 @@ public class UserService {
         if (minDays <= 90)
         	return "Less than in 90 days period of time is not allowed to donate blood again";
         
+        received.setStatus(false);
+        donateService.saveDonorDetails(received);
 		return "You are eligible to donate, request needs to be accepted by admin";
+	}
+
+	public String bloodRequest(PatientDetails received) {
+		
+		if(received.getBloodUnits() > 5) {
+			return "Not allowed to take blood more than 5 units";
+		}
+		List<Inventory> inventory = inventoryService.findByBloodGroup(received.getBloodGroup());
+		int bloodUnits=0;
+		for (Inventory detail: inventory) {
+			if(detail.getQuantity() != 0) {
+				bloodUnits += 1;
+//				System.out.println("count: " + bloodUnits);
+			}
+		}
+		if (received.getBloodUnits() > bloodUnits)
+			return "There is no enough blood in the Inventory";
+		received.setStatus(false);
+		patientService.savePatientDetails(received);
+		
+		return "Blood is available, admin has to accept your request";
 	}
 
 }

@@ -1,20 +1,14 @@
 package com.example.demo.service;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.DonorDetails;
-import com.example.demo.entity.Inventory;
 import com.example.demo.entity.PatientDetails;
 import com.example.demo.repository.PatientDetailsRepository;
 
-import jakarta.transaction.Transactional;
 
 @Service
 public class PatientDetailsService {
