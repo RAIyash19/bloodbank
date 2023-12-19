@@ -154,7 +154,8 @@ public class UserService {
 		for (Inventory detail: inventory) {
 			if(detail.getQuantity() != 0) {
 				bloodUnits += 1;
-//				System.out.println("count: " + bloodUnits);
+//				System.out.println("count: " + bloodUnits);.
+				
 			}
 		}
 		if (received.getBloodUnits() > bloodUnits)
