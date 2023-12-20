@@ -23,16 +23,21 @@ public class RegistrationDetails {
 	private String email;
 	private String password;
 	private String role;
+	private String gender;
+	private String dateOfBirth;
+	private String city;
+	private String bloodGroup;
+	
 	public String getGender() {
 		return gender;
 	}
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public Date getDateOfBirth() {
+	public String getDateOfBirth() {
 		return dateOfBirth;
 	}
-	public void setDateOfBirth(Date dateOfBirth) {
+	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 	public String getCity() {
@@ -47,10 +52,7 @@ public class RegistrationDetails {
 	public void setBloodGroup(String bloodGroup) {
 		this.bloodGroup = bloodGroup;
 	}
-	private String gender;
-	private Date dateOfBirth;
-	private String city;
-	private String bloodGroup;
+
 	
 	
 	public long getId() {

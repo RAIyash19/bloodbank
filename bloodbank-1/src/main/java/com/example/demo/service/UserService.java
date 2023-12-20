@@ -64,6 +64,21 @@ public class UserService {
 //		}
 //		return null;
 	}
+	
+	public RegistrationDetails updateProfile(RegistrationDetails received) {
+		
+		List<RegistrationDetails> saved = service.getRegistrationDetailsByEmail(received.getEmail());
+		for (RegistrationDetails detail:saved) {
+			detail.setLastname(received.getLastname());
+			detail.setFirstname(received.getFirstname());
+			service.updateUserProfile(detail);
+			System.out.println("name : " + received.getEmail());
+			return detail;
+		}
+		
+		return null;
+		
+	}
 
 	public List<PatientDetails> getBloodRequestsDetails(String email) {
 		
@@ -112,12 +127,27 @@ public class UserService {
 	}
 
 	public String donateRequest(DonorDetails received) {
+		
+		List<RegistrationDetails> saved1 = service.getRegistrationDetailsByEmail(received.getEmail());
+		
+		
+		if (saved1.isEmpty())
+			return "email not dound";
+		for (RegistrationDetails detail: saved1) {
+			//DonorDetails received = new DonorDetails();
+			received.setEmail(detail.getEmail());
+			received.setBloodGroup(detail.getBloodGroup());
+//			received.setCity(detail.getCity());
+			received.setDateOfBirth(detail.getDateOfBirth());
+			received.setFirstname(detail.getFirstname());
+			received.setLastname(detail.getLastname());
+			received.setGender(detail.getGender());
+		}
+		
 		received.setStatus(false);
 		String dob=received.getDateOfBirth();
 		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-	        // Parse the string to obtain a LocalDate object
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");	        // Parse the string to obtain a LocalDate object
 	    LocalDate dob_format = LocalDate.parse(dob, formatter);
 		Period period = Period.between(dob_format, LocalDate.now());
 
@@ -127,6 +157,8 @@ public class UserService {
         if (years < 18) {
         	return "Minors will not be allowed to Donate Blood, age should be minimum 18 years";
         }
+        if (years > 65)
+        	return "Older people are not allowe to donate";
         List<DonorDetails> saved = donateService.getDonorsDetailsByEmail(received.getEmail());
         long minDays=91;
         for (DonorDetails detail: saved) {	// to get the difference between recent blood donation date and current date

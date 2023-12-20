@@ -31,6 +31,11 @@ public class UserController {
 		return loginService.getProfileDetails(email);
 	}
 	
+	@PostMapping("/updateProfileDetails")
+	public RegistrationDetails updateProfile(@RequestBody RegistrationDetails received) {
+		return loginService.updateProfile(received);
+	}
+	
 	@GetMapping("/viewBloodRequestDetails/{email}")
 	public List<PatientDetails> viewBloodRequestsDetails(@PathVariable("email") String email) {
 		return loginService.getBloodRequestsDetails(email);
