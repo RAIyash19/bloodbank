@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.RegistrationDetails;
@@ -17,6 +18,9 @@ public class RegistrationDetailsService {
 	
 	
 	public String saveRegistrationDetails(RegistrationDetails detail) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String passwd = passwordEncoder.encode(detail.getPassword());
+		detail.setPassword(passwd);
 		repo.save(detail);
 		return "Registered successfully";
 	}

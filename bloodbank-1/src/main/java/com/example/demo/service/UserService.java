@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.DonorDetails;
@@ -32,10 +33,13 @@ public class UserService {
 	
 	public String verifyLogin(RegistrationDetails received) {
 		
+		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+		
+		
 		List<RegistrationDetails> saved = service.getRegistrationDetailsByRole("user");
 		for (RegistrationDetails detail:saved) {
 			if (detail.getEmail().equals(received.getEmail())) {
-				if (detail.getPassword().equals(received.getPassword())) {
+				if (bcrypt.matches(received.getPassword(), detail.getPassword())) {
 					return "Login Success";	// Login success
 				}
 				else 
