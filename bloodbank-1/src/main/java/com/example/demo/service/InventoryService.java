@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,10 +37,26 @@ public class InventoryService {
 //	public List<Inventory> getInventoryDetailsByBloodGroup(String BloodGroup) {
 //		return repo.findByBloodGroup(BloodGroup);
 //	}
+	 
+//	 public Map<String, Long> getInventoryDetailsByBloodGroup() {
+//	        return repo.getCountByBloodGroup();
+//	    }
+//	 
+	 
+	 
+	 
 	public List<Inventory> findByBloodGroup(String bloodGroup) {
         return repo.findByBloodGroup(bloodGroup);
 	}
 	
+	 
+
+	    public Map<String, Long> getCountByBloodGroup(String bloodGroup) {
+	        List<Inventory> inventoryList = findByBloodGroup(bloodGroup);
+
+	        // Count occurrences of each blood group in the list
+	        return inventoryList.stream().collect(Collectors.groupingBy(Inventory::getBloodGroup, Collectors.counting()));
+	    }
 	
 
 //    public List<Inventory> findQuantityByBloodGroup() {

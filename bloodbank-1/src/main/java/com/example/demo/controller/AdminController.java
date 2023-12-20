@@ -76,14 +76,24 @@ public class AdminController {
 	}
   
   
-  @GetMapping("//getInventoryQuantityByBloodGroup")
-  public Map<String, Integer> getBloodGroupCounts() {
-      return inventoryService.findQuantityByBloodGroup();
-  }
+//  @GetMapping("//getInventoryQuantityByBloodGroup")
+//  public Map<String, Integer> getBloodGroupCounts() {
+//      return inventoryService.getInventoryByBloodGroup();
+//  }
 //  public List<Inventory> getQuantityByBloodGroup() {
 //      return inventoryService.findQuantityByBloodGroup();
 //  }
 //  
+  
+//  @GetMapping("/inventory/{bloodGroup}")
+//  public List<Inventory> getInventoryByBloodGroup(@PathVariable String bloodGroup) {
+//      return inventoryService.getInventoryByBloodGroup(bloodGroup);
+//  }
+  
+  @GetMapping("/getCountByBloodGroup/{bloodGroup}")
+  public Map<String, Long> getCountByBloodGroup(@PathVariable String bloodGroup) {
+      return inventoryService.getCountByBloodGroup(bloodGroup);
+  }
  
   @GetMapping("/getDonorDetails")
   public List<DonorDetails> getDonorDetails(){

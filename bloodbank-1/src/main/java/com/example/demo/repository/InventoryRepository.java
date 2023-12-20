@@ -1,6 +1,8 @@
 package com.example.demo.repository;
 
-import java.util.List;
+
+
+import java.util.*;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,8 +20,10 @@ public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
 	// @Query("SELECT bloodGroup, SUM(quantity) FROM Inventory GROUP BY bloodGroup")
 	 //@Query("SELECT i.bloodGroup, SUM(i.quantity) FROM Inventory i GROUP BY i.bloodGroup")
 	   //public List<Object[]> findQuantityByBloodGroup();
-	 @Query(value = "SELECT blood_group, SUM(quantity) FROM blood_inventory GROUP BY blood_group", nativeQuery = true)
-	    List<Inventory> findQuantityByBloodGroup();
+//	 @Query(value = "SELECT blood_group, SUM(quantity) FROM blood_inventory GROUP BY blood_group", nativeQuery = true)
+//	    List<Inventory> findQuantityByBloodGroup();
+	 @Query("SELECT bloodGroup, COUNT(bloodId) FROM Inventory GROUP BY bloodGroup")
+	    public Map<String, Long> getCountByBloodGroup();
 	
 	 
 	//public List<Object[]> findDistinctBloodGroupAndSumQuantityBy();
