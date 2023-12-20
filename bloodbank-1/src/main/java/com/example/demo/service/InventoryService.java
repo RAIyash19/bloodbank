@@ -25,6 +25,11 @@ public class InventoryService {
 	private InventoryRepository repo;
 	
 	
+	
+	public void saveInventory(Inventory inv) {
+		repo.save(inv);
+	}
+	
 	public List<Inventory> getInventoryDetails(){
 		return repo.findAll();
 

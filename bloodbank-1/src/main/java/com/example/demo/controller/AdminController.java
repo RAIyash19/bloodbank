@@ -131,11 +131,15 @@ public class AdminController {
 		return new ResponseEntity<RegistrationDetails>(user, HttpStatus.OK);
 	}
 
+  
+  	@GetMapping("/viewDonationRequests")
+  	public List<DonorDetails> viewDonationRequests() {
+  		return service.getDonationRequests();
+  	}
 
-	@GetMapping("/acceptDonationRequest")
-	public List<DonorDetails> acceptDonationRequest(){
-		return donorDetailsService.acceptDonationRequest();
-		
+	@PostMapping("/acceptDonationRequest")
+	public String acceptDonationRequest(@RequestBody DonorDetails received){
+		return service.acceptDonationRequest(received);
 	}
 	
 	@GetMapping("/acceptBloodRequest")
