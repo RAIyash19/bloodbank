@@ -35,7 +35,8 @@ public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
 //		@Query(value = "delete from Inventory where BloodId = ?1",nativeQuery = true)
 //		public void deleteByBloodId(Integer BloodId);
 	   public void deleteByBloodId(int bloodId);
-		
+	   
+	   
 	}
 	   
 	

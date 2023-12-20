@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.DonorDetails;
 import com.example.demo.entity.Inventory;
+import com.example.demo.entity.PatientDetails;
 import com.example.demo.entity.RegistrationDetails;
 
 
@@ -23,6 +24,9 @@ public class AdminService {
 	
 	@Autowired
 	private InventoryService inventoryService;
+	
+	@Autowired
+	private PatientDetailsService patientService;
 	
 	public byte verifyLogin(RegistrationDetails received) {
 		
@@ -60,6 +64,35 @@ public class AdminService {
 		}
 		
 		return "Donation request accepted for the user with email " + received.getEmail();
+	}
+
+
+	public  List<PatientDetails> viewBloodRequest() {
+		return patientService.getPatientDetailsByStatus(false);
+	}
+
+
+	public String acceptBloodRequest(PatientDetails received) {
+		List<PatientDetails> saved = patientService.getPatientsDetailsByEmail(received.getEmail());
+		for (PatientDetails detail: saved) {
+			if (detail.isStatus() == false)
+				detail.setStatus(true);
+			
+			int units = detail.getBloodUnits();
+			List<Inventory> saved1 = inventoryService.getInventoryDetailsByBloodGroup(detail.getBloodGroup());
+			
+			for (Inventory inv:saved1) {
+				if (inv.getQuantity()!= 0) {
+					units--;
+					inventoryService.deleteInventory(inv);
+					if (units == 0)
+						break;
+				}	
+			}
+			
+			patientService.savePatientDetails(detail);
+		}
+		return "Given " + received.getBloodUnits() + "units or blood successfully";
 	}
 
 }

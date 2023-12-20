@@ -35,6 +35,14 @@ public class InventoryService {
 
 	}
 	
+	public void deleteInventory(Inventory inv) {
+		repo.delete(inv);
+	}
+	
+	public List<Inventory> getInventoryDetailsByBloodGroup(String bloodGroup) {
+		return repo.findByBloodGroup(bloodGroup);
+	}
+	
 	 public Inventory updateStatus(Inventory detail) {
 			return repo.save(detail);
 		}

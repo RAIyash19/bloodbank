@@ -142,9 +142,16 @@ public class AdminController {
 		return service.acceptDonationRequest(received);
 	}
 	
-	@GetMapping("/acceptBloodRequest")
-	public List<PatientDetails> acceptBloodRequest(){
-		return patientDetailsService.acceptBloodRequest();
+	
+	
+	@GetMapping("/viewBloodRequests")
+	public List<PatientDetails> viewBloodRequest(){
+		return  service.viewBloodRequest();
+	}
+	
+	@PostMapping("/acceptBloodRequest")
+	public String acceptBloodRequest(@RequestBody PatientDetails received) {
+		return service.acceptBloodRequest(received);
 	}
 	
 }
