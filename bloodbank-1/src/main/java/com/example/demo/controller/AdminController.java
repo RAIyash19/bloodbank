@@ -100,8 +100,7 @@ public class AdminController {
 	  return donorDetailsService.getDonorDetails();
   }
   
-  @GetMapping("/getDonorDetailsByEmial/{email}")
-  
+  @GetMapping("/getDonorDetailsByEmial/{email}") 
   public List<DonorDetails> getDonorDetailsByEmail(@PathVariable("email") String email){
 	  return donorDetailsService.findByemail(email);
   }

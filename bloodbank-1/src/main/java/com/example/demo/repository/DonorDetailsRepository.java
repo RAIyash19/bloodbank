@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.entity.DonorDetails;
 
 @Repository
-public interface DonorDetailsRepository extends JpaRepository<DonorDetails, String> {
+public interface DonorDetailsRepository extends JpaRepository<DonorDetails, Integer> {
 	
 	
 	public List<DonorDetails> findByEmail(String email);

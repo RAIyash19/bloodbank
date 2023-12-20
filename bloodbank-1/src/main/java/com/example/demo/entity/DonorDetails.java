@@ -2,12 +2,17 @@ package com.example.demo.entity;
 
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class DonorDetails {
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	private int id;
+	
 	private String email;
 	
 	private String firstname;
@@ -23,7 +28,15 @@ public class DonorDetails {
 	private String dateOfDonation;
 	
 	private boolean status;
-	private Integer count;
+	
+	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getEmail() {
 		return email;
 	}
@@ -88,12 +101,7 @@ public class DonorDetails {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-	public Integer getCount() {
-		return count;
-	}
-	public void setCount(Integer count) {
-		this.count = count;
-	}
+	
 //	public String getStreet() {
 //		return street;
 //	}
