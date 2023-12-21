@@ -53,7 +53,7 @@ public class PatientDetailsService {
 		return repo.findByEmail(email);
 	}
 	
-	public List<PatientDetails> getPatientDetailsByStatus(boolean status){
+	public List<PatientDetails> getPatientDetailsByStatus(byte status){
 		return repo.findByStatus(status);
 		
 	}
@@ -63,12 +63,12 @@ public class PatientDetailsService {
 		}
 	
 	public List<PatientDetails> acceptBloodRequest(){
-		List<PatientDetails> saved= getPatientDetailsByStatus(false);
+		List<PatientDetails> saved= getPatientDetailsByStatus((byte) 0);
 		List<PatientDetails> donors = new ArrayList<>();
 		for (PatientDetails detail: saved) {
-			if(detail.isStatus()==false) {
+			if(detail.getStatus()==0) {
 				donors.add(detail);
-				detail.setStatus(true);
+				detail.setStatus((byte) 1);
 				updateStatus(detail);
 			
 		}

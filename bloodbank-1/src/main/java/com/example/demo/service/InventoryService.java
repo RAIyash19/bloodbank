@@ -102,7 +102,7 @@ public class InventoryService {
             }
         }
 
-        return deletedItems;
+        return  deletedItems;
     }
 
     static long findDifference(String donationDate, String todayDate) {

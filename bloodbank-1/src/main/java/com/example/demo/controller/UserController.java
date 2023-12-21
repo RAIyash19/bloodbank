@@ -21,51 +21,53 @@ public class UserController {
 	private UserService loginService;
 	
 	
-	@PostMapping("/verifyLogin")
+	@PostMapping("/verifyLogin")//1
 	public String verifyLogin(@RequestBody RegistrationDetails received) {
 		return  loginService.verifyLogin(received);
 	}
 	
-	@GetMapping("/viewProfileDetails/{email}")
+	@GetMapping("/viewProfileDetails/{email}")//1
 	public List<RegistrationDetails> viewProfileDetails(@PathVariable("email") String email) {
 		return loginService.getProfileDetails(email);
 	}
 	
-	@PostMapping("/updateProfileDetails")
+	@PostMapping("/updateProfileDetails")//1
 	public RegistrationDetails updateProfile(@RequestBody RegistrationDetails received) {
 		return loginService.updateProfile(received);
 	}
 	
-	@GetMapping("/viewBloodRequestDetails/{email}")
+	@GetMapping("/viewBloodRequestDetails/{email}")//1
 	public List<PatientDetails> viewBloodRequestsDetails(@PathVariable("email") String email) {
 		return loginService.getBloodRequestsDetails(email);
 	}
 	
-	@GetMapping("/viewDonateRequestDetails/{email}")
+	@GetMapping("/viewDonateRequestDetails/{email}")//1------------------------------------------------------
 	public List<DonorDetails> getDonateRequestsDerails(@PathVariable("email") String email) {
 		return loginService.getDonateRequestsDetails(email);
 	}
 	
-	@GetMapping("/viewBloodDonationCount/{email}")
+	@GetMapping("/viewAcceptedBloodDonationCount/{email}")//1
 	public String getBloodDonationCount(@PathVariable("email") String email) {
 		return loginService.findBloodDonationsCount(email);
 	}
 	
-	@GetMapping("/viewBloodRequestCount/{email}")
+	@GetMapping("/viewAcceptedBloodRequestCount/{email}")//acepted requests
 	public String getBloodRequestCount(@PathVariable("email") String email) {
 		return loginService.findBloodRequestsCount(email);
 	}
 	
-	@PostMapping("/bloodDonationRequest")
+	@PostMapping("/bloodDonationRequest")//1
 	public String donateRequest(@RequestBody DonorDetails received) {
 		System.out.println(received);
 		return loginService.donateRequest(received);
 	}
 	
-	@PostMapping("/bloodRequest")
+	@PostMapping("/bloodRequest")  //1
 	public String bloodRequest(@RequestBody PatientDetails detail) {
 		return loginService.bloodRequest(detail);
 	}
+	
+	
 	
 
 }

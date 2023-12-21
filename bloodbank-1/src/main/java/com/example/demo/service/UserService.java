@@ -89,7 +89,7 @@ public class UserService {
 		List<PatientDetails> saved= patientService.getPatientsDetailsByEmail(email);
 		List<PatientDetails> patients = new ArrayList<>();
 		for (PatientDetails detail: saved) {
-			if (detail.isStatus())
+			//if (detail.getStatus()==1)
 				patients.add(detail);
 		}
 		
@@ -101,7 +101,7 @@ public class UserService {
 		List<DonorDetails> saved = donateService.getDonorsDetailsByEmail(email);
 		int count=0;
 		for (DonorDetails detail: saved) {
-			if (detail.isStatus())
+			if (detail.getStatus()==1)
 				count++;
 		}
 		System.out.println("count : "+count);
@@ -113,7 +113,7 @@ public class UserService {
 		List<PatientDetails> saved = patientService.getPatientsDetailsByEmail(email);
 		int count=0;
 		for(PatientDetails detail : saved) {
-			if (detail.isStatus())
+			if (detail.getStatus()==1)
 				count++;
 		}
 		return "Blood requests count : " + count;
@@ -123,7 +123,7 @@ public class UserService {
 		List<DonorDetails> saved= donateService.getDonorsDetailsByEmail(email);
 		List<DonorDetails> donors = new ArrayList<>();
 		for (DonorDetails detail: saved) {
-			if (detail.isStatus())
+			//if (detail.getStatus()==1)
 				donors.add(detail);
 		}
 		
@@ -133,7 +133,13 @@ public class UserService {
 	public String donateRequest(DonorDetails received) {
 		
 		List<RegistrationDetails> saved1 = service.getRegistrationDetailsByEmail(received.getEmail());
-		
+		LocalDate currentDate = LocalDate.now();
+
+        // Define the desired date format
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // Format the local date using the specified formatter
+        String formattedDate = currentDate.format(formatter);
 		
 		if (saved1.isEmpty())
 			return "email not dound";
@@ -146,12 +152,14 @@ public class UserService {
 			received.setFirstname(detail.getFirstname());
 			received.setLastname(detail.getLastname());
 			received.setGender(detail.getGender());
+			received.setDateOfDonation(formattedDate); 
+			
 		}
 		
-		received.setStatus(false);
+		received.setStatus((byte) 0);
 		String dob=received.getDateOfBirth();
 		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");	        // Parse the string to obtain a LocalDate object
+		//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");	        // Parse the string to obtain a LocalDate object
 	    LocalDate dob_format = LocalDate.parse(dob, formatter);
 		Period period = Period.between(dob_format, LocalDate.now());
 
@@ -159,7 +167,7 @@ public class UserService {
 	    int years = period.getYears();
 	        
         if (years < 18) {
-        	return "Minors will not be allowed to Donate Blood, age should be minimum 18 years";
+        	return "hey kid  " + received.getEmail() + ",  you are not allowed to Donate Blood, age should be minimum 18 years";
         }
         if (years > 65)
         	return "Older people are not allowe to donate";
@@ -175,7 +183,7 @@ public class UserService {
         if (minDays <= 90)
         	return "Less than in 90 days period of time is not allowed to donate blood again";
         
-        received.setStatus(false);
+        received.setStatus((byte) 0);
         donateService.saveDonorDetails(received);
 		return "You are eligible to donate, request needs to be accepted by admin";
 	}
@@ -196,7 +204,7 @@ public class UserService {
 		}
 		if (received.getBloodUnits() > bloodUnits)
 			return "There is no enough blood in the Inventory";
-		received.setStatus(false);
+		received.setStatus((byte) 0);
 		patientService.savePatientDetails(received);
 		
 		return "Blood is available, admin has to accept your request";

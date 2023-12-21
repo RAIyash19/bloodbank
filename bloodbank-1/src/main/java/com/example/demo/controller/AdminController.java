@@ -111,7 +111,7 @@ public class AdminController {
 	}
 	
   
-  @GetMapping("/clearExpiry")
+  @GetMapping("/clearExpiry")//1
   public List<Inventory> checkBlood() {
 	  List<Inventory> donors = inventoryService.getInventoryDetails();
 	  return inventoryService.checkForOldBloodSamples(donors);
@@ -132,26 +132,38 @@ public class AdminController {
 	}
 
   
-  	@GetMapping("/viewDonationRequests")
+  	@GetMapping("/viewDonationRequests")//1
   	public List<DonorDetails> viewDonationRequests() {
   		return service.getDonationRequests();
   	}
 
-	@PostMapping("/acceptDonationRequest")
+	@PostMapping("/acceptDonationRequest")//1
 	public String acceptDonationRequest(@RequestBody DonorDetails received){
 		return service.acceptDonationRequest(received);
 	}
 	
 	
 	
-	@GetMapping("/viewBloodRequests")
+	@GetMapping("/viewBloodRequests")//1
 	public List<PatientDetails> viewBloodRequest(){
 		return  service.viewBloodRequest();
 	}
 	
-	@PostMapping("/acceptBloodRequest")
+	@PostMapping("/acceptBloodRequest")//1
 	public String acceptBloodRequest(@RequestBody PatientDetails received) {
 		return service.acceptBloodRequest(received);
+	}
+	
+	@PostMapping("/rejectBloodDonationRequest")//1
+	public String rejectDonationRequest(@RequestBody DonorDetails detail ) {
+		return service.rejectDonationRequest(detail);
+		
+	}
+	
+	@PostMapping("/rejectBloodRequest")//1
+	public String rejectBloodRequest(@RequestBody PatientDetails detail ) {
+		return service.rejectBloodRequest(detail);
+		
 	}
 	
 }

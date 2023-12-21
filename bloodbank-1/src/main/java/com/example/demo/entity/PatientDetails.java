@@ -26,7 +26,7 @@ public class PatientDetails {
 	private String reason;
 	//private String Address;
 	private Date dateOfBlood; //date of blood request
-	private boolean status;
+	private byte status;
 	
 	
 	public String getReason() {
@@ -47,14 +47,15 @@ public class PatientDetails {
 	public void setDateOfBlood(Date dateOfBlood) {
 		this.dateOfBlood = dateOfBlood;
 	}
-	public boolean isStatus() {
+	
+	
+	
+	public byte getStatus() {
 		return status;
 	}
-	public void setStatus(boolean status) {
+	public void setStatus(byte status) {
 		this.status = status;
 	}
-	
-	
 	public long getId() {
 		return id;
 	}

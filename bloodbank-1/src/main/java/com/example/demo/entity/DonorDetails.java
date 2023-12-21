@@ -27,7 +27,7 @@ public class DonorDetails {
 //	private String pincode;
 	private String dateOfDonation;
 	
-	private boolean status;
+	private byte status;
 	
 	
 	
@@ -95,12 +95,13 @@ public class DonorDetails {
 	public void setDateOfDonation(String dateOfDonation) {
 		this.dateOfDonation = dateOfDonation;
 	}
-	public boolean isStatus() {
+	public byte getStatus() {
 		return status;
 	}
-	public void setStatus(boolean status) {
+	public void setStatus(byte status) {
 		this.status = status;
 	}
+	
 	
 //	public String getStreet() {
 //		return street;

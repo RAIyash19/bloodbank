@@ -15,6 +15,7 @@ import com.example.demo.service.RegistrationDetailsService;
 import com.example.demo.service.UserService;
 
 @RestController
+
 public class RegistrationDetailsController {
 
 	
@@ -23,7 +24,7 @@ public class RegistrationDetailsController {
 	@Autowired 
 	private UserService registerService;
 	
-	@PostMapping("/addRegistrationDetails")
+	@PostMapping("/addRegistrationDetails")  //1
 	public String saveDetail(@RequestBody RegistrationDetails detail) {
 		
 		boolean status= registerService.checkEmailExistance(detail);
@@ -33,23 +34,23 @@ public class RegistrationDetailsController {
 		return service.saveRegistrationDetails(detail);
 	}
 	
-	@GetMapping("/getRegistrationDetails")
+	@GetMapping("/getRegistrationDetails") //1
 	public List<RegistrationDetails> getDetails() {
 		return service.getRegistrationDetails();
 		
 	}
 	
-	@GetMapping("/getRegistrationDetailsById/{id}")
+	@GetMapping("/getRegistrationDetailsById/{id}") //1
 	public Optional<RegistrationDetails> findDetailsById(@PathVariable("id") int id) {
 		return service.getRegistrationDetailsById(id);
 	}
 	
-	@GetMapping("/getRegistrationDetailsByEmail/{email}")
+	@GetMapping("/getRegistrationDetailsByEmail/{email}") //1
 	public List<RegistrationDetails> findDetailsByEmail(@PathVariable("email") String email) {
 		return service.getRegistrationDetailsByEmail(email);
 	}
 	
-	@GetMapping("/getRegistrationDetailsByRole/{role}")
+	@GetMapping("/getRegistrationDetailsByRole/{role}")//1
 	public List<RegistrationDetails> findByLoginType(@PathVariable("role") String role) {
 		return service.getRegistrationDetailsByRole(role);
 	}

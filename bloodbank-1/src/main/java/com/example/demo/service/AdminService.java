@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,16 +45,23 @@ public class AdminService {
 	
 	
 	public List<DonorDetails> getDonationRequests() {
-		return donorService.getDonordetailsByStatus(false);
+		return donorService.getDonordetailsByStatus((byte) 0);
 	}
 
-
+// reject status maake it null funcvtion
+	
+	
 	public String acceptDonationRequest(DonorDetails received) {
+		
+		
 		
 		List<DonorDetails> saved = donorService.getDonorsDetailsByEmail(received.getEmail());
 		for (DonorDetails detail:saved) {
-			if (detail.isStatus() == false) {
-				detail.setStatus(true);
+			if (detail.getStatus()==1) {
+				return "why are you accepting again and again, go and some other work";
+			}
+			if (detail.getStatus() == 0) {
+				detail.setStatus((byte) 1);
 			}
 			Inventory inv = new Inventory();
 			inv.setBloodGroup(detail.getBloodGroup());
@@ -68,15 +76,22 @@ public class AdminService {
 
 
 	public  List<PatientDetails> viewBloodRequest() {
-		return patientService.getPatientDetailsByStatus(false);
+		return patientService.getPatientDetailsByStatus((byte) 0);
 	}
 
 
 	public String acceptBloodRequest(PatientDetails received) {
 		List<PatientDetails> saved = patientService.getPatientsDetailsByEmail(received.getEmail());
+		
+		
 		for (PatientDetails detail: saved) {
-			if (detail.isStatus() == false)
-				detail.setStatus(true);
+			if (detail.getStatus()==1) {
+				return "why are you accepting again and again, go and some other work";
+			}
+			
+			if (detail.getStatus() == 0)
+				detail.setStatus((byte) 1);
+			
 			
 			int units = detail.getBloodUnits();
 			List<Inventory> saved1 = inventoryService.getInventoryDetailsByBloodGroup(detail.getBloodGroup());
@@ -93,6 +108,52 @@ public class AdminService {
 			patientService.savePatientDetails(detail);
 		}
 		return "Given " + received.getBloodUnits() + "units or blood successfully";
+	}
+
+
+	public String rejectDonationRequest(DonorDetails detail) {
+		
+		List<DonorDetails> saved= donorService.getDonorsDetailsByEmail(detail.getEmail());
+		List<DonorDetails> donors = new ArrayList<>();
+		for (DonorDetails detail1: saved) {
+			if(detail1.getStatus()==0) {
+				//donors.add(detail1);
+				//saveDonorDetails(detail);
+				
+				detail1.setStatus((byte) -1);
+				donorService.updateStatus(detail1);
+//				Inventory inventory = convertDonorDetailsToInventory(detail);
+//				inventoryrepo.updateStatus(inventory);
+				
+				return " Blood Donatio request rejected";
+			}
+			
+		}
+		
+		return "no Blood Donation request is there to reject";
+		
+	}
+
+
+	public String rejectBloodRequest(PatientDetails detail) {
+		List<PatientDetails> saved= patientService.getPatientsDetailsByEmail(detail.getEmail());
+		//List<DonorDetails> donors = new ArrayList<>();
+		for (PatientDetails detail1: saved) {
+			if(detail1.getStatus()==0) {
+				//donors.add(detail1);
+				//saveDonorDetails(detail);
+				
+				detail1.setStatus((byte) -1);
+				patientService.updateStatus(detail1);
+//				Inventory inventory = convertDonorDetailsToInventory(detail);
+//				inventoryrepo.updateStatus(inventory);
+				
+				return "Blood request rejected";
+			}
+			
+		}
+		
+		return "no Blood request is there to reject";
 	}
 
 }
