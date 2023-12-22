@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.DonorDetails;
 import com.example.demo.entity.Inventory;
+import com.example.demo.entity.PatientDetails;
 import com.example.demo.repository.InventoryRepository;
 
 import jakarta.transaction.Transactional;
@@ -42,6 +43,8 @@ public class InventoryService {
 	public List<Inventory> getInventoryDetailsByBloodGroup(String bloodGroup) {
 		return repo.findByBloodGroup(bloodGroup);
 	}
+	
+	
 	
 	 public Inventory updateStatus(Inventory detail) {
 			return repo.save(detail);

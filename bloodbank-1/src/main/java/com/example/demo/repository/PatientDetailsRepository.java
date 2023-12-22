@@ -14,6 +14,8 @@ public interface PatientDetailsRepository extends JpaRepository<PatientDetails, 
 	public List<PatientDetails> findByStatus(byte status);
 	
 	
+	public List<PatientDetails> findByEmailAndStatus(String email, byte status);
+	
 
 	
 }

@@ -26,7 +26,7 @@ public class RegistrationDetailsController {
 	
 	@PostMapping("/addRegistrationDetails")  //1
 	public String saveDetail(@RequestBody RegistrationDetails detail) {
-		
+	
 		boolean status= registerService.checkEmailExistance(detail);
 		if (status)
 			return "User is already having account, try to login";

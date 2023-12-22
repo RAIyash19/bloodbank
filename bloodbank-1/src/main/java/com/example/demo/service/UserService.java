@@ -171,9 +171,12 @@ public class UserService {
         }
         if (years > 65)
         	return "Older people are not allowe to donate";
-        List<DonorDetails> saved = donateService.getDonorsDetailsByEmail(received.getEmail());
+        List<DonorDetails> saved = donateService.getDonorDetailsByEmailAndStatus(received.getEmail(), (byte) 0);
         long minDays=91;
         for (DonorDetails detail: saved) {	// to get the difference between recent blood donation date and current date
+        	if (detail.getStatus() == 0)
+        		return "You can't make a request again without the last request getting verified";
+        	
         	LocalDate lastDonation=LocalDate.parse(detail.getDateOfDonation(), formatter);
 //        	LocalDate currentDate = LocalDate.parse(received.getDateOfDonation(), formatter);
         	long daysDifference = ChronoUnit.DAYS.between(lastDonation, LocalDate.now());
@@ -189,6 +192,14 @@ public class UserService {
 	}
 
 	public String bloodRequest(PatientDetails received) {
+		
+		List<PatientDetails> saved = patientService.getPatientDetailsByEmailAndStatus(received.getEmail(), (byte) 0);
+		
+		for (PatientDetails detail: saved) {
+			if (detail.getStatus() == 0)
+				return "You can't made blood request again with the last request being verified";
+		}
+		
 		
 		if(received.getBloodUnits() > 5) {
 			return "Not allowed to take blood more than 5 units";

@@ -97,6 +97,10 @@ public class DonorDetailsService {
 		return repo.save(detail);
 	}
 	 
+	 public List<DonorDetails> getDonorDetailsByEmailAndStatus(String email, byte status) {
+		 return repo.findByEmailAndStatus(email, status);
+	 }
+	 
 //	 public DonorDetails saveDetails(DonorDetails detail) {
 //		 return inventoryrepo.updateStatus(detail);
 //	 }
