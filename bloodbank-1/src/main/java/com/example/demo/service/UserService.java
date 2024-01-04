@@ -31,23 +31,25 @@ public class UserService {
 	@Autowired
 	private InventoryService inventoryService;
 	
-	public String verifyLogin(RegistrationDetails received) {
+	public int verifyLogin(RegistrationDetails received) {
 		
-		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+		//BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
 		
 		
 		List<RegistrationDetails> saved = service.getRegistrationDetailsByRole("user");
 		for (RegistrationDetails detail:saved) {
 			if (detail.getEmail().equals(received.getEmail())) {
-				if (bcrypt.matches(received.getPassword(), detail.getPassword())) {
-					return "Login Success";	// Login success
+				//if (bcrypt.matches(received.getPassword(), detail.getPassword())) 
+				if(received.getPassword().equals(detail.getPassword()))
+				{
+					return 1;	// Login success
 				}
 				else 
-					return "Password incorrect";	// password incorrect
+					return -1;	// password incorrect
 			}
 		}
 		
-		return "invalid credentials";	// Invalid credential means Details not found
+		return 0;	// Invalid credential means Details not found
 	}
 
 	public boolean checkEmailExistance(RegistrationDetails received) {
@@ -197,7 +199,7 @@ public class UserService {
 		
 		for (PatientDetails detail: saved) {
 			if (detail.getStatus() == 0)
-				return "You can't made blood request again with the last request being verified";
+				return "You can't made blood request again until the last request being verified";
 		}
 		
 		

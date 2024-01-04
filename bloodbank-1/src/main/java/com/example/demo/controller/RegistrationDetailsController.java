@@ -25,13 +25,14 @@ public class RegistrationDetailsController {
 	private UserService registerService;
 	
 	@PostMapping("/addRegistrationDetails")  //1
-	public String saveDetail(@RequestBody RegistrationDetails detail) {
+	public String saveDetail( RegistrationDetails detail) {
 	
 		boolean status= registerService.checkEmailExistance(detail);
 		if (status)
-			return "User is already having account, try to login";
+			return "userRegistration";
 		detail.setRole("user");
-		return service.saveRegistrationDetails(detail);
+		service.saveRegistrationDetails(detail);
+		return "redirect:/registrationStatus";
 	}
 	
 	@GetMapping("/getRegistrationDetails") //1

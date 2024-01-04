@@ -154,7 +154,11 @@ public class AdminController {
 		return service.acceptBloodRequest(received);
 	}
 	
-	@PostMapping("/rejectBloodDonationRequest")//1
+
+	
+	
+	
+	 @PostMapping("/rejectBloodDonationRequest")//1
 	public String rejectDonationRequest(@RequestBody DonorDetails detail ) {
 		return service.rejectDonationRequest(detail);
 		

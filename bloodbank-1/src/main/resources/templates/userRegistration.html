@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Registration</title>
+</head>
+<body>
+    <h2>User Registration</h2>
+
+    <form th:action="@{/addRegistrationDetails}" method="post">
+        <div>
+            <label for="firstname">First Name:</label>
+            <input type="text" id="firstname" name="firstname" th:field="*{firstname}" required>
+        </div>
+
+        <div>
+            <label for="lastname">Last Name:</label>
+            <input type="text" id="lastname" name="lastname" th:field="*{lastname}" required>
+        </div>
+
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" th:field="*{email}" required>
+        </div>
+
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" th:field="*{password}" required>
+        </div>
+
+        <div>
+            <label for="role">Role:</label>
+            <input type="text" id="role" name="role" th:field="*{role}" required>
+        </div>
+
+        <div>
+            <label for="gender">Gender:</label>
+            <input type="text" id="gender" name="gender" th:field="*{gender}" required>
+        </div>
+
+        <div>
+            <label for="dateOfBirth">Date of Birth:</label>
+            <input type="text" id="dateOfBirth" name="dateOfBirth" th:field="*{dateOfBirth}" required>
+        </div>
+
+        <div>
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" th:field="*{city}" required>
+        </div>
+
+        <div>
+            <label for="bloodGroup">Blood Group:</label>
+            <input type="text" id="bloodGroup" name="bloodGroup" th:field="*{bloodGroup}" required>
+        </div>
+
+        <button type="submit">Register</button>
+    </form>
+    
+    <!-- Link to go back to the home page -->
+    <p><a th:href="@{/}" style="text-decoration: none;">Back to Home</a></p>
+</body>
+</html>
