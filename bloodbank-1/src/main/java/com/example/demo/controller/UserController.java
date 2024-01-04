@@ -1,9 +1,15 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,17 +20,26 @@ import com.example.demo.entity.PatientDetails;
 import com.example.demo.entity.RegistrationDetails;
 import com.example.demo.service.UserService;
 
-@RestController
+@Controller
 public class UserController {
 	
 	@Autowired
 	private UserService loginService;
 	
 	
-	@PostMapping("/verifyLogin")//1
-	public String verifyLogin(@RequestBody RegistrationDetails received) {
-		return  loginService.verifyLogin(received);
-	}
+	@PostMapping("/verifyUserLogin")//1
+	public String verifyLogin(@ModelAttribute("received") RegistrationDetails received, Model model) {
+        int status = loginService.verifyLogin(received);
+
+        if (status == 1) {
+            // If login is successful, return the Thymeleaf template name for redirection
+            return "redirect:/userDashboard";
+        } else {
+            // If login fails, add an error message to the model and stay on the login page
+            model.addAttribute("error", "Invalid username or password");
+            return "userLogin"; // Assuming the login page is named "login.html"
+        }
+    }
 	
 	@GetMapping("/viewProfileDetails/{email}")//1
 	public List<RegistrationDetails> viewProfileDetails(@PathVariable("email") String email) {
@@ -51,7 +66,7 @@ public class UserController {
 		return loginService.findBloodDonationsCount(email);
 	}
 	
-	@GetMapping("/viewAcceptedBloodRequestCount/{email}")//acepted requests
+	@GetMapping("/viewAcceptedBloodRequestCount/{email}") // acepted requests
 	public String getBloodRequestCount(@PathVariable("email") String email) {
 		return loginService.findBloodRequestsCount(email);
 	}

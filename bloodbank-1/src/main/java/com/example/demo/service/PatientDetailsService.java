@@ -43,6 +43,11 @@ public class PatientDetailsService {
 		return repo.findAll();
 	}
 	
+
+	public List<PatientDetails> getPatientDetailsByEmailAndStatus(String email, byte status) {
+		return repo.findByEmailAndStatus(email, status);
+	}
+	
 	public Optional<PatientDetails> getPatientsDetailsByUser(int id) {
 		return repo.findById(id);
 	}

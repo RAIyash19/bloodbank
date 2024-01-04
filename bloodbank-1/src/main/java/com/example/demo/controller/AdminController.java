@@ -105,10 +105,10 @@ public class AdminController {
 	  return donorDetailsService.findByemail(email);
   }
   
-  @GetMapping("/getDonorDetailsByEmial/{email}")
-	public List<PatientDetails> getPatientDetailsByEmail(@PathVariable String email) {
-		return patientDetailsService.getPatientsDetailsByEmail(email);
-	}
+//  @GetMapping("/getDonorDetailsByEmial/{email}")
+//	public List<PatientDetails> getPatientDetailsByEmail(@PathVariable String email) {
+//		return patientDetailsService.getPatientsDetailsByEmail(email);
+//	}
 	
   
   @GetMapping("/clearExpiry")//1
@@ -154,7 +154,11 @@ public class AdminController {
 		return service.acceptBloodRequest(received);
 	}
 	
-	@PostMapping("/rejectBloodDonationRequest")//1
+
+	
+	
+	
+	 @PostMapping("/rejectBloodDonationRequest")//1
 	public String rejectDonationRequest(@RequestBody DonorDetails detail ) {
 		return service.rejectDonationRequest(detail);
 		

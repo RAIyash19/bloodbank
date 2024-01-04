@@ -31,23 +31,25 @@ public class UserService {
 	@Autowired
 	private InventoryService inventoryService;
 	
-	public String verifyLogin(RegistrationDetails received) {
+	public int verifyLogin(RegistrationDetails received) {
 		
-		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+		//BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
 		
 		
 		List<RegistrationDetails> saved = service.getRegistrationDetailsByRole("user");
 		for (RegistrationDetails detail:saved) {
 			if (detail.getEmail().equals(received.getEmail())) {
-				if (bcrypt.matches(received.getPassword(), detail.getPassword())) {
-					return "Login Success";	// Login success
+				//if (bcrypt.matches(received.getPassword(), detail.getPassword())) 
+				if(received.getPassword().equals(detail.getPassword()))
+				{
+					return 1;	// Login success
 				}
 				else 
-					return "Password incorrect";	// password incorrect
+					return -1;	// password incorrect
 			}
 		}
 		
-		return "invalid credentials";	// Invalid credential means Details not found
+		return 0;	// Invalid credential means Details not found
 	}
 
 	public boolean checkEmailExistance(RegistrationDetails received) {
@@ -171,9 +173,12 @@ public class UserService {
         }
         if (years > 65)
         	return "Older people are not allowe to donate";
-        List<DonorDetails> saved = donateService.getDonorsDetailsByEmail(received.getEmail());
+        List<DonorDetails> saved = donateService.getDonorDetailsByEmailAndStatus(received.getEmail(), (byte) 0);
         long minDays=91;
         for (DonorDetails detail: saved) {	// to get the difference between recent blood donation date and current date
+        	if (detail.getStatus() == 0)
+        		return "You can't make a request again without the last request getting verified";
+        	
         	LocalDate lastDonation=LocalDate.parse(detail.getDateOfDonation(), formatter);
 //        	LocalDate currentDate = LocalDate.parse(received.getDateOfDonation(), formatter);
         	long daysDifference = ChronoUnit.DAYS.between(lastDonation, LocalDate.now());
@@ -189,6 +194,14 @@ public class UserService {
 	}
 
 	public String bloodRequest(PatientDetails received) {
+		
+		List<PatientDetails> saved = patientService.getPatientDetailsByEmailAndStatus(received.getEmail(), (byte) 0);
+		
+		for (PatientDetails detail: saved) {
+			if (detail.getStatus() == 0)
+				return "You can't made blood request again until the last request being verified";
+		}
+		
 		
 		if(received.getBloodUnits() > 5) {
 			return "Not allowed to take blood more than 5 units";

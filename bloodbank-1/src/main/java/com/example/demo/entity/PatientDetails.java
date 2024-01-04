@@ -25,7 +25,7 @@ public class PatientDetails {
 	private String city;
 	private String reason;
 	//private String Address;
-	private Date dateOfBlood; //date of blood request
+	private String dateOfBlood; //date of blood request
 	private byte status;
 	
 	
@@ -41,10 +41,10 @@ public class PatientDetails {
 	public void setBloodUnits(int bloodUnits) {
 		this.bloodUnits = bloodUnits;
 	}
-	public Date getDateOfBlood() {
+	public String getDateOfBlood() {
 		return dateOfBlood;
 	}
-	public void setDateOfBlood(Date dateOfBlood) {
+	public void setDateOfBlood(String dateOfBlood) {
 		this.dateOfBlood = dateOfBlood;
 	}
 	
