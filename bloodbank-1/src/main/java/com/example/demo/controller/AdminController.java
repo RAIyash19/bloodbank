@@ -105,7 +105,7 @@ public class AdminController {
 	  return donorDetailsService.findByemail(email);
   }
   
-  @GetMapping("/getPatientDetailsByEmail/{email}")
+  @GetMapping("/getDonorDetailsByEmial/{email}")
 	public List<PatientDetails> getPatientDetailsByEmail(@PathVariable String email) {
 		return patientDetailsService.getPatientsDetailsByEmail(email);
 	}
@@ -117,14 +117,14 @@ public class AdminController {
 	  return inventoryService.checkForOldBloodSamples(donors);
   }
   
-  @GetMapping("/eligibleToDonate")
+  @GetMapping("/eligibleToDonate")//1
   public List<DonorDetails> checkEligibility(){
   List<DonorDetails> donors = donorDetailsService.getDonorDetails();
   
       return donorDetailsService.checkEligibility(donors);
   }
   
-  @PostMapping("/updateDetails")
+  @PostMapping("/updateDetails")//1
 	public ResponseEntity<RegistrationDetails> updateUserProfile(@RequestBody RegistrationDetails user) throws Exception
 	{
 	  registrationDetailsService.updateUserProfile(user);
