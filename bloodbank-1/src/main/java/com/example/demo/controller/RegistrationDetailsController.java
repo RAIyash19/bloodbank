@@ -4,33 +4,35 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.RegistrationDetails;
 import com.example.demo.service.RegistrationDetailsService;
 import com.example.demo.service.UserService;
 
-@RestController
-
+@Controller
 public class RegistrationDetailsController {
 
-	
 	@Autowired
 	private RegistrationDetailsService service;
 	@Autowired 
 	private UserService registerService;
 	
 	@PostMapping("/addRegistrationDetails")  //1
-	public String saveDetail( RegistrationDetails detail) {
+	public String saveDetail( RegistrationDetails detail, Model model) {
 	
 		boolean status= registerService.checkEmailExistance(detail);
-		if (status)
+		if (status) {
+			model.addAttribute("message", "Email already exists");
+		
 			return "userRegistration";
+		}
 		detail.setRole("user");
+		
 		service.saveRegistrationDetails(detail);
 		return "redirect:/registrationStatus";
 	}
