@@ -49,9 +49,10 @@ public class RegistrationDetailsController {
 	}
 	
 	@GetMapping("/getRegistrationDetails") //1
-	public List<RegistrationDetails> getDetails() {
-		return service.getRegistrationDetails();
-		
+	public String getDetails(Model model) {
+		List<RegistrationDetails> users = service.getRegistrationDetails();
+		model.addAttribute("users", users);
+		return "details";
 	}
 	
 	@GetMapping("/getRegistrationDetailsById/{id}") //1

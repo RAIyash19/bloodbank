@@ -25,5 +25,11 @@ public class UserDashboard {
     public String showDonationRequests() {
         return "donationRequests";
     }
+    
+    @GetMapping("/details")
+    public String getMethodName() {
+        return "details";
+    }
+    
 }
 
