@@ -42,15 +42,14 @@ public class UserService {
 	
 	public int verifyLogin(RegistrationDetails received) {
 		
-		//BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
 		
 		
 		List<RegistrationDetails> saved = service.getRegistrationDetailsByRole("user");
 		for (RegistrationDetails detail:saved) {
 			if (detail.getEmail().equals(received.getEmail())) {
-				//if (bcrypt.matches(received.getPassword(), detail.getPassword())) 
-				if(received.getPassword().equals(detail.getPassword()))
-				{
+				if (bcrypt.matches(received.getPassword(), detail.getPassword()))  {
+//				if(received.getPassword().equals(detail.getPassword()))
 					return 1;	// Login success
 				}
 				else 
@@ -244,7 +243,6 @@ public int sendOtp(String email) {
 			return 0;
 		}
 		
-		
 		Random random = new Random();
 		System.out.println("started email");
         // Generate a random 6-digit number
@@ -256,11 +254,7 @@ public int sendOtp(String email) {
 		reg.setPassword("121345");
 		service.saveRegistrationDetails(reg);
 		
-		
-		
-		
-		
-		System.out.println("Successful");
+//		System.out.println("Successful");
 		return 0;
 	}
 

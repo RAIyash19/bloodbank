@@ -26,16 +26,24 @@ public class RegistrationDetailsController {
 	@PostMapping("/register")  //1
 	public String saveDetail(@ModelAttribute("detail") RegistrationDetails detail, Model model) {
 	
-		boolean status= registerService.checkEmailExistance(detail);
-		if (status) {
-			model.addAttribute("message", "Email already exists");
-		
-			return "userRegistration";
-		}
+//		boolean status= registerService.checkEmailExistance(detail);
 		detail.setRole("user");
+		List<RegistrationDetails> saved = service.getRegistrationDetailsByEmail(detail.getEmail());
+		for(RegistrationDetails ele: saved) {
+			if(detail.getOtp() == ele.getOtp()) {
+				ele.setFirstname(detail.getFirstname());
+				ele.setLastname(detail.getLastname());
+				ele.setPassword(detail.getPassword());
+				service.saveRegistrationDetails(ele);
+				return "redirect:/registrationStatus";
+			}
+			
+		}
+		model.addAttribute("otpMismatch", "Otp is not correct");
+		return "userRegistration";
 		
-		service.saveRegistrationDetails(detail);
-		return "redirect:/registrationStatus";
+		
+		
 	}
 	
 	@GetMapping("/getRegistrationDetails") //1
