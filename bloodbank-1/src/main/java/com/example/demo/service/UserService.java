@@ -6,11 +6,14 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.emailService.SendEmailService;
 import com.example.demo.entity.DonorDetails;
 import com.example.demo.entity.Inventory;
 import com.example.demo.entity.PatientDetails;
@@ -30,6 +33,12 @@ public class UserService {
 	
 	@Autowired
 	private InventoryService inventoryService;
+	
+	@Autowired
+	private SendEmailService emailService;
+	
+	
+	
 	
 	public int verifyLogin(RegistrationDetails received) {
 		
@@ -221,6 +230,38 @@ public class UserService {
 		patientService.savePatientDetails(received);
 		
 		return "Blood is available, admin has to accept your request";
+	}
+	
+public int sendOtp(String email) { 
+	
+	    int status=0;
+		List<RegistrationDetails> saved = service.getRegistrationDetailsByEmail(email);
+		for(RegistrationDetails test : saved) {
+			if(test.getEmail().equals(email)) {
+				return 1; // user email id already exist
+			}
+			
+			return 0;
+		}
+		
+		
+		Random random = new Random();
+		System.out.println("started email");
+        // Generate a random 6-digit number
+        int otp = 100000 + random.nextInt(900000);
+		emailService.sendEmail(email,"This is Confidential", "This is  Body of Email\n OTP is "+otp);
+		RegistrationDetails reg = new RegistrationDetails();
+		reg.setEmail(email);
+		reg.setOtp(otp);
+		reg.setPassword("121345");
+		service.saveRegistrationDetails(reg);
+		
+		
+		
+		
+		
+		System.out.println("Successful");
+		return 0;
 	}
 
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.DonorDetails;
@@ -41,6 +42,18 @@ public class UserController {
             return "userLogin"; // Assuming the login page is named "login.html"
         }
     }
+	
+	@PostMapping("/sendOTP/{email}")
+	 @ResponseStatus(HttpStatus.OK)
+	public void sendOtp(@PathVariable("email") String email, Model model) {
+		int status = loginService.sendOtp(email);
+		
+		if (status ==1) {
+			model.addAttribute("message", "User aleady existing");
+		}
+		System.out.println("request mapped " + email);
+		
+	}
 	
 	@GetMapping("/viewProfileDetails/{email}")//1
 	public List<RegistrationDetails> viewProfileDetails(@PathVariable("email") String email) {
