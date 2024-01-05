@@ -43,17 +43,19 @@ public class UserService {
 	public int verifyLogin(RegistrationDetails received) {
 		
 		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
-		
-		
-		List<RegistrationDetails> saved = service.getRegistrationDetailsByRole("user");
+		List<RegistrationDetails> saved = service.getRegistrationDetailsByEmail(received.getEmail());
 		for (RegistrationDetails detail:saved) {
 			if (detail.getEmail().equals(received.getEmail())) {
+				// matches(raw password, hashed password)
 				if (bcrypt.matches(received.getPassword(), detail.getPassword()))  {
 //				if(received.getPassword().equals(detail.getPassword()))
 					return 1;	// Login success
 				}
 				else 
 					return -1;	// password incorrect
+			}
+			else {
+				return 0;
 			}
 		}
 		
