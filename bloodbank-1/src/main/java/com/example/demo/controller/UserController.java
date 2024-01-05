@@ -27,13 +27,14 @@ public class UserController {
 	private UserService loginService;
 	
 	
-	@PostMapping("/verifyUserLogin")//1
+	@GetMapping("/verifyUserLogin")//1
 	public String verifyLogin(@ModelAttribute("received") RegistrationDetails received, Model model) {
         int status = loginService.verifyLogin(received);
 
         if (status == 1) {
             // If login is successful, return the Thymeleaf template name for redirection
-            return "redirect:/userDashboard";
+            return "redirect:/dashboard_u";
+        	  //return "userDashboard";
         } else {
             // If login fails, add an error message to the model and stay on the login page
             model.addAttribute("error", "Invalid username or password");

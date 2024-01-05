@@ -1,0 +1,51 @@
+<!-- <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>User Dashboard</title>
+</head>
+<body>
+    <h1>Welcome to the User Dashboard</h1>
+    Add your dashboard content here
+</body>
+</html>
+ -->
+ 
+ <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+
+    <h2>Welcome to Your Dashboard</h2>
+
+    <section>
+        <h3>Blood Donation</h3>
+        <p>Find information about blood donation events, schedules, and locations.</p>
+        <a th:href="@{/bloodDonation}" style="text-decoration: none;" th:objct="${bloodDonation}" method="get" >Go to Blood Donation</a>
+    </section>
+
+    <section>
+        <h3>Blood Request</h3>
+        <p>Submit or view blood requests from individuals in need.</p>
+        <a th:href="@{/bloodRequest}" style="text-decoration: none;">Go to Blood Request</a>
+    </section>
+
+    <section>
+        <h3>User Profile</h3>
+        <p>Manage your profile information and settings.</p>
+        <a th:href="@{/userProfile}" style="text-decoration: none;">Go to User Profile</a>
+    </section>
+
+    <section>
+        <h3>Other Features</h3>
+        <!-- Add more sections or features as needed -->
+    </section>
+
+    <!-- Link to go back to the home page or logout -->
+    <p><a th:href="@{/}" style="text-decoration: none;">Back to Home</a></p>
+
+</body>
+</html>
+ 

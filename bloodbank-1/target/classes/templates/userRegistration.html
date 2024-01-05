@@ -1,61 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>User Registration</title>
+    <meta charset="UTF-8">
+    <title>User Registration with OTP</title>
 </head>
 <body>
-    <h2>User Registration</h2>
+    <h1>User Registration</h1>
+    <form id="registrationForm" action="/register" th:object="${detail}" method="post">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required>
+        <br>
 
-    <form th:action="@{/addRegistrationDetails}" method="post">
-        <div>
-            <label for="firstname">First Name:</label>
-            <input type="text" id="firstname" name="firstname" th:field="*{firstname}" required>
-        </div>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required>
+        <br>
 
-        <div>
-            <label for="lastname">Last Name:</label>
-            <input type="text" id="lastname" name="lastname" th:field="*{lastname}" required>
-        </div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
 
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" th:field="*{email}" required>
-        </div>
+        <button type="button" onclick="sendOTP()">Send OTP</button>
+        <br>
 
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" th:field="*{password}" required>
-        </div>
+        <label for="otp">OTP:</label>
+        <input type="text" id="otp" name="otp" required>
+        <br>
 
-        <div>
-            <label for="role">Role:</label>
-            <input type="text" id="role" name="role" th:field="*{role}" required>
-        </div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
 
-        <div>
-            <label for="gender">Gender:</label>
-            <input type="text" id="gender" name="gender" th:field="*{gender}" required>
-        </div>
-
-        <div>
-            <label for="dateOfBirth">Date of Birth:</label>
-            <input type="text" id="dateOfBirth" name="dateOfBirth" th:field="*{dateOfBirth}" required>
-        </div>
-
-        <div>
-            <label for="city">City:</label>
-            <input type="text" id="city" name="city" th:field="*{city}" required>
-        </div>
-
-        <div>
-            <label for="bloodGroup">Blood Group:</label>
-            <input type="text" id="bloodGroup" name="bloodGroup" th:field="*{bloodGroup}" required>
-        </div>
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+        <br>
 
         <button type="submit">Register</button>
     </form>
-    
-    <!-- Link to go back to the home page -->
-    <p><a th:href="@{/}" style="text-decoration: none;">Back to Home</a></p>
+
+    <script>
+        function sendOTP() {
+            var email = document.getElementById('email').value;
+            
+            // Assuming you have an endpoint '/sendOTP' on the server to handle OTP requests
+            fetch('/sendOTP?email=' + email, { method: 'POST' })
+                .then(response => {
+                    // Handle the response as needed
+                    console.log('OTP Sent Successfully');
+                })
+                .catch(error => console.error('Error sending OTP:', error));
+        }
+    </script>
 </body>
 </html>

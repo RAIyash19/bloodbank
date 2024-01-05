@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -22,8 +23,8 @@ public class RegistrationDetailsController {
 	@Autowired 
 	private UserService registerService;
 	
-	@PostMapping("/addRegistrationDetails")  //1
-	public String saveDetail( RegistrationDetails detail, Model model) {
+	@PostMapping("/register")  //1
+	public String saveDetail(@ModelAttribute("detail") RegistrationDetails detail, Model model) {
 	
 		boolean status= registerService.checkEmailExistance(detail);
 		if (status) {
@@ -57,9 +58,6 @@ public class RegistrationDetailsController {
 	public List<RegistrationDetails> findByLoginType(@PathVariable("role") String role) {
 		return service.getRegistrationDetailsByRole(role);
 	}
-	
-	
-	
 	
 	
 }

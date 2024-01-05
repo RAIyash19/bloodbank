@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -18,9 +19,9 @@ public class WebController {
 		return "userLogin";
 	}
 	
-	@GetMapping("/userDashboard")
+	@GetMapping("/dashboard_u" )
 	public String userDashboard() {
-		return "userDashboard";
+		return "dashboard_u";
 	}
 
 	 @GetMapping("/userRegistration")
@@ -32,5 +33,6 @@ public class WebController {
 	public String registrationStatus() {
 		return "registrationStatus";
 	}
+	
 	
 }
