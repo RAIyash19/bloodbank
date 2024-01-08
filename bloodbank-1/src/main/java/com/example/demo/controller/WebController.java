@@ -44,5 +44,14 @@ public class WebController {
 	}
 	
 	
+	@GetMapping("/adminLogin")
+	public String adminLogin(){
 	
+		return "adminLogin";
+	}
+	
+	@GetMapping("/adminHome")
+	public String adminHome() {
+		return "adminHome";
+	}
 }

@@ -9,7 +9,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -29,7 +32,7 @@ import com.example.demo.service.RegistrationDetailsService;
 import com.example.demo.service.UserService;
 
 
-@RestController
+@Controller
 public class AdminController {
 	
 	
@@ -48,15 +51,25 @@ public class AdminController {
 	@Autowired
 	private RegistrationDetailsService registrationDetailsService;
 	
-	@PostMapping("/verifyAdminLogin")
-	public String verifyAdminLogin(@RequestBody RegistrationDetails received) {
-		byte status = service.verifyLogin(received);
-		if (status == 1)
-			return "Admin Login Successful";
-		else if (status == -1)
-			return "Password incorrect";
-		else
-			return "Invalid credentials, there is no admin with mail \"" + received.getEmail() + "\"" ;
+	@GetMapping("/verifyAdminLogin")
+	public String verifyAdminLogin(@ModelAttribute("received") RegistrationDetails received, Model model) {
+		 int status = service.verifyLogin(received);
+         System.out.println(status);
+        if (status == 1) {
+            // If login is successful, return the Thymeleaf template name for redirection
+            //return "redirect:/dashboard_u";
+        	  //return "userDashboard";
+        	return "redirect:/adminHome";
+        } 
+        else if (status == 0) {
+        	model.addAttribute("invalidMail", "Invalid credentials");
+            
+        }
+        else {
+            // If login fails, add an error message to the model and stay on the login page
+            model.addAttribute("error", "Invalid username or password");
+        }
+        return "yash";
 		
 	}
 //	
