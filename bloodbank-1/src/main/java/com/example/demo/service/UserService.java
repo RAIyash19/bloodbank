@@ -9,9 +9,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+import javax.imageio.spi.RegisterableService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.example.demo.emailService.SendEmailService;
 import com.example.demo.entity.DonorDetails;
@@ -237,21 +240,21 @@ public class UserService {
 	
 public int sendOtp(String email) { 
 	
-	    int status=0;
-		List<RegistrationDetails> saved = service.getRegistrationDetailsByEmail(email);
-		for(RegistrationDetails test : saved) {
-			if(test.getEmail().equals(email)) {
-				return 1; // user email id already exist
-			}
-			
-			//return 0;
-		}
+	   
 		
 		Random random = new Random();
 		System.out.println("started email");
         // Generate a random 6-digit number
         int otp = 100000 + random.nextInt(900000);
 		emailService.sendEmail(email,"This is Confidential", "This is  Body of Email\n OTP is "+otp);
+		List<RegistrationDetails> saved = service.getRegistrationDetailsByEmail(email);
+		for (RegistrationDetails detail : saved) {
+			detail.setEmail(email);
+			detail.setOtp(otp);
+			detail.setPassword("121345");
+			service.saveRegistrationDetails(detail);
+			return 1;
+		}
 		RegistrationDetails reg = new RegistrationDetails();
 		reg.setEmail(email);
 		reg.setOtp(otp);
@@ -261,5 +264,18 @@ public int sendOtp(String email) {
 //		System.out.println("Successful");
 		return 0;
 	}
+
+public int resetPassword(String email, int otp,String password, Model model) {
+	List<RegistrationDetails> saved = service.getRegistrationDetailsByEmail(email);
+	for (RegistrationDetails detail:saved) {
+		if(otp == detail.getOtp())
+		{
+			detail.setPassword(password);
+			service.saveRegistrationDetails(detail);
+		}
+	}
+	
+	return 0;
+}
 
 }
