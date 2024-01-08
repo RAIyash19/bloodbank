@@ -297,19 +297,42 @@ footer a {
 <body>
     <div class="container" id="container">
         <div class="form-container sign-up-container">
-            <form th:action="@{/verifyUserLogin}" th:object = "${received}" method="get">
+           <!--  <form th:action="@{/register}" th:object = "${detail}" method="post">
                 <h1>Create Account</h1>
-                 <div class="social-container">
-                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                </div>
                 <span>or use your email for registration</span> 
-                <input type="text" placeholder="Name" />
-                <input type="email" placeholder="Email" />
-                <input type="password" placeholder="Password" />
+                <input type="text" placeholder="Name" name="firstname" />
+                <input type="email" placeholder="Email" name="email" />
+                <button type="button" onclick="sendOTP()">Send OTP</button>
+        <br>
+        <input type="text" id="otp" placeholder="Enter OTP" name="otp" required>
+                <input type="password" placeholder="Password" name ="password" />
+                <input type="password" placeholder="confirmPassword" />
                 <button>Sign Up</button>
-            </form>
+            </form> -->
+             <form  action="/register" th:object="${detail}" method="post">
+       
+
+        	<label for="email">Email:</label>
+        	<input type="email" id="email" name="email" required>
+        
+
+        	<!-- Button to send OTP -->
+        	<button type="button" onclick="sendOTP()">Send OTP</button>
+      
+
+        	<label for="otp">OTP:</label>
+        	<input type="text" id="otp" name="otp" required>
+        
+   	<label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required onblur="validatePasswords()">
+        
+
+        <!-- Button to submit the registration form -->
+        	<button type="submit">Register</button>
+    </form>
         </div>
         <div class="form-container sign-in-container">
 		  <form th:action="@{/verifyUserLogin}" th:object = "${received}" method="get">
@@ -317,7 +340,7 @@ footer a {
 				 <span>or use your account</span> 
 				<input type="email" id="email" name="email" placeholder="Email" required />
 				<input type="password" id="password" name="password" placeholder="Password" required />
-				 <a href="#">Forgot your password?</a> 
+				 <a href="forgetPassword">Forgot your password?</a> 
 				<button type="submit">Sign In</button>
 			</form>
         </div>
@@ -338,13 +361,37 @@ footer a {
     </div>
     
      <footer>
-        <p>
-            Created with <i class="fa fa-heart"></i> by
-            <a target="_blank" href="https://florin-pop.com">Florin Pop</a>
-            - Read how I created this and how you can join the challenge
-            <a target="_blank" href="https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/">here</a>.
-        </p>
+       
     </footer> 
+   
+    <script>
+        function validatePasswords() {
+            var password = document.getElementById('password').value;
+            var confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                if (!document.getElementById('confirmPassword').hasAttribute('data-invalid')) {
+                    alert('Passwords do not match');
+                    document.getElementById('confirmPassword').setAttribute('data-invalid', 'true');
+                }
+            } else {
+                document.getElementById('confirmPassword').removeAttribute('data-invalid');
+            }
+        }
+    </script>
+    <script>
+    function sendOTP() {
+        var email = document.getElementById('email').value;
+        
+        // Assuming you have an endpoint '/sendOTP/{email}' on the server to handle OTP requests
+        fetch('/sendOTP/' + email, { method: 'POST' })
+            .then(response => {
+                // Handle the response as needed
+                console.log('OTP Sent Successfully');
+            })
+            .catch(error => console.error('Error sending OTP:', error));
+    }
+</script>
     <script>
         const signUpButton = document.getElementById('signUp');
         const signInButton = document.getElementById('signIn');
@@ -374,6 +421,7 @@ footer a {
 			return true; // Allow form submission
 		}
 	</script> 
+	
 	<!--<script>
 		function validateForm() {
 			var email = document.getElementById("email").value;

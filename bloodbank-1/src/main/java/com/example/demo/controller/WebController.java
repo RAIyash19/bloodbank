@@ -38,6 +38,11 @@ public class WebController {
 	public String userHome() {
 		return "userHome";
 	}
+	@GetMapping("/forgetPassword")
+	public String forgetPassword() {
+		return "forgetPassword";
+	}
+	
 	
 	
 }
