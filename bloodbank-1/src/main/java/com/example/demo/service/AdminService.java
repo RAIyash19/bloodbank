@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.DonorDetails;
@@ -29,19 +30,68 @@ public class AdminService {
 	@Autowired
 	private PatientDetailsService patientService;
 	
+//	public byte verifyLogin(RegistrationDetails received) {
+//		
+//		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+//		System.out.println("yyyyyyy");
+//		List<RegistrationDetails> saved = service.getRegistrationDetailsByRole("admin"); //received.getRole("admin");
+//		System.out.println(saved);
+//		for (RegistrationDetails detail: saved) {
+//			System.out.println(detail);
+//			if (detail.getEmail().equals(received.getEmail())) {
+//				System.out.println(detail.getEmail());
+//				
+//				if (bcrypt.matches(received.getPassword(), detail.getPassword()))
+//				{
+//					return 1; // Successful admin login
+//				}
+//				else 
+//					return -1; // Password incorrect
+//			}
+//			else {
+//				return 0;
+//		}
+//		 // Details not found
+//	}
+//		return 0;
+//	}
 	public byte verifyLogin(RegistrationDetails received) {
-		
-		List<RegistrationDetails> saved = service.getRegistrationDetailsByRole("admin");
-		for (RegistrationDetails detail: saved) {
-			if (detail.getEmail().equals(received.getEmail())) {
-				if (detail.getPassword().equals(received.getPassword()))
-					return 1; // Successful admin login
-				else 
-					return -1; // Password incorrect
-			}
-		}
-		return 0; // Details not found
+	    BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+	    System.out.println("yyyyyyy");
+	    
+	    List<RegistrationDetails> saved = service.getRegistrationDetailsByRole("admin");
+
+	    System.out.println(saved);
+
+	    for (RegistrationDetails detail : saved) {
+	        System.out.println(detail);
+
+	        if (detail.getEmail().equals(received.getEmail())) {
+	            System.out.println(detail.getEmail());
+
+	            if (bcrypt.matches(received.getPassword(), detail.getPassword())) {
+	                return 1; // Successful admin login
+	            } else {
+	                return -1; // Password incorrect
+	            }
+	        }
+	    }
+
+	    // If no matching email is found
+	    return 0;
 	}
+
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	public List<DonorDetails> getDonationRequests() {

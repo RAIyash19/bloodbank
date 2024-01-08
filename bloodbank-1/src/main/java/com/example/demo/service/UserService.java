@@ -46,6 +46,7 @@ public class UserService {
 		List<RegistrationDetails> saved = service.getRegistrationDetailsByEmail(received.getEmail());
 		for (RegistrationDetails detail:saved) {
 			if (detail.getEmail().equals(received.getEmail())) {
+				System.out.println(detail);
 				// matches(raw password, hashed password)
 				if (bcrypt.matches(received.getPassword(), detail.getPassword()))  {
 //				if(received.getPassword().equals(detail.getPassword()))
@@ -235,7 +236,7 @@ public class UserService {
 		return "Blood is available, admin has to accept your request";
 	}
 	
-public int sendOtp(String email) { 
+	public int sendOtp(String email) { 
 	
 	    int status=0;
 		List<RegistrationDetails> saved = service.getRegistrationDetailsByEmail(email);
@@ -261,5 +262,34 @@ public int sendOtp(String email) {
 //		System.out.println("Successful");
 		return 0;
 	}
+
+	public int forgetPasswordSendOtp(String email) {
+			int status = 0;
+			
+			List<RegistrationDetails> saved = service.getRegistrationDetailsByEmail(email);
+			for(RegistrationDetails test : saved) {
+				if(test.getEmail().equals(email)) {
+					return 1; // user email id already exist
+				}
+				
+				//return 0;
+			}
+			
+			Random random = new Random();
+			System.out.println("started email");
+	        // Generate a random 6-digit number
+	        int otp = 100000 + random.nextInt(900000);
+			emailService.sendEmail(email,"This is Confidential", "This is  Body of Email\n OTP is "+otp);
+			RegistrationDetails reg = new RegistrationDetails();
+			reg.setEmail(email);
+			reg.setOtp(otp);
+			reg.setPassword("121345");
+			service.saveRegistrationDetails(reg);
+			
+//			System.out.println("Successful");
+			return 0;
+			
+	
+}
 
 }

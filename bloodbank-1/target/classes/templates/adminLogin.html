@@ -35,11 +35,14 @@
           <div class="row justify-content-center">
             <div class="col-md-8">
               <div class="mb-4">
-				  <form th:action="@{/verifyAdminLogin}" th:object = "${received}" method="get">
+				 <!--
+					  <form  action="/register" th:object="${detail}" method="post">-->
+				  <!--<form th:action="@{/verifyAdminLogin}" th:object = "${received}" method="get">-->
               <h3>Admin Sign-In</h3>
               <p class="mb-4">Unlocking Lifesaving Potential: Admin Access to Blood Bank Harmony!</p>
             </div>
-            <form action="C:\Users\adityeshwar_mallare\Desktop\BloodTemplate\bloodbank\Admin_Home\adminhome.html" method="post" onsubmit="return validateForm()">
+             <form th:action="@{/verifyAdminLogin}" th:object = "${received}" method="get">
+<!--            <form action="C:\Users\adityeshwar_mallare\Desktop\BloodTemplate\bloodbank\Admin_Home\adminhome.html" method="post" onsubmit="return validateForm()">--> 
               <div class="form-group first">
                   <label for="username">Username</label>
                   <input type="text" class="form-control" id="username" name="username">
@@ -67,7 +70,7 @@
     <script src="static/adminLogin/js/popper.min.js"></script>
     <script src="static/adminLogin/js/bootstrap.min.js"></script>
     <script src=static/adminLogin/"js/main.js"></script>
-    
+    <!--
      <script>
 		function validateForm() {
 			var email = document.getElementById('email').value;
@@ -84,7 +87,7 @@
 			return true; // Allow form submission
 		}
 	</script> 
-    
+    -->
     
     
    <!-- <script>
