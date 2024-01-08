@@ -23,7 +23,6 @@ public class RegistrationDetailsService {
 		detail.setPassword(passwd);
 		repo.save(detail);
 		return "Registered successfully";
-		
 	}
 	
 	public RegistrationDetails updateUserProfile(RegistrationDetails user)

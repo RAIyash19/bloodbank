@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,22 +27,32 @@ public class RegistrationDetailsController {
 	@PostMapping("/register")  //1
 	public String saveDetail(@ModelAttribute("detail") RegistrationDetails detail, Model model) {
 	
-		boolean status= registerService.checkEmailExistance(detail);
-		if (status) {
-			model.addAttribute("message", "Email already exists");
-		
-			return "userRegistration";
-		}
+//		boolean status= registerService.checkEmailExistance(detail);
 		detail.setRole("user");
+		List<RegistrationDetails> saved = service.getRegistrationDetailsByEmail(detail.getEmail());
+		for(RegistrationDetails ele: saved) {
+			if(detail.getOtp() == ele.getOtp()) {
+				ele.setFirstname(detail.getFirstname());
+				ele.setLastname(detail.getLastname());
+				ele.setPassword(detail.getPassword());
+				
+				service.saveRegistrationDetails(ele);
+				return "redirect:/registrationStatus";
+			}
+			
+		}
+		model.addAttribute("otpMismatch", "Otp is not correct");
+		return "userRegistration";
 		
-		service.saveRegistrationDetails(detail);
-		return "redirect:/registrationStatus";
+		
+		
 	}
 	
 	@GetMapping("/getRegistrationDetails") //1
-	public List<RegistrationDetails> getDetails() {
-		return service.getRegistrationDetails();
-		
+	public String getDetails(Model model) {
+		List<RegistrationDetails> users = service.getRegistrationDetails();
+		model.addAttribute("users", users);
+		return "details";
 	}
 	
 	@GetMapping("/getRegistrationDetailsById/{id}") //1

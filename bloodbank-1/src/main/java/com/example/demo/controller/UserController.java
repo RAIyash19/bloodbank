@@ -36,11 +36,16 @@ public class UserController {
             // If login is successful, return the Thymeleaf template name for redirection
             return "redirect:/dashboard_u";
         	  //return "userDashboard";
-        } else {
+        } 
+        else if (status == 0) {
+        	model.addAttribute("invalidMail", "Invalid credentials");
+            
+        }
+        else {
             // If login fails, add an error message to the model and stay on the login page
             model.addAttribute("error", "Invalid username or password");
-            return "userLogin"; // Assuming the login page is named "login.html"
         }
+        return "userLogin"; 
     }
 	
 	@PostMapping("/sendOTP/{email}")
