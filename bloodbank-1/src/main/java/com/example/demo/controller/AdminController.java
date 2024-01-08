@@ -9,7 +9,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -49,10 +51,11 @@ public class AdminController {
 	private RegistrationDetailsService registrationDetailsService;
 	
 	@PostMapping("/verifyAdminLogin")
-	public String verifyAdminLogin(@RequestBody RegistrationDetails received) {
+	public String verifyAdminLogin(@ModelAttribute("received") RegistrationDetails received, Model model) {
+		
 		byte status = service.verifyLogin(received);
 		if (status == 1)
-			return "Admin Login Successful";
+			return "redirect:/adminHome";
 		else if (status == -1)
 			return "Password incorrect";
 		else
