@@ -142,7 +142,7 @@ public class UserService {
 	}
 
 	public String donateRequest(DonorDetails received) {
-		
+		String email=received.getEmail();
 		List<RegistrationDetails> saved1 = service.getRegistrationDetailsByEmail(received.getEmail());
 		LocalDate currentDate = LocalDate.now();
 
@@ -199,6 +199,8 @@ public class UserService {
         
         received.setStatus((byte) 0);
         donateService.saveDonorDetails(received);
+		
+		emailService.sendEmail(email,"This is Confidential", "This is  Body of Email\n OTP is ");
 		return "You are eligible to donate, request needs to be accepted by admin";
 	}
 
@@ -241,7 +243,7 @@ public int sendOtp(String email) {
 				return 1; // user email id already exist
 			}
 			
-			return 0;
+			//return 0;
 		}
 		
 		

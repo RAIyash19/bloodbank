@@ -10,7 +10,7 @@ public class WebController {
 	
 	@GetMapping("/") 
 	public String home () {
-//		System.out.println("IN");
+		System.out.println("IN");
 		return "index";
 	}
 	
