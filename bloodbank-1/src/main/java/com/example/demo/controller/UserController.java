@@ -34,8 +34,9 @@ public class UserController {
 
         if (status == 1) {
             // If login is successful, return the Thymeleaf template name for redirection
-            return "redirect:/dashboard_u";
+            //return "redirect:/dashboard_u";
         	  //return "userDashboard";
+        	return "redirect:/userHome";
         } 
         else if (status == 0) {
         	model.addAttribute("invalidMail", "Invalid credentials");

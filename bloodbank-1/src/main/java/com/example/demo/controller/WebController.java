@@ -34,5 +34,10 @@ public class WebController {
 		return "registrationStatus";
 	}
 	
+	@GetMapping("/userHome")
+	public String userHome() {
+		return "userHome";
+	}
+	
 	
 }

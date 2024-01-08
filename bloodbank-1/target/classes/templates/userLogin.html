@@ -28,6 +28,11 @@
     <p><a th:href="@{/}" style="text-decoration: none;">Back to Home</a></p>
 </body>
 </html>-->
+
+
+
+
+
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -294,12 +299,12 @@ footer a {
         <div class="form-container sign-up-container">
             <form th:action="@{/verifyUserLogin}" th:object = "${received}" method="get">
                 <h1>Create Account</h1>
-                <!-- <div class="social-container">
+                 <div class="social-container">
                     <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
                     <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                 </div>
-                <span>or use your email for registration</span> -->
+                <span>or use your email for registration</span> 
                 <input type="text" placeholder="Name" />
                 <input type="email" placeholder="Email" />
                 <input type="password" placeholder="Password" />
@@ -307,12 +312,12 @@ footer a {
             </form>
         </div>
         <div class="form-container sign-in-container">
-			<form onsubmit="return validateForm()" action="C:\Users\adityeshwar_mallare\Desktop\BloodTemplate\bloodbank\User_Home\userhome.html" method="post">
+		  <form th:action="@{/verifyUserLogin}" th:object = "${received}" method="get">
 				<h1>Sign in</h1>
-				<!-- <span>or use your account</span> -->
+				 <span>or use your account</span> 
 				<input type="email" id="email" name="email" placeholder="Email" required />
 				<input type="password" id="password" name="password" placeholder="Password" required />
-				<!-- <a href="#">Forgot your password?</a> -->
+				 <a href="#">Forgot your password?</a> 
 				<button type="submit">Sign In</button>
 			</form>
         </div>
@@ -332,14 +337,14 @@ footer a {
         </div>
     </div>
     
-    <!-- <footer>
+     <footer>
         <p>
             Created with <i class="fa fa-heart"></i> by
             <a target="_blank" href="https://florin-pop.com">Florin Pop</a>
             - Read how I created this and how you can join the challenge
             <a target="_blank" href="https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/">here</a>.
         </p>
-    </footer> -->
+    </footer> 
     <script>
         const signUpButton = document.getElementById('signUp');
         const signInButton = document.getElementById('signIn');
@@ -353,7 +358,7 @@ footer a {
             container.classList.remove("right-panel-active");
         });
     </script>
-	 <!-- <script>
+	  <script>
 		function validateForm() {
 			var email = document.getElementById('email').value;
 			var password = document.getElementById('password').value;
@@ -368,8 +373,8 @@ footer a {
 	
 			return true; // Allow form submission
 		}
-	</script> -->
-	<script>
+	</script> 
+	<!--<script>
 		function validateForm() {
 			var email = document.getElementById("email").value;
 			var password = document.getElementById("password").value;
@@ -390,8 +395,7 @@ footer a {
 				return false; // Prevent form submission
 			}
 		}
-	</script>
+	</script>-->
     
 </body>
 </html>
-
