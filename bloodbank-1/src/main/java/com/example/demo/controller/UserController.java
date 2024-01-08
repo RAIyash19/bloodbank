@@ -7,18 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.DonorDetails;
 import com.example.demo.entity.PatientDetails;
 import com.example.demo.entity.RegistrationDetails;
+import com.example.demo.service.RegistrationDetailsService;
 import com.example.demo.service.UserService;
 
 @Controller
@@ -26,6 +29,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService loginService;
+	
+	@Autowired
+	private RegistrationDetailsService registerService;
 	
 	
 	@GetMapping("/verifyUserLogin")//1
@@ -50,7 +56,9 @@ public class UserController {
     }
 	
 	@PostMapping("/sendOTP/{email}")
-	 @ResponseStatus(HttpStatus.OK)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	
 	public void sendOtp(@PathVariable("email") String email, Model model) {
 		int status = loginService.sendOtp(email);
 		
@@ -60,6 +68,14 @@ public class UserController {
 		System.out.println("request mapped " + email);
 		
 	}
+	
+//	@PostMapping("/forgetPassword/{email}")
+//	@ResponseStatus(HttpStatus.OK)
+//	@ResponseBody
+//	public void  forgetPassword(@PathVariable("email") String email, Model model) {
+//		List<RegistrationDetails> saved = registerService.getRegistrationDetailsByEmail(email)
+//	}
+	
 	
 	@GetMapping("/viewProfileDetails/{email}")//1
 	public List<RegistrationDetails> viewProfileDetails(@PathVariable("email") String email) {

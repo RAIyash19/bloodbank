@@ -41,8 +41,10 @@ public class RegistrationDetailsController {
 			}
 			
 		}
+		
+		service.deleteRegistrationDetail(detail.getEmail());
 		model.addAttribute("otpMismatch", "Otp is not correct");
-		return "userRegistration";
+		return "userLogin";
 		
 		
 		
