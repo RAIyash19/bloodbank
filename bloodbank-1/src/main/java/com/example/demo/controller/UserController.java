@@ -84,7 +84,7 @@ public class UserController {
 ////		return "redirect:/";
 //	}
 	
-	@PostMapping("/resetPassword/{email}")
+	@PostMapping("/resetPassword")
 //	public String resetPassword(@PathVariable("email") String email,@PathVariable("otp") int otp,@PathVariable("password") String password, Model model) {
 	public String resetPassword(@ModelAttribute("detail") RegistrationDetails detail, Model model) {
 		System.out.println("innn");

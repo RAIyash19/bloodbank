@@ -266,19 +266,19 @@ public class UserService {
 		return 0;
 	}
 
-<<<<<<< HEAD
-public int resetPassword(String email, int otp,String password, Model model) {
-	List<RegistrationDetails> saved = service.getRegistrationDetailsByEmail(email);
-	for (RegistrationDetails detail:saved) {
-		if(otp == detail.getOtp())
-		{
-			detail.setPassword(password);
-			service.saveRegistrationDetails(detail);
+	public int resetPassword(String email, int otp,String password, Model model) {
+		List<RegistrationDetails> saved = service.getRegistrationDetailsByEmail(email);
+		for (RegistrationDetails detail:saved) {
+			if(otp == detail.getOtp())
+			{
+				detail.setPassword(password);
+				service.saveRegistrationDetails(detail);
+			}
 		}
+	
+		return 0;
 	}
 	
-	return 0;
-=======
 	public int forgetPasswordSendOtp(String email) {
 			int status = 0;
 			
@@ -305,8 +305,6 @@ public int resetPassword(String email, int otp,String password, Model model) {
 //			System.out.println("Successful");
 			return 0;
 			
-	
->>>>>>> da5bf4728b0bc2ed16e065df091aa047d951263c
-}
+		}
 
-}
+	}
