@@ -57,7 +57,7 @@ public class AdminService {
 //	}
 	public byte verifyLogin(RegistrationDetails received) {
 	    BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
-	    System.out.println("yyyyyyy");
+	    System.out.println(received.getEmail());
 	    
 	    List<RegistrationDetails> saved = service.getRegistrationDetailsByRole("admin");
 

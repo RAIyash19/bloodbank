@@ -24,7 +24,7 @@
   <body>
   
 
-  
+  <!--
   <div class="content">
     <div class="container">
       <div class="row">
@@ -35,14 +35,14 @@
           <div class="row justify-content-center">
             <div class="col-md-8">
               <div class="mb-4">
-				 <!--
-					  <form  action="/register" th:object="${detail}" method="post">-->
-				  <!--<form th:action="@{/verifyAdminLogin}" th:object = "${received}" method="get">-->
+				 
+					  <form  action="/register" th:object="${detail}" method="post">
+				  <form th:action="@{/verifyAdminLogin}" th:object = "${received}" method="get">
               <h3>Admin Sign-In</h3>
               <p class="mb-4">Unlocking Lifesaving Potential: Admin Access to Blood Bank Harmony!</p>
             </div>
              <form th:action="@{/verifyAdminLogin}" th:object = "${received}" method="get">
-<!--            <form action="C:\Users\adityeshwar_mallare\Desktop\BloodTemplate\bloodbank\Admin_Home\adminhome.html" method="post" onsubmit="return validateForm()">--> 
+            <form action="C:\Users\adityeshwar_mallare\Desktop\BloodTemplate\bloodbank\Admin_Home\adminhome.html" method="post" onsubmit="return validateForm()"> 
               <div class="form-group first">
                   <label for="username">Username</label>
                   <input type="text" class="form-control" id="username" name="username">
@@ -63,7 +63,56 @@
         
       </div>
     </div>
-  </div>
+  </div>-->
+  
+  
+   <div class="content">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <img src="static/adminLogin/images/undraw_remotely_2j6y.svg" alt="Image" class="img-fluid">
+        </div>
+        <div class="col-md-6 contents">
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+              <div class="mb-4">
+				   <div class="mb-4">
+              <h3>Admin Sign-In</h3>
+              <p class="mb-4">Unlocking Lifesaving Potential: Admin Access to Blood Bank Harmony!</p>
+            </div>
+          <!--  <form th:action="@{/verifyAdminLogin}" th:object = "${received}" method="get">
+              <div class="form-group first">
+                  <label for="username">Username</label>
+                  <input type="text" class="form-control" id="username" name="username">
+                  <span id="usernameError" class="error"></span>
+              </div>
+              <div class="form-group last mb-4">
+                  <label for="password">Password</label>
+                  <input type="password" class="form-control" id="password" name="password">
+                  <span id="passwordError" class="error"></span>
+              </div>
+      
+              <input type="submit" value="Log In" class="btn btn-block btn-primary">
+            </form>-->
+            
+            
+            
+
+				 
+            
+            <!--working-->
+            
+            </form>
+        </div>
+        <div class="form-container sign-in-container">
+		  <form th:action="@{/verifyAdminLogin}" th:object = "${received}" method="get">
+				<h1>Sign in</h1>
+				 <span>or use your account</span> 
+				<input type="email" id="email" name="email" placeholder="Email" required />
+				<input type="password" id="password" name="password" placeholder="Password" required />
+				 <a href="forgetPassword">Forgot your password?</a> 
+				<button type="submit">Sign In</button>
+			</form>
 
   
     <script src="static/adminLogin/js/jquery-3.3.1.min.js"></script>
