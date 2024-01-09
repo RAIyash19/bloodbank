@@ -82,9 +82,7 @@ public class AdminController {
         return "redirect:/adminLogin";
 		
 	}
-//	
-//	@GetMapping
-//	public String getdetails
+
   @GetMapping("/getInventoryDetails")
 	public List<Inventory> getDetails() {
 		return inventoryService.getInventoryDetails();
