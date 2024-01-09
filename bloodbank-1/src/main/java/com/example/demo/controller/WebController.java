@@ -42,6 +42,11 @@ public class WebController {
 	public String forgetPassword() {
 		return "forgetPassword";
 	}
+	@GetMapping("/forgetPasswordadmin")
+		public String forgetPasswordadmin() {
+			return "forgetPasswordadmin";
+		}
+	
 	
 	
 	@GetMapping("/adminLogin")

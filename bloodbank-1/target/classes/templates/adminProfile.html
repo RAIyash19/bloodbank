@@ -1,4 +1,4 @@
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -104,8 +104,9 @@ canvas {
                         <div class="col-md-6"><label class="labels">Date of Birth</label><input type="date" class="form-control" value="" placeholder="dob"></div>
                     </div>
                     <div class="mt-5 text-center">
-                        <button class="btn btn-primary profile-button" type="button" onclick="updateProfile()">Update Profile</button>
-                        <button class="btn btn-primary profile-button" type="submit" onclick="showSuccessMessage()">Save Profile</button>
+                      <!--  <button class="btn btn-primary profile-button" type="button" onclick="updateProfile()">Update Profile</button>
+                        <button class="btn btn-primary profile-button" type="submit">Save Profile</button>-->
+                       <!-- <button type="submit">Register</button>-->
                     </div>
                         
                 </div>
@@ -131,6 +132,7 @@ canvas {
                     <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
                 </div>
             </div>
+             <button class="btn btn-primary profile-button" type="submit">Save Profile</button>
         </div>
         </div>
         </div>

@@ -148,6 +148,7 @@ public class AdminController {
   @PostMapping("/updateDetails")//1
 	public ResponseEntity<RegistrationDetails> updateUserProfile(@ModelAttribute("detail") RegistrationDetails detail, Model model) throws Exception
 	{
+	  System.out.println(detail.getEmail());
 	  registrationDetailsService.updateUserProfile(detail);
 		return new ResponseEntity<RegistrationDetails>(detail, HttpStatus.OK);
 	}
