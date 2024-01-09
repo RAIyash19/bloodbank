@@ -45,12 +45,11 @@ public class UserController {
         	return "redirect:/userHome";
         } 
         else if (status == 0) {
-        	model.addAttribute("invalidMail", "Invalid credentials");
-            
+        	model.addAttribute("message", "Email is invalid");
         }
         else {
             // If login fails, add an error message to the model and stay on the login page
-            model.addAttribute("error", "Invalid username or password");
+            model.addAttribute("error", "Invalid password");
         }
         return "userLogin"; 
     }
@@ -68,28 +67,16 @@ public class UserController {
 		
 	}
 	
-//	@PostMapping("/forgetPassword/{email}")
-//	@ResponseStatus(HttpStatus.OK)
-//	@ResponseBody
-//	public void  forgetPassword(@PathVariable("email") String email, Model model) {
-//		List<RegistrationDetails> saved = registerService.getRegistrationDetailsByEmail(email);
-//		
-//		for(RegistrationDetails detail : saved) {
-//			if (detail.getRole().equals("user"))
-//			{
-//				int status = loginService.sendOtp(email);
-//				//return "redirect:/userLogin";
-//			}
-//		}
-////		return "redirect:/";
-//	}
+
 	
 	@PostMapping("/resetPassword")
 //	public String resetPassword(@PathVariable("email") String email,@PathVariable("otp") int otp,@PathVariable("password") String password, Model model) {
 	public String resetPassword(@ModelAttribute("detail") RegistrationDetails detail, Model model) {
 		System.out.println("innn");
 		int status = loginService.resetPassword(detail.getEmail(), detail.getOtp(),detail.getPassword(), model);
-		return "redirect:/userLogin";
+		if (status==1) 
+			return "redirect:/userLogin";
+		return "foregetPassword";
 	}
 	
 	@GetMapping("/viewProfileDetails/{email}")//1

@@ -257,6 +257,10 @@ input {
 	margin: 20px 0;
 }
 
+.error-message {
+        color: red;
+    }
+
 .social-container a {
 	border: 1px solid #DDDDDD;
 	border-radius: 50%;
@@ -292,6 +296,11 @@ footer a {
     color: #3c97bf;
     text-decoration: none;
 }
+
+    
+
+
+
     </style>
 </head>
 <body>
@@ -339,7 +348,9 @@ footer a {
 				<h1>Sign in</h1>
 				 <span>or use your account</span> 
 				<input type="email" id="email" name="email" placeholder="Email" required />
+				 <span th:if="${message}" class="error-message" th:text="${message}"></span>
 				<input type="password" id="password" name="password" placeholder="Password" required />
+				 <span th:if="${error}" class="error-message" th:text="${error}"></span>
 				 <a href="forgetPassword">Forgot your password?</a> 
 				<button type="submit">Sign In</button>
 			</form>

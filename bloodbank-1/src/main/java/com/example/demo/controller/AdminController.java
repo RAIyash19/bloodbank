@@ -69,7 +69,7 @@ public class AdminController {
             // If login fails, add an error message to the model and stay on the login page
             model.addAttribute("error", "Invalid username or password");
         }
-        return "yash";
+        return "adminLogin";
 		
 	}
 //	

@@ -16,8 +16,6 @@ public class RegistrationDetailsService {
 	@Autowired
 	private RegistrationDetailsRepository repo;
 	
-	
-	
 	public String saveRegistrationDetails(RegistrationDetails detail) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String passwd = passwordEncoder.encode(detail.getPassword());
