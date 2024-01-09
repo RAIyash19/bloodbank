@@ -76,15 +76,10 @@ public class AdminController {
         else if (status == -1) {
             // If login fails, add an error message to the model and stay on the login page
             model.addAttribute("error", "Invalid username or password");
-<<<<<<< HEAD
+
         }
         return "adminLogin";
-=======
-            return "adminLogin";
-            }
-        
-        return "redirect:/adminLogin";
->>>>>>> 027ace64cea31156ef824a56c550b906bec00db3
+
 		
 	}
 
