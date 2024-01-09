@@ -30,14 +30,14 @@ public class RegistrationDetailsController {
 		boolean status=userService.checkEmailExistance(detail);
 		if(status) 
 			return "userLogin";
-		detail.setRole("user");
+//		detail.setRole("user");
 		List<RegistrationDetails> saved = service.getRegistrationDetailsByEmail(detail.getEmail());
 		for(RegistrationDetails ele: saved) {
 			if(detail.getOtp() == ele.getOtp()) {
 				ele.setFirstname(detail.getFirstname());
 				ele.setLastname(detail.getLastname());
 				ele.setPassword(detail.getPassword());
-				
+				ele.setRole("user");
 				service.saveRegistrationDetails(ele);
 				return "redirect:/registrationStatus";
 			}
@@ -47,9 +47,7 @@ public class RegistrationDetailsController {
 //		service.deleteRegistrationDetail(detail.getEmail());
 		model.addAttribute("otpMismatch", "Otp is not correct");
 		return "userLogin";
-		
-		
-		
+
 	}
 	
 	@GetMapping("/getRegistrationDetails") //1

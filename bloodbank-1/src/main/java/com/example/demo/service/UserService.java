@@ -48,7 +48,7 @@ public class UserService {
 		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
 		List<RegistrationDetails> saved = service.getRegistrationDetailsByEmail(received.getEmail());
 		for (RegistrationDetails detail:saved) {
-			if (detail.getEmail().equals(received.getEmail())) {
+			if (detail.getEmail().equals(received.getEmail()) && detail.getRole().equals("user")) {
 				System.out.println(detail);
 				// matches(raw password, hashed password)
 				if (bcrypt.matches(received.getPassword(), detail.getPassword()))  {
@@ -273,6 +273,7 @@ public class UserService {
 			{
 				detail.setPassword(password);
 				service.saveRegistrationDetails(detail);
+				return 1;
 			}
 		}
 	
