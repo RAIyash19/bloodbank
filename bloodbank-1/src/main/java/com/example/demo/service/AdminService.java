@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.emailService.SendEmailService;
 import com.example.demo.entity.DonorDetails;
 import com.example.demo.entity.Inventory;
 import com.example.demo.entity.PatientDetails;
@@ -29,6 +30,9 @@ public class AdminService {
 	
 	@Autowired
 	private PatientDetailsService patientService;
+	
+	@Autowired
+	private SendEmailService emailService;
 	
 //	public byte verifyLogin(RegistrationDetails received) {
 //		
@@ -82,29 +86,14 @@ public class AdminService {
 	}
 
 	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public List<DonorDetails> getDonationRequests() {
 		return donorService.getDonordetailsByStatus((byte) 0);
 	}
 
 // reject status maake it null funcvtion
 	
-	
 	public String acceptDonationRequest(DonorDetails received) {
-		
-		
-		
+		String email=received.getEmail();
 		List<DonorDetails> saved = donorService.getDonorsDetailsByEmail(received.getEmail());
 		for (DonorDetails detail:saved) {
 			if (detail.getStatus()==1) {
@@ -120,7 +109,8 @@ public class AdminService {
 			inventoryService.saveInventory(inv);
 			donorService.saveDonorDetails(detail);
 		}
-		
+		//
+		emailService.sendEmail(email,"this is to inform you", "your blood donation request is accepted");
 		return "Donation request accepted for the user with email " + received.getEmail();
 	}
 
@@ -131,6 +121,7 @@ public class AdminService {
 
 
 	public String acceptBloodRequest(PatientDetails received) {
+		String email=received.getEmail();
 		List<PatientDetails> saved = patientService.getPatientsDetailsByEmail(received.getEmail());
 		
 		
@@ -157,12 +148,13 @@ public class AdminService {
 			
 			patientService.savePatientDetails(detail);
 		}
+		emailService.sendEmail(email,"this is to inform you", "your blood request is accepted");
 		return "Given " + received.getBloodUnits() + "units or blood successfully";
 	}
 
 
 	public String rejectDonationRequest(DonorDetails detail) {
-		
+		String email=detail.getEmail();
 		List<DonorDetails> saved= donorService.getDonorsDetailsByEmail(detail.getEmail());
 		List<DonorDetails> donors = new ArrayList<>();
 		for (DonorDetails detail1: saved) {
@@ -179,6 +171,7 @@ public class AdminService {
 			}
 			
 		}
+		emailService.sendEmail(email,"this is to inform you", "your blood donation request is rejected");
 		
 		return "no Blood Donation request is there to reject";
 		
@@ -186,6 +179,7 @@ public class AdminService {
 
 
 	public String rejectBloodRequest(PatientDetails detail) {
+		String email=detail.getEmail();
 		List<PatientDetails> saved= patientService.getPatientsDetailsByEmail(detail.getEmail());
 		//List<DonorDetails> donors = new ArrayList<>();
 		for (PatientDetails detail1: saved) {
@@ -202,7 +196,7 @@ public class AdminService {
 			}
 			
 		}
-		
+		emailService.sendEmail(email,"this is to inform you", "your blood request is rejected");
 		return "no Blood request is there to reject";
 	}
 

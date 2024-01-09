@@ -53,8 +53,11 @@ public class AdminController {
 	
 	@GetMapping("/verifyAdminLogin")
 	public String verifyAdminLogin(@ModelAttribute("received") RegistrationDetails received, Model model) {
+		System.out.println(received.getEmail());
 		 int status = service.verifyLogin(received);
-         System.out.println(status);
+        // System.out.println(status);
+		 System.out.println(status
+				 );
         if (status == 1) {
             // If login is successful, return the Thymeleaf template name for redirection
             //return "redirect:/dashboard_u";
@@ -62,19 +65,29 @@ public class AdminController {
         	return "redirect:/adminHome";
         } 
         else if (status == 0) {
-        	model.addAttribute("invalidMail", "Invalid credentials");
+        	model.addAttribute("invalidMail", "this email is not admin");
+        	return "adminLogin";
             
         }
-        else {
+//        else if(status == -1) {
+//            // If login fails, add an error message to the model and stay on the login page
+//            model.addAttribute("error", "Invalid username or password");
+//        }
+        else if (status == -1) {
             // If login fails, add an error message to the model and stay on the login page
             model.addAttribute("error", "Invalid username or password");
+<<<<<<< HEAD
         }
         return "adminLogin";
+=======
+            return "adminLogin";
+            }
+        
+        return "redirect:/adminLogin";
+>>>>>>> 027ace64cea31156ef824a56c550b906bec00db3
 		
 	}
-//	
-//	@GetMapping
-//	public String getdetails
+
   @GetMapping("/getInventoryDetails")
 	public List<Inventory> getDetails() {
 		return inventoryService.getInventoryDetails();
