@@ -22,12 +22,14 @@ public class RegistrationDetailsController {
 	@Autowired
 	private RegistrationDetailsService service;
 	@Autowired 
-	private UserService registerService;
+	private UserService userService;
 	
 	@PostMapping("/register")  //1
 	public String saveDetail(@ModelAttribute("detail") RegistrationDetails detail, Model model) {
 	
-//		boolean status= registerService.checkEmailExistance(detail);
+		boolean status=userService.checkEmailExistance(detail);
+		if(status) 
+			return "userLogin";
 		detail.setRole("user");
 		List<RegistrationDetails> saved = service.getRegistrationDetailsByEmail(detail.getEmail());
 		for(RegistrationDetails ele: saved) {
@@ -42,7 +44,7 @@ public class RegistrationDetailsController {
 			
 		}
 		
-		service.deleteRegistrationDetail(detail.getEmail());
+//		service.deleteRegistrationDetail(detail.getEmail());
 		model.addAttribute("otpMismatch", "Otp is not correct");
 		return "userLogin";
 		
