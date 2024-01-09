@@ -88,7 +88,7 @@ public class UserController {
 //	public String resetPassword(@PathVariable("email") String email,@PathVariable("otp") int otp,@PathVariable("password") String password, Model model) {
 	public String resetPassword(@ModelAttribute("detail") RegistrationDetails detail, Model model) {
 		System.out.println("innn");
-		int status = loginService.resetPassword(detail.getEmail(), detail.getOtp(),detail.getPassword(), model);
+		int status = loginService.resetPassword(detail.getEmail(), detail.getOtp(), detail.getPassword(), model);
 		return "redirect:/userLogin";
 	}
 	
