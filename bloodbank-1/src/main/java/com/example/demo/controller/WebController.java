@@ -54,4 +54,10 @@ public class WebController {
 	public String adminHome() {
 		return "adminHome";
 	}
+	
+	@GetMapping("/adminProfile")
+	public String adminProfile() {
+		return "adminProfile";
+	}
+	
 }
