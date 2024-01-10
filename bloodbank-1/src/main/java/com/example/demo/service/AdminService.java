@@ -199,5 +199,38 @@ public class AdminService {
 		emailService.sendEmail(email,"this is to inform you", "your blood request is rejected");
 		return "no Blood request is there to reject";
 	}
+	
+	public RegistrationDetails updateUserProfile(RegistrationDetails user)
+	{
+		List<RegistrationDetails> saved = service.getRegistrationDetailsByEmail(user.getEmail());
+		RegistrationDetails obj = new RegistrationDetails();
+		for(RegistrationDetails detail: saved) {
+			detail.setBloodGroup(user.getBloodGroup());
+			detail.setCity(user.getCity());
+			detail.setDateOfBirth(user.getDateOfBirth());
+			detail.setEmail(user.getEmail());
+			detail.setFirstname(user.getFirstname());
+			detail.setGender(user.getGender());
+			detail.setLastname(user.getLastname());
+			
+			service.updateUserProfile(detail);
+		}
+		return null;
+		
+	}
 
+
+	
+	public List<RegistrationDetails> getProfileDetails(RegistrationDetails detail) {
+		
+		List<RegistrationDetails> saved = service.getRegistrationDetailsByEmail(detail.getEmail());
+		List<RegistrationDetails> data = new ArrayList<>();
+		for(RegistrationDetails user :saved) {
+			data.add(user);
+		}
+		
+		return data;
+		
+	}
+	
 }

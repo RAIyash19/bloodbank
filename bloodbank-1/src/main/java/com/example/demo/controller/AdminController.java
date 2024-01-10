@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.DonorDetails;
 import com.example.demo.entity.Inventory;
+import com.example.demo.entity.LoggedInUser;
 import com.example.demo.entity.PatientDetails;
 import com.example.demo.entity.RegistrationDetails;
 import com.example.demo.service.AdminService;
@@ -30,6 +31,8 @@ import com.example.demo.service.PatientDetailsService;
 
 import com.example.demo.service.RegistrationDetailsService;
 import com.example.demo.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -51,37 +54,135 @@ public class AdminController {
 	@Autowired
 	private RegistrationDetailsService registrationDetailsService;
 	
-	@GetMapping("/verifyAdminLogin")
-	public String verifyAdminLogin(@ModelAttribute("received") RegistrationDetails received, Model model) {
-		System.out.println(received.getEmail());
-		 int status = service.verifyLogin(received);
-        // System.out.println(status);
-		 System.out.println(status
-				 );
-        if (status == 1) {
-            // If login is successful, return the Thymeleaf template name for redirection
-            //return "redirect:/dashboard_u";
-        	  //return "userDashboard";
-        	return "redirect:/adminHome";
-        } 
-        else if (status == 0) {
-        	model.addAttribute("invalidMail", "this email is not admin");
-        	return "adminLogin";
-            
-        }
-//        else if(status == -1) {
+//	@GetMapping("/verifyAdminLogin")
+//	public String verifyAdminLogin(@ModelAttribute("received") RegistrationDetails received, Model model) {
+//		System.out.println(received.getEmail());
+//		 int status = service.verifyLogin(received);
+//        // System.out.println(status);
+//		 System.out.println(status
+//				 );
+//        if (status == 1) {
+//            // If login is successful, return the Thymeleaf template name for redirection
+//            //return "redirect:/dashboard_u";
+//        	  //return "userDashboard";
+////        	 LoggedInUser loggedInUser = new LoggedInUser();
+////             loggedInUser.setEmail(received.getEmail());
+////             session.setAttribute("loggedInUser", loggedInUser);
+//        	
+//
+//        	return "redirect:/adminHome";
+//        } 
+//        else if (status == 0) {
+//        	model.addAttribute("invalidMail", "this email is not admin");
+//        	return "adminLogin";
+//            
+//        }
+////        else if(status == -1) {
+////            // If login fails, add an error message to the model and stay on the login page
+////            model.addAttribute("error", "Invalid username or password");
+////        }
+//        else if (status == -1) {
 //            // If login fails, add an error message to the model and stay on the login page
 //            model.addAttribute("error", "Invalid username or password");
+//
 //        }
-        else if (status == -1) {
-            // If login fails, add an error message to the model and stay on the login page
+//        return "adminLogin";
+//        }
+	
+	
+	
+	@GetMapping("/verifyAdminLogin")
+    public String verifyAdminLogin(@ModelAttribute("received") RegistrationDetails received, 
+                                   HttpSession session, Model model) {
+		System.out.println(received.getEmail());
+        int status = service.verifyLogin(received);
+
+        if (status == 1) {
+            // If login is successful, set the email as a session attribute
+            session.setAttribute("loggedInUserEmail", received.getEmail());
+
+            // Redirect to the admin home page
+            return "redirect:/adminHome";
+        } else if (status == 0) {
+            model.addAttribute("invalidMail", "This email is not admin");
+            return "adminLogin";
+        } else if (status == -1) {
             model.addAttribute("error", "Invalid username or password");
-
         }
-        return "adminLogin";
 
-		
+        // If login fails, stay on the login page
+        return "adminLogin";
+    }
+	
+//
+//	 @GetMapping("/adminHome")
+//    public String adminHome(Model model, HttpSession session) {
+//        // Retrieve the loggedInUser from the session
+//		 
+//		 String email = (String) session.getAttribute("loggedInUserEmail");
+//
+//		    // Pass the user's email to the Thymeleaf template
+//		    model.addAttribute("email", email);
+//		 
+////        LoggedInUser loggedInUser = (LoggedInUser) session.getAttribute("loggedInUser");
+//
+//        // Pass the user's email to the Thymeleaf template
+////        model.addAttribute("email", loggedInUser.getEmail());
+//
+//        return "adminHome";
+//    }
+
+	
+	
+	
+	
+	
+//	@GetMapping("/viewProfileDetail")//1
+//	public String viewProfileDetail(@ModelAttribute("detail") RegistrationDetails detail, Model model) {
+//		/*
+//		 * List<RegistrationDetails> userDetails = service.getAllUserDetails();
+//		 * model.addAttribute("users", userDetails);
+//		 */
+//		
+//		
+//		model.addAttribute("user", service.getProfileDetails(detail));
+//		
+//		
+//		return "adminfetch";
+//	
+//	}
+	
+	@GetMapping("/viewProfileDetail")
+	public String viewProfileDetail(HttpSession session, Model model) {
+	    // Retrieve the email from the session
+	    String adminEmail = (String) session.getAttribute("loggedInUserEmail");
+	    System.out.println(adminEmail);
+	    System.out.println(adminEmail);
+	    System.out.println(adminEmail);
+	    System.out.println(adminEmail);
+
+	    if (adminEmail == null) {
+	        // Handle the case where the admin is not logged in
+	        return "redirect:/adminLogin";  // Redirect to the admin login page or handle appropriately
+	    }
+
+	    // Add logic to fetch user details based on the admin's email
+	    List<RegistrationDetails> userDetails = registrationDetailsService.getRegistrationDetailsByEmail(adminEmail);
+	    for(RegistrationDetails a:userDetails) {
+	    	System.out.println(a.getBloodGroup());
+	    	System.out.println(a.getCity());
+	    	System.out.println(a.getFirstname());
+	    }
+
+	    // Add the user details to the model
+	    model.addAttribute("user", userDetails);
+
+	    // Return the Thymeleaf template name
+	    return "adminfetch";
 	}
+
+	
+	
 
   @GetMapping("/getInventoryDetails")
 	public List<Inventory> getDetails() {
@@ -146,11 +247,12 @@ public class AdminController {
   }
   
   @PostMapping("/updateDetails")//1
-	public ResponseEntity<RegistrationDetails> updateUserProfile(@ModelAttribute("detail") RegistrationDetails detail, Model model) throws Exception
+	public String updateUserProfile(@ModelAttribute("detail") RegistrationDetails detail, Model model)
 	{
 	  System.out.println(detail.getEmail());
-	  registrationDetailsService.updateUserProfile(detail);
-		return new ResponseEntity<RegistrationDetails>(detail, HttpStatus.OK);
+	  service.updateUserProfile(detail);
+//		return new ResponseEntity<RegistrationDetails>(detail, HttpStatus.OK);
+	  return "redirect:/adminProfile";
 	}
 
   
