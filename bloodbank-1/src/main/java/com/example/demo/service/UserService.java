@@ -91,6 +91,10 @@ public class UserService {
 		for (RegistrationDetails detail:saved) {
 			detail.setLastname(received.getLastname());
 			detail.setFirstname(received.getFirstname());
+			detail.setBloodGroup(received.getBloodGroup());
+			detail.setCity(received.getCity());
+			detail.setDateOfBirth(received.getDateOfBirth());
+			detail.setGender(received.getGender());
 			service.updateUserProfile(detail);
 			System.out.println("name : " + received.getEmail());
 			return detail;
@@ -307,5 +311,16 @@ public class UserService {
 			return 0;
 			
 		}
+
+//	public int getBloodRequestsCount(String email) {
+//		// TODO Auto-generated method stub
+//		
+//		return 0;
+//	}
+//
+//	public int getDonationCount(String email) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
 
 	}

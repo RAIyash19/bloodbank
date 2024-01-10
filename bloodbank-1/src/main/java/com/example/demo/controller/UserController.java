@@ -42,7 +42,7 @@ public class UserController {
             // If login is successful, return the Thymeleaf template name for redirection
             //return "redirect:/dashboard_u";
         	  //return "userDashboard";
-        	return "redirect:/userHome";
+        	return "redirect:/check";
         } 
         else if (status == 0) {
         	model.addAttribute("message", "Email is invalid");
@@ -84,10 +84,25 @@ public class UserController {
 		return loginService.getProfileDetails(email);
 	}
 	
-	@PostMapping("/updateProfileDetails")//1
-	public RegistrationDetails updateProfile(@RequestBody RegistrationDetails received) {
-		return loginService.updateProfile(received);
+	@PostMapping("/updateUserDetails")//1
+	public String updateProfile(@ModelAttribute("received") RegistrationDetails received, Model model) {
+		 System.out.println("update");
+		 System.out.println(received);
+		 loginService.updateProfile(received);
+		 model.addAttribute("userData", received);
+		 model.addAttribute("userUpdate", "Details updated successfully");
+		 return "userProfile";
 	}
+	
+//	@GetMapping("/getDonationAndBloodCount/{email}")
+//	@ResponseStatus(HttpStatus.OK)
+//	@ResponseBody
+//	public void getDonationAndBloodCount(@PathVariable("email") String email) {
+//		
+//		int bloodRequests = loginService.getBloodRequestsCount(email);
+//		int donationRequests = loginService.getDonationCount(email);
+//		
+//	}
 	
 	@GetMapping("/viewBloodRequestDetails/{email}")//1
 	public List<PatientDetails> viewBloodRequestsDetails(@PathVariable("email") String email) {
@@ -95,8 +110,10 @@ public class UserController {
 	}
 	
 	@GetMapping("/viewDonateRequestDetails/{email}")//1------------------------------------------------------
-	public List<DonorDetails> getDonateRequestsDerails(@PathVariable("email") String email) {
-		return loginService.getDonateRequestsDetails(email);
+	public String getDonateRequestsDerails(@PathVariable("email") String email) {
+		
+		 loginService.getDonateRequestsDetails(email);
+		 return "userProfile";
 	}
 	
 	@GetMapping("/viewAcceptedBloodDonationCount/{email}")//1

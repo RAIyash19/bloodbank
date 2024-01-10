@@ -97,6 +97,12 @@ public class RegistrationDetails {
 	public void setRole(String role) {
 		this.role = role;
 	}
+	@Override
+	public String toString() {
+		return "RegistrationDetails [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", email="
+				+ email + ", password=" + password + ", role=" + role + ", gender=" + gender + ", dateOfBirth="
+				+ dateOfBirth + ", city=" + city + ", bloodGroup=" + bloodGroup + ", otp=" + otp + "]";
+	}
 	
 	
 	
