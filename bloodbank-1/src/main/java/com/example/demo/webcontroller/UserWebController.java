@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.webcontroller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +10,7 @@ import com.example.demo.entity.LoggedInUser;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-public class WebController {
+public class UserWebController {
 	
 	@GetMapping("/") 
 	public String home () {
