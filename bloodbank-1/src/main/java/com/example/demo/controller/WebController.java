@@ -5,6 +5,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.demo.entity.LoggedInUser;
+
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class WebController {
 	
@@ -55,14 +59,40 @@ public class WebController {
 		return "adminLogin";
 	}
 	
+//	@GetMapping("/adminHome")
+//	public String adminHome() {
+//		return "adminHome";
+//	}
+	
 	@GetMapping("/adminHome")
-	public String adminHome() {
-		return "adminHome";
-	}
+    public String adminHome(Model model, HttpSession session) {
+		 String email = (String) session.getAttribute("loggedInUserEmail");
+
+		    // Pass the user's email to the Thymeleaf template
+		    model.addAttribute("email", email);
+		 
+
+        return "adminHome";
+    }
 	
 	@GetMapping("/adminProfile")
 	public String adminProfile() {
 		return "adminProfile";
 	}
+	
+	
+	@GetMapping("/adminfetch")
+	public String adminfetch(Model model, HttpSession session) {
+		String email = (String) session.getAttribute("loggedInUserEmail");
+		
+	    model.addAttribute("email", email);
+		
+		return "adminfetch";
+	}
+	@GetMapping("/profileDisplay")
+	public String profileDisplay() {
+		return "profileDisplay";
+	}
+	
 	
 }
