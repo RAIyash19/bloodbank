@@ -173,7 +173,7 @@ public class UserService {
 		return donors;
 	}
 
-	public String donateRequest(DonorDetails received) {
+	public int donateRequest(DonorDetails received) {
 		String email=received.getEmail();
 		List<RegistrationDetails> saved1 = service.getRegistrationDetailsByEmail(received.getEmail());
 		LocalDate currentDate = LocalDate.now();
@@ -185,7 +185,7 @@ public class UserService {
         String formattedDate = currentDate.format(formatter);
 		
 		if (saved1.isEmpty())
-			return "email not dound";
+			return 0;   //"email not dound";
 		for (RegistrationDetails detail: saved1) {
 			//DonorDetails received = new DonorDetails();
 			received.setEmail(detail.getEmail());
@@ -210,33 +210,45 @@ public class UserService {
 	    int years = period.getYears();
 	        
         if (years < 18) {
-        	return "hey kid  " + received.getEmail() + ",  you are not allowed to Donate Blood, age should be minimum 18 years";
+        	return 2;   //"hey kid  " + received.getEmail() + ",  you are not allowed to Donate Blood, age should be minimum 18 years";
         }
         if (years > 65)
-        	return "Older people are not allowe to donate";
+        	return 3;   //"Older people are not allowed to donate";
         List<DonorDetails> saved = donateService.getDonorDetailsByEmailAndStatus(received.getEmail(), (byte) 0);
         long minDays=91;
         for (DonorDetails detail: saved) {	// to get the difference between recent blood donation date and current date
         	if (detail.getStatus() == 0)
-        		return "You can't make a request again without the last request getting verified";
+        		return 4;   //"You can't make a request again without the last request getting verified";
         	
         	LocalDate lastDonation=LocalDate.parse(detail.getDateOfDonation(), formatter);
 //        	LocalDate currentDate = LocalDate.parse(received.getDateOfDonation(), formatter);
-        	long daysDifference = ChronoUnit.DAYS.between(lastDonation, LocalDate.now());
+        	long daysDifference = ChronoUnit.DAYS.between(lastDonation, LocalDate.parse(detail.getDateOfDonation(), formatter));
         	minDays = daysDifference;
 //        	System.out.println("days: " + minDays);
         }
-        if (minDays <= 90)
-        	return "Less than in 90 days period of time is not allowed to donate blood again";
+        List<DonorDetails> saved2 = donateService.getDonorDetailsByEmailAndStatus(received.getEmail(), (byte) 1);
+        for (DonorDetails detail: saved2) {	// to get the difference between recent blood donation date and current date
+        	
+        	LocalDate lastDonation=LocalDate.parse(detail.getDateOfDonation(), formatter);
+//        	LocalDate currentDate = LocalDate.parse(received.getDateOfDonation(), formatter);
+        	long daysDifference = ChronoUnit.DAYS.between(lastDonation, LocalDate.parse(detail.getDateOfDonation(), formatter));
+        	minDays = daysDifference;
+//        	System.out.println("days: " + minDays);
+        }
+        
+        if (minDays <= 90 )
+        	return 5;   //"Less than in 90 days period of time is not allowed to donate blood again";
         
         received.setStatus((byte) 0);
         donateService.saveDonorDetails(received);
 		
-		emailService.sendEmail(email,"This is Confidential", "This is  Body of Email\n OTP is ");
-		return "You are eligible to donate, request needs to be accepted by admin";
+		return 	1;			//"You are eligible to donate, request needs to be accepted by admin";
 	}
 
-	public String bloodRequest(PatientDetails received) {
+	
+
+
+	public String bloodRequestSelf(PatientDetails received) {
 		
 		List<PatientDetails> saved = patientService.getPatientDetailsByEmailAndStatus(received.getEmail(), (byte) 0);
 		
@@ -261,6 +273,14 @@ public class UserService {
 		if (received.getBloodUnits() > bloodUnits)
 			return "There is no enough blood in the Inventory";
 		received.setStatus((byte) 0);
+		List<RegistrationDetails> saved1 = service.getRegistrationDetailsByEmail(received.getEmail());
+		for(RegistrationDetails detail:saved1) {
+			received.setDateOfBirth(detail.getDateOfBirth());
+			received.setFirstname(detail.getFirstname());
+			received.setGender(detail.getGender());
+			received.setLastname(detail.getLastname());
+		
+		}
 		patientService.savePatientDetails(received);
 		
 		return "Blood is available, admin has to accept your request";

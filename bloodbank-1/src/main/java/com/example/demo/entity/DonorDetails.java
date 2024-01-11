@@ -26,11 +26,19 @@ public class DonorDetails {
 //	private String state;
 //	private String pincode;
 	private String dateOfDonation;
+	private String timeSlot;
 	
 	private byte status;
 	
 	
 	
+	
+	public String getTimeSlot() {
+		return timeSlot;
+	}
+	public void setTimeSlot(String timeSlot) {
+		this.timeSlot = timeSlot;
+	}
 	public int getId() {
 		return id;
 	}

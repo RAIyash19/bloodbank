@@ -54,6 +54,11 @@ public class RegistrationDetailsController {
 	public String getDetails(Model model) {
 		List<RegistrationDetails> users = service.getRegistrationDetails();
 		model.addAttribute("users", users);
+//		List<RegistrationDetails> saved = service.getRegistrationDetailsByEmail("bodeddularajasekharreddy2002@gmail.com");
+//    	for(RegistrationDetails detail:saved) {
+//    		 System.out.println("Blood Group: " + detail.getBloodGroup());
+//    		model.addAttribute("userData", detail);
+//    	}
 		return "details";
 	}
 	

@@ -9,7 +9,12 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
     /* Add any additional CSS styles if needed for donations.html */
+    .error-message {
+        color: red;
+    }
   </style>
+  
+  
 </head>
 <body>
   <!-- Your HTML content specific to donations -->
@@ -23,35 +28,45 @@
             <h4 class="mb-4">Are you willing to give blood?</h4>
             <div class="btn-group" role="group" aria-label="Donor Choice">
               <button type="button" class="btn btn-primary" onclick="donorChoice('yes')">Yes</button>
-              <button type="button" class="btn btn-primary" onclick="donorChoice('no')">No</button>
+              <button type="button" class="btn btn-primary" onclick="donorChoice('no')">No</button> <br>
+              
             </div>
+                                      <center> <span th:if="${donateMessage}" class="error-message" th:text="${donateMessage}"></span></center>
+            
 
-             <form id="donationForm">
+          <div id="locationDate" style="display: none;" class="mt-4">
+        <form id="donationForm" th:action="@{/bloodDonationRequest}" th:object="${received}" method="post">
+        
+        <input type="hidden" id="email" name="email" th:value="${session.userEmail}">
             <label for="location">Select Location:</label>
-            <select class="form-control mb-2" id="location" required>
-                <option value="location1">Bangalore</option>
-                <option value="location2">Location 2</option>
-                <option value="location3">Location 3</option>
+            <select class="form-control mb-2" id="location" name="city" required>
+                <option value="Bangalore">Bangalore</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Chennai">Chennai</option>
                 <!-- Add more location options as needed -->
             </select>
 
-            <label for="date">Select Date:</label>
-            <input type="date" id="date" class="form-control mb-2" required>
-
+            <label for="date">Select Date (mm-dd-yyyy):</label><br>
+    <input type="date" id="date" name="dateOfDonation" pattern="\d{4}-\d{2}-\d{2}" required>
+<br>
             <label for="time">Select Time Slot:</label>
-            <select class="form-control mb-2" id="time" required>
+            <select class="form-control mb-2" id="time" name="timeSlot" required>
                 <option value="9:00-10:00">9:00 AM - 10:00 AM</option>
                 <option value="10:00-11:00">10:00 AM - 11:00 AM</option>
                 <option value="11:00-12:00">11:00 AM - 12:00 PM</option>
                 <option value="12:00-01:00">12:00 PM - 01:00 PM</option>
                 <option value="01:00-02:00">01:00 PM - 02:00 PM</option>
                 <option value="02:00-03:00">02:00 PM - 03:00 PM</option>
+                <option value="03:00-04:00">03:00 PM - 04:00 PM</option>
+                <option value="04:00-05:00">04:00 PM - 05:00 PM</option>
+                <option value="05:00-06:00">05:00 PM - 06:00 PM</option>
                 <!-- Add more time slots as needed -->
             </select>
+            
 
-            <button type="button" class="btn btn-primary" onclick="submitForm('bodeddularajasekharreddy1111@gmail.com')">Submit</button>
+            <button type="submit" class="btn btn-primary" >Submit</button>
         </form>
-        </div>
+    </div>
           </div>
         </div>
       </div>

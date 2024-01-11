@@ -24,6 +24,8 @@ import com.example.demo.entity.RegistrationDetails;
 import com.example.demo.service.RegistrationDetailsService;
 import com.example.demo.service.UserService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class UserController {
 	
@@ -35,14 +37,15 @@ public class UserController {
 	
 	
 	@GetMapping("/verifyUserLogin")//1
-	public String verifyLogin(@ModelAttribute("received") RegistrationDetails received, Model model) {
+	public String verifyLogin(@ModelAttribute("received") RegistrationDetails received, HttpSession session, Model model) {
         int status = loginService.verifyLogin(received);
 
         if (status == 1) {
             // If login is successful, return the Thymeleaf template name for redirection
             //return "redirect:/dashboard_u";
         	  //return "userDashboard";
-        	return "redirect:/check";
+        	session.setAttribute("userEmail", received.getEmail());
+        	return "redirect:/userHome";
         } 
         else if (status == 0) {
         	model.addAttribute("message", "Email is invalid");
@@ -127,14 +130,37 @@ public class UserController {
 	}
 	
 	@PostMapping("/bloodDonationRequest")//1
-	public String donateRequest(@RequestBody DonorDetails received) {
-		System.out.println(received);
-		return loginService.donateRequest(received);
+	public String donateRequest(@ModelAttribute("received") DonorDetails received, Model model) {
+//		System.out.println("donation request");
+//		System.out.println(received.getDateOfDonation() + " " + received.getCity());
+		int status = loginService.donateRequest(received);
+		switch(status) {
+		case 0:model.addAttribute("donateMessage", "Email not found");
+		return "donationRequest";
+		case 1:  model.addAttribute("donateMessage", "You are eligible to donate, request needs to be accepted by admin");
+		return "userHome";
+		case 2:model.addAttribute("donateMessage", "you are not allowed to Donate Blood, age should be minimum 18 years");
+		return "donationRequest";
+		case 3:model.addAttribute("donateMessage","Older people are not allowe to donate");
+		return "donationRequest";
+		case 4:
+			model.addAttribute("donateMessage", "You can't make a request again without the last request getting verified");
+			return "donationRequest";
+		case 5:
+			model.addAttribute("donateMessage", "Less than in 90 days period of time is not allowed to donate blood again");
+			return "donationRequest";
+			
+		}
+		System.out.println("donation request  "  + "  " + received.getEmail() + " " + received.getTimeSlot() + " " + received.getDateOfDonation());
+		return "userHome";
 	}
 	
-	@PostMapping("/bloodRequest")  //1
-	public String bloodRequest(@RequestBody PatientDetails detail) {
-		return loginService.bloodRequest(detail);
+	@PostMapping("/bloodRequestSelf")  //1
+	public String bloodRequestSelf(@ModelAttribute("received")  PatientDetails received, Model model) {
+		System.out.println(received.getEmail()+ " " + received.getBloodGroup() + " " + received.getBloodUnits());
+//		return "userHome";
+		loginService.bloodRequest(received);
+		return "userHome";
 	}
 	
 	

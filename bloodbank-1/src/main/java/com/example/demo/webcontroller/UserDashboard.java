@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.example.demo.entity.RegistrationDetails;
 import com.example.demo.service.RegistrationDetailsService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class UserDashboard {
 
@@ -27,8 +29,12 @@ public class UserDashboard {
     private RegistrationDetailsService service;
     
     @GetMapping("/userProfile") 
-	public String userProfile(Model model) {
-    	List<RegistrationDetails> saved = service.getRegistrationDetailsByEmail("bodeddularajasekharreddy2002@gmail.com");
+	public String userProfile(HttpSession session, Model model) {
+    	if (session.getAttribute("userEmail") == null) {
+            // Session is valid, return the Thymeleaf template name for the user home page
+            return "userLogin";
+        } 
+    	List<RegistrationDetails> saved = service.getRegistrationDetailsByEmail((String) session.getAttribute("userEmail"));
     	for(RegistrationDetails detail:saved) {
     		 System.out.println("Blood Group: " + detail.getBloodGroup());
     		model.addAttribute("userData", detail);
@@ -42,7 +48,13 @@ public class UserDashboard {
     }
 
     @GetMapping("/donationRequest")
-    public String showDonationRequests() {
+    public String showDonationRequests(HttpSession session, Model model) {
+    	if (session.getAttribute("userEmail") == null) {
+            // Session is valid, return the Thymeleaf template name for the user home page
+            return "userLogin";
+        } 
+    	model.addAttribute("email", (String) session.getAttribute("email"));
+    	
         return "donationRequest";
     }
     
