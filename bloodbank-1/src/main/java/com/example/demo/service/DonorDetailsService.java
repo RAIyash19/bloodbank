@@ -32,6 +32,16 @@ public class DonorDetailsService {
         return repo.findByEmail(email);
 	}
 	
+	public List<DonorDetails> getTotalDonationCount(){
+		//byte a =0;
+		//byte status=1;
+		return repo.findByStatus((byte) 1);
+		
+		
+		
+	}
+	
+	
 	
 	
     @Transactional

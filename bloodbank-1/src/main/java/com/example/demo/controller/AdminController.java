@@ -139,6 +139,16 @@ public class AdminController {
 //      return inventoryService.getInventoryByBloodGroup(bloodGroup);
 //  }
   
+  @GetMapping("/countStatus1")
+  public List<DonorDetails> countDonorsWithStatusOne() {
+      List<DonorDetails> a =donorDetailsService.getTotalDonationCount();
+      
+      System.out.println(a);
+      return a;
+      
+  }
+  
+  
   @GetMapping("/getCountByBloodGroup/{bloodGroup}")
   public Map<String, Long> getCountByBloodGroup(@PathVariable String bloodGroup) {
       return inventoryService.getCountByBloodGroup(bloodGroup);
@@ -179,7 +189,7 @@ public class AdminController {
 	  System.out.println(detail.getEmail());
 	  service.updateUserProfile(detail);
 //		return new ResponseEntity<RegistrationDetails>(detail, HttpStatus.OK);
-	  return "redirect:/adminProfile";
+	  return "redirect:/viewProfileDetail";
 	}
 
   
