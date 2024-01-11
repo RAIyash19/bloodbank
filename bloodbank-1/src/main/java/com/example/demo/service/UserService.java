@@ -89,12 +89,35 @@ public class UserService {
 		
 		List<RegistrationDetails> saved = service.getRegistrationDetailsByEmail(received.getEmail());
 		for (RegistrationDetails detail:saved) {
-			detail.setLastname(received.getLastname());
-			detail.setFirstname(received.getFirstname());
-			detail.setBloodGroup(received.getBloodGroup());
-			detail.setCity(received.getCity());
-			detail.setDateOfBirth(received.getDateOfBirth());
-			detail.setGender(received.getGender());
+			// Lastname
+			if (received.getLastname() != null && !received.getLastname().trim().isEmpty()) {
+			    detail.setLastname(received.getLastname().trim());
+			}
+
+			// Firstname
+			if (received.getFirstname() != null && !received.getFirstname().trim().isEmpty()) {
+			    detail.setFirstname(received.getFirstname().trim());
+			}
+
+			// BloodGroup
+			if (received.getBloodGroup() != null && !received.getBloodGroup().trim().isEmpty()) {
+			    detail.setBloodGroup(received.getBloodGroup().trim());
+			}
+
+			// City
+			if (received.getCity() != null && !received.getCity().trim().isEmpty()) {
+			    detail.setCity(received.getCity().trim());
+			}
+
+			// DateOfBirth
+			if (received.getDateOfBirth() != null && !received.getDateOfBirth().trim().isEmpty()) {
+			    detail.setDateOfBirth(received.getDateOfBirth().trim());
+			}
+
+			// Gender
+			if (received.getGender() != null && !received.getGender().trim().isEmpty()) {
+			    detail.setGender(received.getGender().trim());
+			}
 			service.updateUserProfile(detail);
 			System.out.println("name : " + received.getEmail());
 			return detail;

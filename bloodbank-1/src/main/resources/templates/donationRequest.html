@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donations</title>
+  <!-- Bootstrap CSS CDN link -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Add any additional CSS styles if needed for donations.html */
+  </style>
+</head>
+<body>
+  <!-- Your HTML content specific to donations -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-9 col-md-8 col-sm-12 mx-auto">
+        <div class="container text-center mt-5">
+          <img src="https://th.bing.com/th/id/OIP.WiB7YEBLZPPpnM0GGAo86AHaD4?rs=1&pid=ImgDetMain" class="img-fluid mt-4" alt="Blood Image">
+          
+          <div id="donationQuestion">
+            <h4 class="mb-4">Are you willing to give blood?</h4>
+            <div class="btn-group" role="group" aria-label="Donor Choice">
+              <button type="button" class="btn btn-primary" onclick="donorChoice('yes')">Yes</button>
+              <button type="button" class="btn btn-primary" onclick="donorChoice('no')">No</button>
+            </div>
+
+             <form id="donationForm">
+            <label for="location">Select Location:</label>
+            <select class="form-control mb-2" id="location" required>
+                <option value="location1">Bangalore</option>
+                <option value="location2">Location 2</option>
+                <option value="location3">Location 3</option>
+                <!-- Add more location options as needed -->
+            </select>
+
+            <label for="date">Select Date:</label>
+            <input type="date" id="date" class="form-control mb-2" required>
+
+            <label for="time">Select Time Slot:</label>
+            <select class="form-control mb-2" id="time" required>
+                <option value="9:00-10:00">9:00 AM - 10:00 AM</option>
+                <option value="10:00-11:00">10:00 AM - 11:00 AM</option>
+                <option value="11:00-12:00">11:00 AM - 12:00 PM</option>
+                <option value="12:00-01:00">12:00 PM - 01:00 PM</option>
+                <option value="01:00-02:00">01:00 PM - 02:00 PM</option>
+                <option value="02:00-03:00">02:00 PM - 03:00 PM</option>
+                <!-- Add more time slots as needed -->
+            </select>
+
+            <button type="button" class="btn btn-primary" onclick="submitForm('bodeddularajasekharreddy1111@gmail.com')">Submit</button>
+        </form>
+        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and jQuery CDN links (required for Bootstrap functionality) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    function donorChoice(choice) {
+      const locationDate = document.getElementById('locationDate');
+      if (choice === 'yes') {
+        locationDate.style.display = 'block';
+      } else {
+        locationDate.style.display = 'none';
+      }
+    }
+
+    function submitForm(type) {
+      if (type === 'donor') {
+        const location = document.getElementById('location').value;
+        const date = document.getElementById('date').value;
+        const time = document.getElementById('time').value;
+
+        console.log(`Location: ${location}, Date: ${date}, Time Slot: ${time}`);
+        alert('Thank you for your response!');
+      }
+    }
+  </script> 
+  <!-- <script>
+    function donorChoice(choice) {
+        // Assuming you have an endpoint '/donorChoice/{choice}' on the server to handle donor choices
+        fetch('/donorChoice/' + choice, { method: 'POST' })
+            .then(response => {
+                // Handle the response as needed
+                console.log('Donor Choice Recorded Successfully');
+            })
+            .catch(error => console.error('Error recording donor choice:', error));
+    }
+</script>
+</body> -->
+</html>
