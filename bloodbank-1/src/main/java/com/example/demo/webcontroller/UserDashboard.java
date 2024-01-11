@@ -36,20 +36,21 @@ public class UserDashboard {
 		return "userProfile";
 	}
 
-    @GetMapping("/blood-requests")
+    @GetMapping("/bloodRequest")
     public String showBloodRequests() {
-        return "bloodRequests";
+        return "bloodRequest";
     }
 
-    @GetMapping("/donation-requests")
+    @GetMapping("/donationRequest")
     public String showDonationRequests() {
-        return "donationRequests";
+        return "donationRequest";
     }
     
     @GetMapping("/details")
     public String getMethodName() {
         return "details";
     }
+    
     
 }
 
