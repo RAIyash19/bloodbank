@@ -26,20 +26,23 @@
               <button type="button" class="btn btn-primary" onclick="donorChoice('no')">No</button>
             </div>
 
-             <form id="donationForm">
+          <div id="locationDate" style="display: none;" class="mt-4">
+        <form id="donationForm" th:action="@{/bloodDonationRequest}" th:object="${received}" method="post">
+        
+        <input type="hidden" id="email" name="email" value="bodeddularajasekharreddy1111@gmail.com">
             <label for="location">Select Location:</label>
-            <select class="form-control mb-2" id="location" required>
+            <select class="form-control mb-2" id="location" name="city" required>
                 <option value="location1">Bangalore</option>
                 <option value="location2">Location 2</option>
                 <option value="location3">Location 3</option>
                 <!-- Add more location options as needed -->
             </select>
 
-            <label for="date">Select Date:</label>
-            <input type="date" id="date" class="form-control mb-2" required>
+            <label for="dateOfDonation">Select Date:</label>
+            <input type="date" id="date" class="form-control mb-2" name="dateOfDonation" required>
 
             <label for="time">Select Time Slot:</label>
-            <select class="form-control mb-2" id="time" required>
+            <select class="form-control mb-2" id="time" name="timeOfDonation" required>
                 <option value="9:00-10:00">9:00 AM - 10:00 AM</option>
                 <option value="10:00-11:00">10:00 AM - 11:00 AM</option>
                 <option value="11:00-12:00">11:00 AM - 12:00 PM</option>
@@ -49,9 +52,9 @@
                 <!-- Add more time slots as needed -->
             </select>
 
-            <button type="button" class="btn btn-primary" onclick="submitForm('bodeddularajasekharreddy1111@gmail.com')">Submit</button>
+            <button type="submit" class="btn btn-primary" >Submit</button>
         </form>
-        </div>
+    </div>
           </div>
         </div>
       </div>
