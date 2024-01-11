@@ -211,10 +211,28 @@ public class AdminController {
 	}
 
   
-  	@GetMapping("/viewDonationRequests")//1
-  	public List<DonorDetails> viewDonationRequests() {
-  		return service.getDonationRequests();
+  	@GetMapping("/viewDonationHistory")//1
+  	public String viewDonationHistory(Model model) {
+  		List<DonorDetails> donorData = new ArrayList<>();
+  		donorData = service.getDonationHistory();
+  		System.out.println(donorData.get(0));
+  		System.out.println(donorData.get(1));
+  		model.addAttribute("donor", donorData);
+  		return "bloodDonationView";
+  		
   	}
+  	
+//  	@GetMapping("/viewDonationRequests")//1
+//  	public String viewDonationRequests(Model model) {
+//  		List<DonorDetails> donorData = new ArrayList<>();
+//  		donorData = service.getDonationRequests();
+//  		System.out.println(donorData.get(0));
+//  		//System.out.println(donorData.get(1));
+//  		model.addAttribute("donor", donorData);
+//  		return "bloodRequestsViews";
+//  		
+//  	}
+  	
 
 	@PostMapping("/acceptDonationRequest")//1
 	public String acceptDonationRequest(@RequestBody DonorDetails received){

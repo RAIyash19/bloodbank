@@ -26,19 +26,27 @@ public class DonorDetails {
 //	private String state;
 //	private String pincode;
 	private String dateOfDonation;
-	private String timeSlot;
+	//private String timeSlot;
+	
 	
 	private byte status;
+	private String units;
 	
 	
 	
 	
-	public String getTimeSlot() {
-		return timeSlot;
+public String getUnits() {
+		return units;
 	}
-	public void setTimeSlot(String timeSlot) {
-		this.timeSlot = timeSlot;
+	public void setUnits(String units) {
+		this.units = units;
 	}
+	//	public String getTimeSlot() {
+//		return timeSlot;
+//	}
+//	public void setTimeSlot(String timeSlot) {
+//		this.timeSlot = timeSlot;
+//	}
 	public int getId() {
 		return id;
 	}
@@ -108,6 +116,12 @@ public class DonorDetails {
 	}
 	public void setStatus(byte status) {
 		this.status = status;
+	}
+	@Override
+	public String toString() {
+		return "DonorDetails [id=" + id + ", email=" + email + ", firstname=" + firstname + ", lastname=" + lastname
+				+ ", gender=" + gender + ", bloodGroup=" + bloodGroup + ", dateOfBirth=" + dateOfBirth + ", city="
+				+ city + ", dateOfDonation=" + dateOfDonation + ", status=" + status + ", units=" + units + "]";
 	}
 	
 	

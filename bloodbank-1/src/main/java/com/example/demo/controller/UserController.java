@@ -151,17 +151,17 @@ public class UserController {
 			return "donationRequest";
 			
 		}
-		System.out.println("donation request  "  + "  " + received.getEmail() + " " + received.getTimeSlot() + " " + received.getDateOfDonation());
+		System.out.println("donation request  "  + "  " + received.getEmail() + " " +  " " + received.getDateOfDonation());
 		return "userHome";
 	}
 	
-	@PostMapping("/bloodRequestSelf")  //1
-	public String bloodRequestSelf(@ModelAttribute("received")  PatientDetails received, Model model) {
-		System.out.println(received.getEmail()+ " " + received.getBloodGroup() + " " + received.getBloodUnits());
+//	@PostMapping("/bloodRequestSelf")  //1
+//	public String bloodRequestSelf(@ModelAttribute("received")  PatientDetails received, Model model) {
+//		System.out.println(received.getEmail()+ " " + received.getBloodGroup() + " " + received.getBloodUnits());
+////		return "userHome";
+//		loginService.bloodRequest(received);
 //		return "userHome";
-		loginService.bloodRequest(received);
-		return "userHome";
-	}
+//	}
 	
 	
 	

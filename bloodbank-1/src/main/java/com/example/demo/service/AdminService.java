@@ -89,6 +89,10 @@ public class AdminService {
 	public List<DonorDetails> getDonationRequests() {
 		return donorService.getDonordetailsByStatus((byte) 0);
 	}
+	
+	public List<DonorDetails> getDonationHistory(){
+		return donorService.getDonorDetails();
+	}
 
 // reject status maake it null funcvtion
 	

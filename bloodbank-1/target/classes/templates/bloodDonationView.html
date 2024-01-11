@@ -113,7 +113,7 @@
                             </a>
                         </li>
                         <li class="text-center p-20 upgrade-btn">
-                            <a href="index.html" class="btn d-grid btn-danger text-white" target="_blank">Sign out</a>
+                            <a href="adminLogin" class="btn d-grid btn-danger text-white" target="_blank">Sign out</a>
                         </li>
                     </ul>
                 </nav>
@@ -147,29 +147,29 @@
                                             <th class="border-top-0">Status</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="donationRequestsTableBody">
-                                        <!-- Rows will be dynamically added here -->
-                                        <tr>
-                                            <td>1</td>
-                                            <td>John</td>
-                                            <td>Doe</td>
-                                            <td>john.doe@example.com</td>
-                                            <td>A+</td>
-                                            <td>2</td>
-                                            <td>11-2-2023</td>
-                                            <td class="text-success">Accepted</td>
-                                        </tr>
-                                       <tr>
-                                            <td>1</td>
-                                            <td>John</td>
-                                            <td>Doe</td>
-                                            <td>john.doe@example.com</td>
-                                            <td>A+</td>
-                                            <td>2</td>
-                                            <td>3-5-2023</td>
-                                            <td class="text-danger">Rejected</td>
-                                        </tr>
-                                    </tbody>
+                                 
+                                     <tbody id="donationRequestsTableBody">
+        <!-- Use Thymeleaf's th:each to iterate over donorData -->
+        <tr th:each="donor, rowStat : ${donor}">
+            <td th:text="${rowStat.index + 1}"></td>
+           <td th:text="${donor.firstname}">John</td>
+            <td th:text="${donor.lastname}">Doe</td>
+            <td th:text="${donor.email}">john.doe@example.com</td>
+            <td th:text="${donor.bloodGroup}">A+</td>
+            <td th:text="${donor.units}">2</td>
+            <td th:text="${donor.dateOfDonation}">11-2-2023</td>
+            
+            <!-- Use Thymeleaf's th:if to conditionally set the status text and class -->
+            <td th:if="${donor.status eq 0}" class="text-warning">Pending</td>
+            <td th:if="${donor.status eq 1}" class="text-success">Accepted</td>
+            <td th:if="${donor.status eq -1}" class="text-danger">Rejected</td>
+        </tr>
+    </tbody>
+                                    
+                                    
+                                    
+                                    
+                                    
                                 </table>
                             </div>
                         </div>
