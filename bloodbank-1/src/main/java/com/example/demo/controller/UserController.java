@@ -155,9 +155,12 @@ public class UserController {
 		return "userHome";
 	}
 	
-	@PostMapping("/bloodRequest")  //1
-	public String bloodRequest(@RequestBody PatientDetails detail) {
-		return loginService.bloodRequest(detail);
+	@PostMapping("/bloodRequestSelf")  //1
+	public String bloodRequestSelf(@ModelAttribute("received")  PatientDetails received, Model model) {
+		System.out.println(received.getEmail()+ " " + received.getBloodGroup() + " " + received.getBloodUnits());
+//		return "userHome";
+		loginService.bloodRequest(received);
+		return "userHome";
 	}
 	
 	

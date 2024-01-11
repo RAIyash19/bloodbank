@@ -55,7 +55,7 @@ public class UserWebController {
 	public String check(HttpSession session, Model model) {
 		 if (session.getAttribute("userEmail") != null) {
 	            // Session is valid, return the Thymeleaf template name for the user home page
-			 model.addAttribute("email", session.getAttribute("userEmail"));
+			 	model.addAttribute("email", session.getAttribute("userEmail"));
 	            return "userHome";
 	        } else {
 	            // Session is not valid, redirect to the login page or perform other actions

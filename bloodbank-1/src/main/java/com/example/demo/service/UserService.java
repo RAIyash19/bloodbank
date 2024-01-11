@@ -248,7 +248,7 @@ public class UserService {
 	
 
 
-	public String bloodRequest(PatientDetails received) {
+	public String bloodRequestSelf(PatientDetails received) {
 		
 		List<PatientDetails> saved = patientService.getPatientDetailsByEmailAndStatus(received.getEmail(), (byte) 0);
 		
@@ -273,6 +273,14 @@ public class UserService {
 		if (received.getBloodUnits() > bloodUnits)
 			return "There is no enough blood in the Inventory";
 		received.setStatus((byte) 0);
+		List<RegistrationDetails> saved1 = service.getRegistrationDetailsByEmail(received.getEmail());
+		for(RegistrationDetails detail:saved1) {
+			received.setDateOfBirth(detail.getDateOfBirth());
+			received.setFirstname(detail.getFirstname());
+			received.setGender(detail.getGender());
+			received.setLastname(detail.getLastname());
+		
+		}
 		patientService.savePatientDetails(received);
 		
 		return "Blood is available, admin has to accept your request";
