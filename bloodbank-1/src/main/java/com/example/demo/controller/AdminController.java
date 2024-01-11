@@ -53,43 +53,7 @@ public class AdminController {
 	
 	@Autowired
 	private RegistrationDetailsService registrationDetailsService;
-	
-//	@GetMapping("/verifyAdminLogin")
-//	public String verifyAdminLogin(@ModelAttribute("received") RegistrationDetails received, Model model) {
-//		System.out.println(received.getEmail());
-//		 int status = service.verifyLogin(received);
-//        // System.out.println(status);
-//		 System.out.println(status
-//				 );
-//        if (status == 1) {
-//            // If login is successful, return the Thymeleaf template name for redirection
-//            //return "redirect:/dashboard_u";
-//        	  //return "userDashboard";
-////        	 LoggedInUser loggedInUser = new LoggedInUser();
-////             loggedInUser.setEmail(received.getEmail());
-////             session.setAttribute("loggedInUser", loggedInUser);
-//        	
-//
-//        	return "redirect:/adminHome";
-//        } 
-//        else if (status == 0) {
-//        	model.addAttribute("invalidMail", "this email is not admin");
-//        	return "adminLogin";
-//            
-//        }
-////        else if(status == -1) {
-////            // If login fails, add an error message to the model and stay on the login page
-////            model.addAttribute("error", "Invalid username or password");
-////        }
-//        else if (status == -1) {
-//            // If login fails, add an error message to the model and stay on the login page
-//            model.addAttribute("error", "Invalid username or password");
-//
-//        }
-//        return "adminLogin";
-//        }
-	
-	
+
 	
 	@GetMapping("/verifyAdminLogin")
     public String verifyAdminLogin(@ModelAttribute("received") RegistrationDetails received, 
@@ -114,43 +78,6 @@ public class AdminController {
         return "adminLogin";
     }
 	
-//
-//	 @GetMapping("/adminHome")
-//    public String adminHome(Model model, HttpSession session) {
-//        // Retrieve the loggedInUser from the session
-//		 
-//		 String email = (String) session.getAttribute("loggedInUserEmail");
-//
-//		    // Pass the user's email to the Thymeleaf template
-//		    model.addAttribute("email", email);
-//		 
-////        LoggedInUser loggedInUser = (LoggedInUser) session.getAttribute("loggedInUser");
-//
-//        // Pass the user's email to the Thymeleaf template
-////        model.addAttribute("email", loggedInUser.getEmail());
-//
-//        return "adminHome";
-//    }
-
-	
-	
-	
-	
-	
-//	@GetMapping("/viewProfileDetail")//1
-//	public String viewProfileDetail(@ModelAttribute("detail") RegistrationDetails detail, Model model) {
-//		/*
-//		 * List<RegistrationDetails> userDetails = service.getAllUserDetails();
-//		 * model.addAttribute("users", userDetails);
-//		 */
-//		
-//		
-//		model.addAttribute("user", service.getProfileDetails(detail));
-//		
-//		
-//		return "adminfetch";
-//	
-//	}
 	
 	@GetMapping("/viewProfileDetail")
 	public String viewProfileDetail(HttpSession session, Model model) {
@@ -178,7 +105,7 @@ public class AdminController {
 	    model.addAttribute("user", userDetails);
 
 	    // Return the Thymeleaf template name
-	    return "adminfetch";
+	    return "adminProfile";
 	}
 
 	

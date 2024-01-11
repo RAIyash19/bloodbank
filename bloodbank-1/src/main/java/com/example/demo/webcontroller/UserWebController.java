@@ -91,6 +91,14 @@ public class UserWebController {
         return "adminHome";
     }
 	
+//	@GetMapping("/adminProfile")
+//	public String adminProfile(Model model, HttpSession session) {
+//String email = (String) session.getAttribute("loggedInUserEmail");
+//		
+//	    model.addAttribute("email", email);
+//		return "adminProfile";
+//	}
+	
 	@GetMapping("/adminProfile")
 	public String adminProfile() {
 		return "adminProfile";
