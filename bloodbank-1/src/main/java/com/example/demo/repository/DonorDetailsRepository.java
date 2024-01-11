@@ -15,6 +15,8 @@ public interface DonorDetailsRepository extends JpaRepository<DonorDetails, Inte
 	
 	public List<DonorDetails> findByStatus(byte status);
 	
+	public List<DonorDetails> countByStatus(byte status);
+	
 	
 	public List<DonorDetails> findByEmailAndStatus(String email, byte status);
 	
