@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import java.util.Map;
@@ -64,6 +65,12 @@ public class AdminController {
         if (status == 1) {
             // If login is successful, set the email as a session attribute
             session.setAttribute("loggedInUserEmail", received.getEmail());
+            
+            List<Integer> countDonor = countDonorsWithStatusOne();
+            int a=countDonor.get(0);
+            System.out.println(a);
+            
+            model.addAttribute("count", countDonor);
 
             // Redirect to the admin home page
             return "redirect:/adminHome";
@@ -73,7 +80,9 @@ public class AdminController {
         } else if (status == -1) {
             model.addAttribute("error", "Invalid username or password");
         }
-
+        
+        
+         
         // If login fails, stay on the login page
         return "adminLogin";
     }
@@ -113,7 +122,11 @@ public class AdminController {
 
   @GetMapping("/getInventoryDetails")
 	public List<Inventory> getDetails() {
-		return inventoryService.getInventoryDetails();
+	  List<Inventory> a = new ArrayList<>();
+	  
+		a= inventoryService.getInventoryDetails();
+		System.out.println(a.get(0));
+		return a;
 		
 	}
 	
@@ -123,6 +136,7 @@ public class AdminController {
 		return inventoryService.findByBloodGroup(bloodGroup);
 		
 	}
+  
   
   
 //  @GetMapping("//getInventoryQuantityByBloodGroup")
@@ -140,11 +154,15 @@ public class AdminController {
 //  }
   
   @GetMapping("/countStatus1")
-  public List<DonorDetails> countDonorsWithStatusOne() {
-      List<DonorDetails> a =donorDetailsService.getTotalDonationCount();
+  public List<Integer> countDonorsWithStatusOne() {
+      List<DonorDetails> saved =donorDetailsService.getTotalDonationCount();
+      int count = saved.size();
+      List<Integer> countDonor = new ArrayList<>();
+      countDonor.add(count);
+      System.out.println(countDonor);
+      return countDonor;
+     
       
-      System.out.println(a);
-      return a;
       
   }
   

@@ -55,6 +55,12 @@ public class Inventory {
 	public void setDateOfDonation(String dateOfDonation) {
 		this.dateOfDonation = dateOfDonation;
 	}
+	@Override
+	public String toString() {
+		return "Inventory [bloodId=" + bloodId + ", bloodGroup=" + bloodGroup + ", dateOfDonation=" + dateOfDonation
+				+ ", quantity=" + quantity + "]";
+	}
+	
 	
 	
 }

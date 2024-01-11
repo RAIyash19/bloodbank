@@ -101,7 +101,9 @@ public class UserWebController {
 	
 	@GetMapping("/adminProfile")
 	public String adminProfile() {
+		System.out.println("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
 		return "adminProfile";
+		
 	}
 	
 	
@@ -117,6 +119,39 @@ public class UserWebController {
 	public String profileDisplay() {
 		return "profileDisplay";
 	}
+	
+	@GetMapping("/bloodDonationView")
+	public String bloodDonationView() {
+		return "bloodDonationView";
+	}
+	
+	@GetMapping("/bloodDonationRequests")
+	public String bloodDonationRequests() {
+		return "bloodDonationRequests";
+	}
+	
+	
+	@GetMapping("/bloodRequestAdmin")
+	public String bloodRequestAdmin() {
+		return "bloodRequestAdmin";
+	}
+	
+	
+	@GetMapping("/bloodRequestsViews")
+	public String bloodRequestsViews() {
+		return "bloodRequestsViews";
+	}
+	
+	@GetMapping("/bloodInventoryTable")
+	public String bloodInventoryTable() {
+		return "bloodInventoryTable";
+	}
+	
+	@GetMapping("/bloodExpiry")
+	public String bloodExpiry() {
+		return "bloodExpiry";
+	}
+	
 	
 	
 }

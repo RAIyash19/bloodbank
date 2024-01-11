@@ -128,38 +128,44 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="basic-table.html"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="bloodDonationRequests"
                                 aria-expanded="false">
                                 <i class="fa fa-table" aria-hidden="true"></i>
-                                <span class="hide-menu">Basic Table</span>
+                                <span class="hide-menu">Blood Donation Request</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="fontawesome.html"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="bloodDonationView"
                                 aria-expanded="false">
                                 <i class="fa fa-font" aria-hidden="true"></i>
-                                <span class="hide-menu">Icon</span>
+                                <span class="hide-menu">Blood Donation Views</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="map-google.html"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="bloodRequestAdmin"
                                 aria-expanded="false">
                                 <i class="fa fa-globe" aria-hidden="true"></i>
-                                <span class="hide-menu">Google Map</span>
+                                <span class="hide-menu">Blood Request</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="blank.html"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="bloodRequestsViews"
                                 aria-expanded="false">
                                 <i class="fa fa-columns" aria-hidden="true"></i>
-                                <span class="hide-menu">Blank Page</span>
+                                <span class="hide-menu">Blood Request Views</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="404.html"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="bloodInventoryTable"
                                 aria-expanded="false">
                                 <i class="fa fa-info-circle" aria-hidden="true"></i>
-                                <span class="hide-menu">Error 404</span>
+                                <span class="hide-menu">Blood Inventory</span>
+                            </a>
+                        </li>
+                         <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="bloodExpiry" aria-expanded="false">
+                                <i class="fa fa-table" aria-hidden="true"></i>
+                                <span class="hide-menu">Blood Expiry Details</span>
                             </a>
                         </li>
                          <li class="text-center p-20 signout-btn">
@@ -215,7 +221,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-12">
+                    <!--<div class="col-lg-4 col-md-12">
                         <div class="white-box analytics-info">
                             <h3 class="box-title">Total Donations </h3>
                             <ul class="list-inline two-part d-flex align-items-center mb-0">
@@ -227,7 +233,43 @@
                                 <li class="ms-auto"><span class="counter text-purple">869</span></li>
                             </ul>
                         </div>
+                    </div>-->
+                    
+                     <div class="col-lg-4 col-md-12">
+        <div class="white-box analytics-info">
+            <h3 class="box-title">Total Donations </h3>
+            <ul class="list-inline two-part d-flex align-items-center mb-0">
+                <li>
+                    <div id="sparklinedash2">
+                        <canvas width="67" height="30" style="display: inline-block; width: 67px; height: 30px; vertical-align: top;"></canvas>
                     </div>
+                </li>
+                <li class="ms-auto">
+                    <!-- Display the count using Thymeleaf expression -->
+                  <!-- <span class="counter text-purple" th:text="${no != null} ? ${no} : 0"></span>-->
+                   <span class="counter text-purple" th:text="${count != null ? count : 0}"></span>
+
+                 
+
+                </li>
+            </ul>
+        </div>
+    </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     <div class="col-lg-4 col-md-12">
                         <div class="white-box analytics-info">
                             <h3 class="box-title">Total Requests</h3>
