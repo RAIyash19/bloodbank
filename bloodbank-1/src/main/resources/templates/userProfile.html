@@ -79,33 +79,32 @@ canvas {
                         <h4 class="text-right">Profile Settings</h4>
                     </div>
                     <div class="row mt-2">
-                        <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" name="firstname" placeholder="first name" value="${userData.firstname}"></div>
-                        <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" name="lastname" value="" placeholder="surname"></div>
+                        <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" name="firstname" placeholder="first name" th:value="${userData != null ? userData.firstname : ''}"></div>
+                        <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" name="lastname" th:value="${userData != null ? userData.lastname : ''}" placeholder="surname"></div>
                     </div>
                     <div class="row mt-3">
                         <!-- <div class="col-md-12"><label class="labels">Mobile Number</label><input type="tel" class="form-control" placeholder="enter phone number" pattern="[0-9]{10}" value="" minlength="10" maxlength="10"></div>
                         <div class="col-md-12"><label class="labels">Address</label><input type="text" class="form-control" placeholder="enter address line 1" value=""></div>
                         <div class="col-md-12"><label class="labels">Post Code</label><input type="number" class="form-control" placeholder="enter address line 2" value=""></div> -->
-                        <div class="col-md-12"><label class="labels">City</label><input type="text" class="form-control" name="city" placeholder="enter address line" value=""></div>
+                        <div class="col-md-12"><label class="labels">City</label><input type="text" class="form-control" name="city" placeholder="enter address line"  th:value="${userData != null ? userData.city : ''}"></div>
                         <!-- <div class="col-md-12"><label class="labels">State</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div> -->
                         <!-- <div class="col-md-12"><label class="labels">Area</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div> -->
-                        <div class="col-md-12"><label class="labels">Email ID</label><input type="text" class="form-control" name="email" placeholder="enter email id" value=""></div>
+                        <div class="col-md-12"><label class="labels">Email ID</label><input type="text" class="form-control" name="email" placeholder="enter email id"  th:value="${userData != null ? userData.email : ''}" readonly></div>
                         <!-- <div class="col-md-12"><label class="labels">Password</label><input type="text" class="form-control" placeholder="password" value=""></div> -->
                     </div>
                     <div class="row mt-3">
-                        
                         <div class="col-md-6">
-                            <label class="labels">Gender</label>
-                            <select class="form-control" name="gender">
-                              <!-- <option value="">None</option>   -->
-                              <option value="male">Male</option>
-                              <option value="female">Female</option>
-                              <option value="other">Other</option>
-                            </select>
-                          </div>
+    <label class="labels">Gender</label>
+    <select class="form-control" name="gender">
+        <option value="male" th:selected="${userData != null && userData.gender == 'male'}">Male</option>
+        <option value="female" th:selected="${userData != null && userData.gender == 'female'}">Female</option>
+        <option value="other" th:selected="${userData != null && userData.gender == 'other'}">Other</option>
+    </select>
+</div>
+
                           
                         <!-- <div class="col-md-6"><label class="labels">Gender</label><input type="text" class="form-control" placeholder="gender" value=""></div> -->
-                        <div class="col-md-6"><label class="labels">Date of Birth</label><input type="date" class="form-control" name="dateOfBirth" value="" placeholder="dob"></div>
+                        <div class="col-md-6"><label class="labels">Date of Birth</label><input type="date" class="form-control" name="dateOfBirth"  th:value="${userData != null ? userData.dateOfBirth : ''}" placeholder="dob"></div>
                     </div>
                     <div class="mt-5 text-center">
                       <!--  <button class="btn btn-primary profile-button" type="button" onclick="updateProfile()">Update Profile</button>
@@ -119,19 +118,19 @@ canvas {
                 <div class="p-3 py-5"><br><br>
                     <!-- <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br> -->
                     <div class="col-md-12">
-                        <label class="labels" aria-placeholder="blood group">Blood Group</label>
-                        <select class="form-control" name="bloodGroup">
-                          <!-- <option value="">None</option> -->
-                            <option value="A+">A+</option>
-                          <option value="A-">A-</option>
-                          <option value="B+">B+</option>
-                          <option value="B-">B-</option>
-                          <option value="O+">O+</option>
-                          <option value="O-">O-</option>
-                          <option value="AB+">AB+</option>
-                          <option value="AB-">AB-</option>
-                        </select>
-                      </div><br>
+    <label class="labels" aria-placeholder="blood group">Blood Group</label>
+    <select class="form-control" name="bloodGroup">
+        <!-- options go here -->
+        <option value="A+" th:selected="${userData != null && userData.bloodGroup == 'A+'}">A+</option>
+        <option value="A-" th:selected="${userData != null && userData.bloodGroup == 'A-'}">A-</option>
+        <option value="B+" th:selected="${userData != null && userData.bloodGroup == 'B+'}">B+</option>
+        <option value="B-" th:selected="${userData != null && userData.bloodGroup == 'B-'}">B-</option>
+        <option value="O+" th:selected="${userData != null && userData.bloodGroup == 'O+'}">O+</option>
+        <option value="O-" th:selected="${userData != null && userData.bloodGroup == 'O-'}">O-</option>
+        <option value="AB+" th:selected="${userData != null && userData.bloodGroup == 'AB+'}">AB+</option>
+        <option value="AB-" th:selected="${userData != null && userData.bloodGroup == 'AB-'}">AB-</option>
+    </select>
+</div>
                     <!-- <div class="col-md-12"><label class="labels">Blood Group</label><input type="text" class="form-control" placeholder="experience" value=""></div> <br> -->
                     
                 	
@@ -165,6 +164,7 @@ canvas {
          alert('Profile saved successfully!');
      });
  </script>
+
     <!-- <script>
 
         function updateProfile() {

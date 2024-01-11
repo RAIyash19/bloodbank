@@ -65,10 +65,7 @@ public class UserWebController {
 		return "userHome";
 	}
 	
-	@GetMapping("/userProfile") 
-	public String userProfile() {
-		return "userProfile";
-	}
+	
 	
 	
 	
