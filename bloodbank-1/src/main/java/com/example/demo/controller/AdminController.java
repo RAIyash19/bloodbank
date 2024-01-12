@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.DonorDetails;
@@ -243,10 +245,32 @@ public class AdminController {
   	}
   	
 
-	@PostMapping("/acceptDonationRequest")//1
-	public String acceptDonationRequest(@RequestBody DonorDetails received){
-		return service.acceptDonationRequest(received);
-	}
+//	@PostMapping("/acceptDonationRequest")//1
+//	public String acceptDonationRequest(@RequestBody DonorDetails received){
+//		return service.acceptDonationRequest(received);
+//	}
+  	
+//  	@PostMapping("/acceptDonationRequest/{email}")
+//  	public String acceptDonationRequest(@PathVariable String email) {
+//  	  
+//  	    return service.acceptDonationRequest(email);
+//  	}
+            
+  	@PostMapping("/acceptDonationRequest/{email}")
+  	@ResponseStatus(HttpStatus.OK)
+  	@ResponseBody
+  	public void acceptDonationRequest(@PathVariable("email") String email, Model model) {
+  		
+  		System.out.println("INside accept" + email);
+  	    String result = service.acceptDonationRequest(email);
+  	    
+//  	    if ("User already existing".equals(result)) {
+//  	        model.addAttribute("message", result);
+//  	    }
+
+  	    System.out.println("Request mapped for email: " + email);
+  	}
+
 	
 	
 	

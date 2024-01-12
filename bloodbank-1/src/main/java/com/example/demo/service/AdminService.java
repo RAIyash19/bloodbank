@@ -100,9 +100,9 @@ public class AdminService {
 
 // reject status maake it null funcvtion
 	
-	public String acceptDonationRequest(DonorDetails received) {
-		String email=received.getEmail();
-		List<DonorDetails> saved = donorService.getDonorsDetailsByEmail(received.getEmail());
+	public String acceptDonationRequest(String email) {
+		//String email=received.getEmail();
+		List<DonorDetails> saved = donorService.getDonorsDetailsByEmail(email);
 		for (DonorDetails detail:saved) {
 			if (detail.getStatus()==1) {
 				return "why are you accepting again and again, go and some other work";
@@ -118,8 +118,8 @@ public class AdminService {
 			donorService.saveDonorDetails(detail);
 		}
 		//
-		emailService.sendEmail(email,"this is to inform you", "your blood donation request is accepted");
-		return "Donation request accepted for the user with email " + received.getEmail();
+//		emailService.sendEmail(email,"this is to inform you", "your blood donation request is accepted");
+		return "Donation request accepted for the user with email " ;
 	}
 
 
@@ -129,7 +129,7 @@ public class AdminService {
 
 
 	public String acceptBloodRequest(PatientDetails received) {
-		String email=received.getEmail();
+//		String email=received.getEmail();
 		List<PatientDetails> saved = patientService.getPatientsDetailsByEmail(received.getEmail());
 		
 		
@@ -156,7 +156,7 @@ public class AdminService {
 			
 			patientService.savePatientDetails(detail);
 		}
-		emailService.sendEmail(email,"this is to inform you", "your blood request is accepted");
+//		emailService.sendEmail(email,"this is to inform you", "your blood request is accepted");
 		return "Given " + received.getBloodUnits() + "units or blood successfully";
 	}
 
