@@ -84,4 +84,9 @@ public class PatientDetailsService {
 	
 	
 }
+	
+	
+	public List<PatientDetails> getDonationRequestsHistory(){
+		return repo.findAll();
+	}
 }

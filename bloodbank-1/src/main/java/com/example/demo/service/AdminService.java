@@ -93,6 +93,10 @@ public class AdminService {
 	public List<DonorDetails> getDonationHistory(){
 		return donorService.getDonorDetails();
 	}
+	
+	public List<PatientDetails> getDonationRequestsHistory(){
+		return patientService.getDonationRequestsHistory();
+	}
 
 // reject status maake it null funcvtion
 	

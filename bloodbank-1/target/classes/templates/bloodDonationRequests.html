@@ -120,43 +120,52 @@
             </div>
         </aside>
 
-        <div class="page-wrapper">
-            <div class="page-breadcrumb bg-white">
-                <div class="row align-items-center">
-                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Donation Requests</h4>
-                    </div>
+         <div class="page-wrapper">
+        <div class="page-breadcrumb bg-white">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Donation Requests</h4>
                 </div>
             </div>
+        </div>
 
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="white-box">
-                            <div class="table-responsive">
-                                <table class="table text-nowrap">
-                                    <thead>
-                                        <tr>
-                                            <th class="border-top-0">S.No</th>
-                                            <th class="border-top-0">First Name</th>
-                                            <th class="border-top-0">Last Name</th>
-                                            <th class="border-top-0">Email</th>
-                                            <th class="border-top-0">Blood Group</th>
-                                            <th class="border-top-0">No.of Units</th>
-                                            <th class="border-top-o">Date of Donation</th>
-                                            <th class="border-top-0">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="donationRequestsTableBody">
-                                        <!-- Rows will be dynamically added here -->
-                                    </tbody>
-                                </table>
-                            </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="white-box">
+                        <div class="table-responsive">
+                            <table class="table text-nowrap">
+                                <thead>
+                                    <!-- ... (your existing table header) ... -->
+                                </thead>
+                                <tbody id="donationRequestsTableBody">
+                                    <!-- Use Thymeleaf to iterate over the list of donorData from the controller -->
+                                    <tr th:each="donor, rowStat : ${donor}">
+                                        <td th:text="${rowStat.index + 1}"></td>
+                                        <td th:text="${donor.firstname}"></td>
+                                        <td th:text="${donor.lastname}"></td>
+                                        <td th:text="${donor.email}"></td>
+                                        <td th:text="${donor.bloodGroup}"></td>
+                                        <td th:text="${donor.units}"></td>
+                                        <td th:text="${donor.dateOfDonation}"></td>
+                                        <td class="action-cell">
+                                            <!-- Use Thymeleaf to bind onclick events to accept and reject buttons -->
+                                            <button class="btn btn-success btn-accept"
+                                                th:onclick="'|acceptDonationRequest(${donor})|'">Accept</button>
+                                            <button class="btn btn-danger btn-reject"
+                                                th:onclick="'|rejectDonationRequest(${donor})|'">Reject</button>
+                                            <span class="status-label" style="display:none;"></span>
+                                        </td>
+                                    </tr>
+                                    <!-- ... (your existing table body) ... -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
         <!-- All Jquery -->
         <script src="static/plugins/bower_components/jquery/dist/jquery.min.js"></script>

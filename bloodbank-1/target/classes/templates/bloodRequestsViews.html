@@ -131,57 +131,53 @@
                 </div>
             </div>
 
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="white-box">
-                            <div class="table-responsive">
-                                <table class="table text-nowrap">
-                                    <thead>
-                                        <tr>
-                                            <th class="border-top-0">S.No</th>
-                                            <th class="border-top-0">First Name</th>
-                                            <th class="border-top-0">Last Name</th>
-                                            <th class="border-top-0">Email</th>
-                                            <th class="border-top-0">Blood Group</th>
-                                            <th class="border-top-0">No.of Units</th>
-                                            <th class="border-top-0">Date of Request</th>
-                                            <th class="border-top-0">Reason</th>
-                                            <th class="border-top-0">Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="donationRequestsTableBody">
-                                        <!-- Rows will be dynamically added here -->
-                                        <tr>
-                                            <td>1</td>
-                                            <td>John</td>
-                                            <td>Doe</td>
-                                            <td>john.doe@example.com</td>
-                                            <td>A+</td>
-                                            <td>2</td>
-                                            <td>11-2-2023</td>
-                                            <td>Urgent requiry of blood </td>
-                                            <td class="text-success">Accepted</td>
-                                        </tr>
-                                       <tr>
-                                            <td>1</td>
-                                            <td>John</td>
-                                            <td>Doe</td>
-                                            <td>john.doe@example.com</td>
-                                            <td>A+</td>
-                                            <td>2</td>
-                                            <td>9-11-2024</td>
-                                            <td>Urgent requiry of blood </td>
-                                            <td class="text-danger">Rejected</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+           <div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="white-box">
+                <div class="table-responsive">
+                    <table class="table text-nowrap">
+                        <thead>
+                            <tr>
+                                <th class="border-top-0">S.No</th>
+                                <th class="border-top-0">First Name</th>
+                                <th class="border-top-0">Last Name</th>
+                                <th class="border-top-0">Email</th>
+                                <th class="border-top-0">Blood Group</th>
+                                <th class="border-top-0">No. of Units</th>
+                                <th class="border-top-0">Date of Request</th>
+                                <th class="border-top-0">Reason</th>
+                                <th class="border-top-0">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="donationRequestsTableBody">
+                            <!-- Use Thymeleaf's th:each to iterate over recieve -->
+                            <tr th:each="recieve, rowStat : ${recieve}">
+                                <td th:text="${rowStat.index + 1}"></td>
+                                <td th:text="${recieve.firstname}">John</td>
+                                <td th:text="${recieve.lastname}">Doe</td>
+                                <td th:text="${recieve.email}">john.doe@example.com</td>
+                                <td th:text="${recieve.bloodGroup}">A+</td>
+                                <td th:text="${recieve.bloodUnits}">2</td>
+                                <td th:text="${recieve.dateOfBlood}">11-2-2023</td>
+                                <td th:text="${recieve.reason}">Reason</td>
+                                
+                                <!-- Use Thymeleaf's th:switch to conditionally set the status text and class -->
+                                <td th:switch="${recieve.status}">
+                                    <span th:case="0" class="text-warning">Pending</span>
+                                    <span th:case="1" class="text-success">Accepted</span>
+                                    <span th:case="-1" class="text-danger">Rejected</span>
+                                    <span th:case="*" class="text-info">Unknown Status</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
 
         <!-- All Jquery -->
         <script src="static/plugins/bower_components/jquery/dist/jquery.min.js"></script>
