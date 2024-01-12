@@ -16,7 +16,7 @@
     <link href="static/css/style.min.css" rel="stylesheet">
 
     <!-- Add Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <!--  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">-->
 
     <style>
         .navbar-skyblue {
@@ -148,14 +148,21 @@
                                         <td th:text="${donor.bloodGroup}"></td>
                                         <td th:text="${donor.units}"></td>
                                         <td th:text="${donor.dateOfDonation}"></td>
-                                        <td class="action-cell">
-                                            <!-- Use Thymeleaf to bind onclick events to accept and reject buttons -->
-                                            <button class="btn btn-success btn-accept"
-                                                th:onclick="'|acceptDonationRequest(${donor})|'">Accept</button>
-                                            <button class="btn btn-danger btn-reject"
-                                                th:onclick="'|rejectDonationRequest(${donor})|'">Reject</button>
-                                            <span class="status-label" style="display:none;"></span>
-                                        </td>
+                                        <!-- ... (existing HTML code) ... -->
+<td class="action-cell">
+                <!--<button class="btn btn-success btn-accept"  th:data-onclick="'accept(\'' + ${donor.email} + '\')'">Accept</button>-->
+                <button class="btn btn-success btn-accept" th:attr="onclick='accept(\'' + ${donor.email} + '\')'">Accept</button>
+
+
+                <button class="btn btn-danger btn-reject">Reject</button>
+                <span class="status-label" style="display:none;"></span>
+               </td>
+               
+              
+
+
+<!-- ... (existing HTML code) ... -->
+
                                     </tr>
                                     <!-- ... (your existing table body) ... -->
                                 </tbody>
@@ -180,10 +187,44 @@
         <script src="static/js/custom.js"></script>
 
         <!-- Include Bootstrap JS -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+       <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>-->
+        <!--    var email = document.getElementById('email').value;-->
+<script>
+	
+  
+    function accept(email) {
+		
+    console.log('Accept function called with email:', email);
+    // ... (rest of your code)
 
+    // Assuming you have an endpoint '/acceptDonationRequest/{email}' on the server to handle donation requests
+    fetch('/acceptDonationRequest/' + email, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' // Add appropriate headers if needed
+        },
+        // You can include a request body if needed
+        // body: JSON.stringify({ /* data to send in the request body */ })
+    })
+    .then(response => {
+        // Handle the response as needed
+        if (response.ok) {
+            console.log('Donation request accepted successfully');
+        } else {
+            console.error('Failed to accept donation request:', response.statusText);
+        }
+    })
+    .catch(error => console.error('Error accepting donation request:', error));
+}
+
+    
+</script>
         <script>
         // Function to add a new row to the table
+        function acceptDonationRequest(button) {
+    var email = button.getAttribute('data-email');
+    // Perform your logic with the email...
+}
         function addTableRow(firstName, lastName, email, bloodGroup, units, date) {
             var newRow = '<tr>' +
                 '<td>' + ($('#donationRequestsTableBody tr').length + 1) + '</td>' +
