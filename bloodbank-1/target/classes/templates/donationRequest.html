@@ -1,114 +1,238 @@
 <!DOCTYPE html>
+<html lang="en">
 
-<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Donations</title>
-  <!-- Bootstrap CSS CDN link -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <style>
-    /* Add any additional CSS styles if needed for donations.html */
-    .error-message {
-        color: red;
-    }
-  </style>
-  
-  
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+	<title>Request Form</title>
+
+	<!-- Google font -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+
+	<!-- Bootstrap -->
+	<link type="text/css" rel="stylesheet" href="static/donaterequest/css/bootstrap.min.css" />
+
+	<!-- Custom stlylesheet -->
+	<link type="text/css" rel="stylesheet" href="static/donaterequest/css/donaterequest.css" />
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+    .section {
+	position: relative;
+	height: 100vh;
+}
+
+.section .section-center {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	right: 0;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+#booking {
+	font-family: 'Montserrat', sans-serif;
+	background-image: url('static/donaterequest/img/donationform.jpg');
+	background-size: cover;
+	background-position: center;
+}
+
+#booking::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	background: rgba(47, 103, 177, 0.6);
+}
+
+.booking-form {
+	background-color: #fff;
+	padding: 50px 20px;
+	-webkit-box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.3);
+	border-radius: 4px;
+}
+
+.booking-form .form-group {
+	position: relative;
+	margin-bottom: 30px;
+}
+
+.booking-form .form-control {
+	background-color: #ebecee;
+	border-radius: 4px;
+	border: none;
+	height: 40px;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	color: #3e485c;
+	font-size: 14px;
+}
+
+.booking-form .form-control::-webkit-input-placeholder {
+	color: rgba(62, 72, 92, 0.3);
+}
+
+.booking-form .form-control:-ms-input-placeholder {
+	color: rgba(62, 72, 92, 0.3);
+}
+
+.booking-form .form-control::placeholder {
+	color: rgba(62, 72, 92, 0.3);
+}
+
+.booking-form input[type="date"].form-control:invalid {
+	color: rgba(62, 72, 92, 0.3);
+}
+
+.booking-form select.form-control {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+
+.booking-form select.form-control+.select-arrow {
+	position: absolute;
+	right: 0px;
+	bottom: 4px;
+	width: 32px;
+	line-height: 32px;
+	height: 32px;
+	text-align: center;
+	pointer-events: none;
+	color: rgba(62, 72, 92, 0.3);
+	font-size: 14px;
+}
+
+.booking-form select.form-control+.select-arrow:after {
+	content: '\279C';
+	display: block;
+	-webkit-transform: rotate(90deg);
+	transform: rotate(90deg);
+}
+
+.booking-form .form-label {
+	display: inline-block;
+	color: #3e485c;
+	font-weight: 700;
+	margin-bottom: 6px;
+	margin-left: 7px;
+}
+
+.booking-form .submit-btn {
+	display: inline-block;
+	color: #fff;
+	background-color: #1e62d8;
+	font-weight: 700;
+	padding: 14px 30px;
+	border-radius: 4px;
+	border: none;
+	-webkit-transition: 0.2s all;
+	transition: 0.2s all;
+}
+
+.booking-form .submit-btn:hover,
+.booking-form .submit-btn:focus {
+	opacity: 0.9;
+}
+
+.booking-cta {
+	margin-top: 80px;
+	margin-bottom: 30px;
+}
+
+.booking-cta h1 {
+	font-size: 40px;
+	text-transform: uppercase;
+	color: #fff;
+	font-weight: 700;
+}
+
+.booking-cta p {
+	font-size: 16px;
+	color: rgba(255, 255, 255, 0.8);
+}
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+    </style>
+
+
+
 </head>
+
 <body>
-  <!-- Your HTML content specific to donations -->
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-lg-9 col-md-8 col-sm-12 mx-auto">
-        <div class="container text-center mt-5">
-          <img src="https://th.bing.com/th/id/OIP.WiB7YEBLZPPpnM0GGAo86AHaD4?rs=1&pid=ImgDetMain" class="img-fluid mt-4" alt="Blood Image">
-          
-          <div id="donationQuestion">
-            <h4 class="mb-4">Are you willing to give blood?</h4>
-            <div class="btn-group" role="group" aria-label="Donor Choice">
-              <button type="button" class="btn btn-primary" onclick="donorChoice('yes')">Yes</button>
-              <button type="button" class="btn btn-primary" onclick="donorChoice('no')">No</button> <br>
-              
-            </div>
-                                      <center> <span th:if="${donateMessage}" class="error-message" th:text="${donateMessage}"></span></center>
-            
+	<div id="booking" class="section">
+		<div class="section-center">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7 col-md-push-5">
+						<div class="booking-cta">
+							<h1>Every Beat Counts: Donate Blood, Transform a Life,
+								Ignite the Heart of Humanity!</h1>
+							<!-- <p>Embark on a journey of compassion and impact as you extend a lifeline through the simple act of donating blood. In every pint, there lies the potential to save a life, to be a hero in someone's story. Be the heartbeat of hope, and with each donation, watch as you transform drops of blood into a symphony of life.  -->
+							<!-- </p> -->
+						</div>
+					</div>
+					<div class="col-md-4 col-md-pull-7">
+						<div class="booking-form">
+							<form id="profileForm"  action="/bloodDonationRequest" th:object="${received}" method="post">
+                                                  
+								 <input type="hidden" id="email" name="email" th:value="${session.userEmail}">
+								<div class="row">
+									<div class="form-group">
+										<div class="form-group">
+											<span class="form-label">Date Of Donation</span>
+											<input class="form-control" type="date" name="dateOfDonation" >
+										</div>
+									</div>
+									<div class="form-group">
+    									<label class="form-label" for="timeSlot">Time Slot</label>
+      									  <select class="form-control" id="time" name="timeSlot" required>
+       									     <option value="09:00-10:00">9:00 AM - 10:00 AM</option>
+         									   <option value="10:00-11:00">10:00 AM - 11:00 AM</option>
+          									  <option value="11:00-12:00">11:00 AM - 12:00 PM</option>
+           									 <option value="12:00-13:00">12:00 PM - 1:00 PM</option>
+           									 <option value="13:00-14:00">1:00 PM - 2:00 PM</option>
+        									    <option value="14:00-15:00">2:00 PM - 3:00 PM</option>
+         									   <option value="14:00-15:00">3:00 PM - 4:00 PM</option>
+           									 <option value="14:00-15:00">4:00 PM - 5:00 PM</option>
+          									  <option value="14:00-15:00">5:00 PM - 6:00 PM</option>
+       									 </select>
+</div>
+								<span th:if="${donateMessage}" class="error-message" th:text="${donateMessage}"></span>
+								</div>
+				
+								<div class="form-btn">
+									<button class="submit-btn" type="submit" >Submit</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <script>
+		function showSuccessMessage() {
+		  // Assuming your form has an id of "profileForm"
+		  document.getElementById('profileForm').addEventListener('submit', function() {
+			alert('Request Sent Successfully!');
+		  });
+		}
+	  </script> -->
+</body>
 
-          <div id="locationDate" style="display: none;" class="mt-4">
-        <form id="donationForm" th:action="@{/bloodDonationRequest}" th:object="${received}" method="post">
-        
-        <input type="hidden" id="email" name="email" th:value="${session.userEmail}">
-            <label for="location">Select Location:</label>
-            <select class="form-control mb-2" id="location" name="city" required>
-                <option value="Bangalore">Bangalore</option>
-                <option value="Hyderabad">Hyderabad</option>
-                <option value="Chennai">Chennai</option>
-                <!-- Add more location options as needed -->
-            </select>
-
-            <label for="date">Select Date (mm-dd-yyyy):</label><br>
-    <input type="date" id="date" name="dateOfDonation" pattern="\d{4}-\d{2}-\d{2}" required>
-<br>
-            <label for="time">Select Time Slot:</label>
-            <select class="form-control mb-2" id="time" name="timeSlot" required>
-                <option value="9:00-10:00">9:00 AM - 10:00 AM</option>
-                <option value="10:00-11:00">10:00 AM - 11:00 AM</option>
-                <option value="11:00-12:00">11:00 AM - 12:00 PM</option>
-                <option value="12:00-01:00">12:00 PM - 01:00 PM</option>
-                <option value="01:00-02:00">01:00 PM - 02:00 PM</option>
-                <option value="02:00-03:00">02:00 PM - 03:00 PM</option>
-                <option value="03:00-04:00">03:00 PM - 04:00 PM</option>
-                <option value="04:00-05:00">04:00 PM - 05:00 PM</option>
-                <option value="05:00-06:00">05:00 PM - 06:00 PM</option>
-                <!-- Add more time slots as needed -->
-            </select>
-            
-
-            <button type="submit" class="btn btn-primary" >Submit</button>
-        </form>
-    </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Bootstrap JS and jQuery CDN links (required for Bootstrap functionality) -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-  <script>
-    function donorChoice(choice) {
-      const locationDate = document.getElementById('locationDate');
-      if (choice === 'yes') {
-        locationDate.style.display = 'block';
-      } else {
-        locationDate.style.display = 'none';
-      }
-    }
-
-    function submitForm(type) {
-      if (type === 'donor') {
-        const location = document.getElementById('location').value;
-        const date = document.getElementById('date').value;
-        const time = document.getElementById('time').value;
-
-        console.log(`Location: ${location}, Date: ${date}, Time Slot: ${time}`);
-        alert('Thank you for your response!');
-      }
-    }
-  </script> 
-  <!-- <script>
-    function donorChoice(choice) {
-        // Assuming you have an endpoint '/donorChoice/{choice}' on the server to handle donor choices
-        fetch('/donorChoice/' + choice, { method: 'POST' })
-            .then(response => {
-                // Handle the response as needed
-                console.log('Donor Choice Recorded Successfully');
-            })
-            .catch(error => console.error('Error recording donor choice:', error));
-    }
-</script>
-</body> -->
 </html>

@@ -1,205 +1,327 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Receiving</title>
-  <!-- Bootstrap CSS CDN link -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <style>
-    /* Add any additional CSS styles if needed for receiving.html */
-    .image-container {
-      text-align: center;
-    }
-    .options {
-      margin-top: 20px;
-    }
-    .address-input {
-      display: none;
-    }
-    .patient-details {
-      display: none;
-    }
-    .error-message {
-        color: red;
-    }
-  </style>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+	<title>Request Form</title>
+
+	<!-- Google font -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+
+	<!-- Bootstrap -->
+	<link type="text/css" rel="stylesheet" href="static/donaterequest/css/bootstrap.min.css" />
+
+	<!-- Custom stlylesheet -->
+	<link type="text/css" rel="stylesheet" href="static/donaterequest/css/donaterequest.css" />
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+    .section {
+	position: relative;
+	height: 100vh;
+}
+
+.section .section-center {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	right: 0;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+#booking {
+	font-family: 'Montserrat', sans-serif;
+	background-image: url('static/donaterequest/img/donationform.jpg');
+	background-size: cover;
+	background-position: center;
+}
+
+#booking::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	background: rgba(47, 103, 177, 0.6);
+}
+
+.booking-form {
+	background-color: #fff;
+	padding: 50px 20px;
+	-webkit-box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.3);
+	border-radius: 4px;
+}
+
+.booking-form .form-group {
+	position: relative;
+	margin-bottom: 30px;
+}
+
+.booking-form .form-control {
+	background-color: #ebecee;
+	border-radius: 4px;
+	border: none;
+	height: 40px;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	color: #3e485c;
+	font-size: 14px;
+}
+
+.booking-form .form-control::-webkit-input-placeholder {
+	color: rgba(62, 72, 92, 0.3);
+}
+
+.booking-form .form-control:-ms-input-placeholder {
+	color: rgba(62, 72, 92, 0.3);
+}
+
+.booking-form .form-control::placeholder {
+	color: rgba(62, 72, 92, 0.3);
+}
+
+.booking-form input[type="date"].form-control:invalid {
+	color: rgba(62, 72, 92, 0.3);
+}
+
+.booking-form select.form-control {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+
+.booking-form select.form-control+.select-arrow {
+	position: absolute;
+	right: 0px;
+	bottom: 4px;
+	width: 32px;
+	line-height: 32px;
+	height: 32px;
+	text-align: center;
+	pointer-events: none;
+	color: rgba(62, 72, 92, 0.3);
+	font-size: 14px;
+}
+
+.booking-form select.form-control+.select-arrow:after {
+	content: '\279C';
+	display: block;
+	-webkit-transform: rotate(90deg);
+	transform: rotate(90deg);
+}
+
+.booking-form .form-label {
+	display: inline-block;
+	color: #3e485c;
+	font-weight: 700;
+	margin-bottom: 6px;
+	margin-left: 7px;
+}
+
+.booking-form .submit-btn {
+	display: inline-block;
+	color: #fff;
+	background-color: #1e62d8;
+	font-weight: 700;
+	padding: 14px 30px;
+	border-radius: 4px;
+	border: none;
+	-webkit-transition: 0.2s all;
+	transition: 0.2s all;
+}
+
+.booking-form .submit-btn:hover,
+.booking-form .submit-btn:focus {
+	opacity: 0.9;
+}
+
+.booking-cta {
+	margin-top: 80px;
+	margin-bottom: 30px;
+}
+
+.booking-cta h1 {
+	font-size: 40px;
+	text-transform: uppercase;
+	color: #fff;
+	font-weight: 700;
+}
+
+.booking-cta p {
+	font-size: 16px;
+	color: rgba(255, 255, 255, 0.8);
+}
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+    </style>
+
+
+
 </head>
+
 <body>
-  <div class="container mt-4">
-    <div class="row">
-      <div class="col-lg-9 col-md-8 col-sm-12 mx-auto">
-        <div class="image-container mt-5">
-          <img src="https://th.bing.com/th/id/OIP.WiB7YEBLZPPpnM0GGAo86AHaD4?rs=1&pid=ImgDetMain" class="img-fluid mt-4" alt="Blood Image">
-        </div>
-        
-        <div class="container text-center mt-4">
-          <h4 class="mb-4">Are you requesting for blood?</h4>
-          <div class="btn-group options" role="group" aria-label="Receiver Choice">
-            <button type="button" class="btn btn-primary" onclick="receiverChoice('self')">Self</button>
-            <button type="button" class="btn btn-primary" onclick="receiverChoice('others')">Others</button>
-          </div>
-          
-          <center> <span th:if="${bloodRequestStatus}" class="error-message" th:text="${bloodRequestStatus}"></span></center>
-	
-         <div class="address-input" style="display: none;">
-    <form action="/bloodRequestSelf" th:object="${received}" method="post">
-   <!--  <div class="form-group mt-4">
-        <input type="hidden" id="email" name="email" th:value="${session.userEmail}">
-        <label for="city">City:</label>
-        <input type="text" id="address" class="form-control" name="city" required>
-    </div> -->
+	<div id="booking" class="section">
+		<div class="section-center">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7 col-md-push-5">
+						<div class="booking-cta">
+							<h1>In Every Request, Echoes of Life: Be the Catalyst, Request Blood, and Write Stories of Survival.</h1>
+							
+						</div>
+					</div>
+
+                            <div class="col-md-4 col-md-pull-7">
+                                <div class="booking-form">
+                                    <form id="donationForm">
+                                        <div class="form-group">
+                                            <span class="form-label">Select Type</span>
+                                            <select class="form-control" id="donationType" name="donationType">
+                                                <option value="self">For Self</option>
+                                                <option value="others">For Others</option>
+                                            </select>
+                                        </div>
+                                    
+                                        <!-- For Self -->
+                                        <div id="forSelf">
+                                           
+                                            <div class="form-group">
+                                                <span class="form-label">How many units do you need? (1 unit = 450ml)</span>
+                                                <input class="form-control" type="number" name="units" required>
+                                            </div>
+                                    
+                                            <div class="form-group">
+                                                <span class="form-label">Reason for Request</span>
+                                                <textarea id="reason" name="reason" rows="4" required></textarea>
+                                            </div>
+                                        </div>
+                                    
+                                        <!-- For Others -->
+                                      
+                                        <div id="forOthers" style="display:none;">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <span class="form-label">First Name</span>
+                                                        <input class="form-control" type="text" name="firstName" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <span class="form-label">Last Name</span>
+                                                        <input class="form-control" type="text" name="lastName" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <span class="form-label">Gender</span>
+                                                        <select class="form-control" name="gender" required>
+                                                            <option value="male">Male</option>
+                                                            <option value="female">Female</option>
+                                                            <option value="other">Other</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <span class="form-label">Date of Birth</span>
+                                                        <input class="form-control" type="date" name="dob" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="bloodType">Blood Type:</label>
+                                                        <select class="form-control" id="bloodType" name="bloodType" required>
+                                                            <option value="A+">A+</option>
+                                                            <option value="B+">B+</option>
+                                                            <option value="O+">O+</option>
+                                                            <option value="AB+">AB+</option>
+                                                            <option value="A-">A-</option>
+                                                            <option value="B-">B-</option>
+                                                            <option value="O-">O-</option>
+                                                            <option value="AB-">AB-</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <span class="form-label">Units</span>
+                                                        <input class="form-control" type="number" name="units" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <span class="form-label">City</span>
+                                                        <input class="form-control" type="text" name="city" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <span class="form-label">Reason for Blood Request</span>
+                                                        <textarea class="form-control" name="reason" rows="4" required></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-btn">
+                                            <button class="submit-btn">Submit</button>
+                                        </div>
+                                        
+                                        
+                                    </form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <script>
     
-    <div class="form-group mt-4">
-        <label for="bloodGroup">Blood Group:</label>
-        <select id="bloodGroup" class="form-control" name="bloodGroup" required>
-            <option value="A+">A+</option>
-            <option value="A-">A-</option>
-            <option value="B+">B+</option>
-            <option value="B-">B-</option>
-            <option value="O+">O+</option>
-            <option value="O-">O-</option>
-            <option value="AB+">AB+</option>
-            <option value="AB-">AB-</option>
-        </select>
-    </div>
+        $(document).ready(function(){
+            $("#donationType").change(function(){
+                if($(this).val() == "self"){
+                    $("#forSelf").show();
+                    $("#forOthers").hide();
+                }
+                else{
+                    $("#forSelf").hide();
+                    $("#forOthers").show();
+                }
+            });
+        });
+    </script>
+	<script>
+		function showSuccessMessage() {
 
-    <div class="form-group mt-4">
-        <label for="bloodUnits">Blood Units:</label>
-        <input type="number" id="bloodUnits" class="form-control" name="bloodUnits" required>
-    </div>
-
-    <div class="form-group mt-4">
-    <label for="dateOfBlood">Select Date (mm-dd-yyyy):</label><br>
-    <input type="date" id="date" name="dateOfBlood" pattern="\d{4}-\d{2}-\d{2}" required>
-    </div>
-    
-    <div class="form-group mt-4">
-        <input type="hidden" id="email" name="email" th:value="${session.userEmail}">
-        <label for="city">City:</label>
-        <input type="text" id="address" class="form-control" name="city" required>
-    </div>
-    
-    <div class="form-group mt-4">
-    <label for="reason">Reason:</label>
-    <input type="text" id="reason" class="form-control" name="reason" required>
-</div>
-
-    <button type="submit" class="btn btn-primary mt-2">Submit</button>
-</form>
-
-</div>
-          </div>
-     
-	<form action="/bloodRequestOthers" th:object="${received}" method="post">
-         <div class="patient-details" style="display: none;">
-    <h4 class="mb-3 mt-4">Patient Details</h4>
-    
-    <div class="form-group">
-        <label for="firstname">First Name:</label>
-        <input type="text" id="firstname" name="firstname" class="form-control">
-        
-        <input type="hidden" id="email" name="email" th:value="${session.userEmail}">
-    </div>
-
-    <div class="form-group">
-        <label for="lastname">Last Name:</label>
-        <input type="text" id="lastname" name="lastname" class="form-control">
-    </div>
-
-    <div class="form-group">
-        <label for="gender">Gender:</label>
-        <select class="form-control mb-2" id="gender" name="gender" >
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="Others">Others</option>
-            <!-- Add more options as needed -->
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label for="dateOfBirth">Date of Birth:</label>
-        <input type="date" id="dateOfBirth" name="dateOfBirth" class="form-control mb-2">
-    </div>
-
-    <div class="form-group">
-        <label for="bloodUnits">Blood Units:</label>
-        <input type="text" id="bloodUnits" name="bloodUnits" class="form-control mb-2" required>
-    </div>
-
-    <div class="form-group">
-        <label for="bloodGroup">Blood Group:</label>
-        <select class="form-control mb-2" id="bloodGroup" name="bloodGroup" required>
-            <option value="A+">A+</option>
-            <option value="A-">A-</option>
-            <option value="B+">B+</option>
-            <option value="B-">B-</option>
-            <option value="O+">O+</option>
-            <option value="O-">O-</option>
-            <option value="AB+">AB+</option>
-            <option value="AB-">AB-</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label for="city">City:</label>
-        <input type="text" id="city" name="city" class="form-control mb-2">
-    </div>
-
-    <div class="form-group">
-        <label for="reason">Reason:</label>
-        <input type="text" id="reason" name="reason" class="form-control mb-2">
-    </div>
-
-    <div class="form-group">
-        <label for="dateOfBlood">Date of Blood Donation:</label>
-        <input type="date" id="dateOfBlood" name="dateOfBlood" class="form-control mb-2">
-    </div>
-
-    <button type="submit" class="btn btn-primary mt-2">Submit</button>
-</div>
-</form>
-    </div>
-  </div>
-
-  <!-- Bootstrap JS and jQuery CDN links (required for Bootstrap functionality) -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-  <script>
-    function receiverChoice(choice) {
-      const addressInput = document.querySelector('.address-input');
-      const patientDetails = document.querySelector('.patient-details');
-      
-      if (choice === 'self') {
-        addressInput.style.display = 'block';
-        patientDetails.style.display = 'none';
-      } else {
-        addressInput.style.display = 'none';
-        patientDetails.style.display = 'block';
-      }
-    }
-
-    function submitForm(type) {
-      if (type === 'receiver') {
-        const address = document.getElementById('address').value;
-        console.log(`Address: ${address}`);
-        alert('Thank you for your response!');
-      } else if (type === 'patient') {
-        const patientName = document.getElementById('patientName').value;
-        console.log(`Patient Name: ${patientName}`);
-        alert('Thank you for your response!');
-      }
-    }
-  
- function formatAadhar(input) {
-      let value = input.value.replace(/\D/g, '');
-      value = value.replace(/(.{4})/g, '$1 ').trim();
-      input.value = value;
-    }
-  </script>
+		  document.getElementById('profileForm').addEventListener('submit', function() {
+			alert('Request Sent Successfully!');
+		  });
+		}
+	  </script>
 </body>
+
 </html>

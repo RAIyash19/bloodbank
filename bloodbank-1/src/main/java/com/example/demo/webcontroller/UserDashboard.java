@@ -46,6 +46,17 @@ public class UserDashboard {
     public String showBloodRequests() {
         return "bloodRequest";
     }
+    
+    @GetMapping("/userBloodRequestHistory")
+    public String showBloodRequestsHistory() {
+        return "userBloodRequestHistory";
+    }
+    
+    @GetMapping("/userDonationRequestHistory")
+    public String showDonationRequestsHistory() {
+        return "userDonationRequestHistory";
+    }
+    
 
     @GetMapping("/donationRequest")
     public String showDonationRequests(HttpSession session, Model model) {
