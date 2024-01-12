@@ -161,6 +161,8 @@ public class UserController {
 	@PostMapping("/bloodRequestSelf")  //1
 	public String bloodRequestSelf(@ModelAttribute("received")  PatientDetails received,HttpSession session, Model model) {
 		
+		
+		System.out.println("inside self");
 		if (session.getAttribute("userEmail") == null) {
             // Session is valid, return the Thymeleaf template name for the user home page
             return "userLogin";

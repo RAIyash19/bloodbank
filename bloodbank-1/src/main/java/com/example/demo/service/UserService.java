@@ -196,6 +196,8 @@ public class UserService {
 			received.setLastname(detail.getLastname());
 			received.setGender(detail.getGender());
 			received.setDateOfDonation(formattedDate); 
+			received.setCity(detail.getCity());
+			received.setUnits("1");
 			
 		}
 		
@@ -261,13 +263,18 @@ public class UserService {
 		if(received.getBloodUnits() > 5) {
 			return 1;   //"Not allowed to take blood more than 5 units";
 		}
-		List<Inventory> inventory = inventoryService.findByBloodGroup(received.getBloodGroup());
+		List<RegistrationDetails> saved2= service.getRegistrationDetailsByEmail(received.getEmail());
+		String bloodGroup=" ";
+		for(RegistrationDetails detail:saved2) {
+			bloodGroup=detail.getBloodGroup();
+		}
+		
+		List<Inventory> inventory = inventoryService.findByBloodGroup(bloodGroup);
 		int bloodUnits=0;
 		for (Inventory detail: inventory) {
 			if(detail.getQuantity() != 0) {
 				bloodUnits += 1;
 //				System.out.println("count: " + bloodUnits);.
-				
 			}
 		}
 		if (received.getBloodUnits() > bloodUnits)
@@ -279,6 +286,8 @@ public class UserService {
 			received.setFirstname(detail.getFirstname());
 			received.setGender(detail.getGender());
 			received.setLastname(detail.getLastname());
+			received.setCity(detail.getCity());
+			received.setBloodGroup(bloodGroup);
 		}
 		patientService.savePatientDetails(received);
 		

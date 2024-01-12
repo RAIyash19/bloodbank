@@ -74,6 +74,13 @@ public class UserDashboard {
         return "details";
     }
     
+    @GetMapping("/userLogout")
+    public String userLogout(HttpSession session) {
+    	// Invalidate the session
+    	session.invalidate();
+    	return "userLogin";
+    }
+    
     
 }
 

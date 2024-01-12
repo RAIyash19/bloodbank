@@ -153,6 +153,9 @@
 	color: #fff;
 	font-weight: 700;
 }
+.error-attribute {
+    color: red;
+}
 
 .booking-cta p {
 	font-size: 16px;
@@ -212,8 +215,8 @@
           									  <option value="14:00-15:00">5:00 PM - 6:00 PM</option>
        									 </select>
 </div>
-								<span th:if="${donateMessage}" class="error-message" th:text="${donateMessage}"></span>
-								</div>
+								<span class ="error-attribute" th:if="${donateMessage}"  th:text="${donateMessage}"></span>
+								</div><br>
 				
 								<div class="form-btn">
 									<button class="submit-btn" type="submit" >Submit</button>
