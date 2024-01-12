@@ -140,7 +140,7 @@ public class UserService {
 		
 	}
 
-	public String findBloodDonationsCount(String email) {
+	public int findBloodDonationsCount(String email) {
 		List<DonorDetails> saved = donateService.getDonorsDetailsByEmail(email);
 		int count=0;
 		for (DonorDetails detail: saved) {
@@ -148,10 +148,10 @@ public class UserService {
 				count++;
 		}
 		System.out.println("count : "+count);
-		return "Blood Donation Count : " + count;
+		return count;
 	}
 	
-	public String findBloodRequestsCount(String email) {
+	public int findBloodRequestsCount(String email) {
 		
 		List<PatientDetails> saved = patientService.getPatientsDetailsByEmail(email);
 		int count=0;
@@ -159,7 +159,7 @@ public class UserService {
 			if (detail.getStatus()==1)
 				count++;
 		}
-		return "Blood requests count : " + count;
+		return  count;
 	}
 
 	public List<DonorDetails> getDonateRequestsDetails(String email) {
@@ -196,6 +196,8 @@ public class UserService {
 			received.setLastname(detail.getLastname());
 			received.setGender(detail.getGender());
 			received.setDateOfDonation(formattedDate); 
+			received.setCity(detail.getCity());
+			received.setUnits("1");
 			
 		}
 		
@@ -261,13 +263,18 @@ public class UserService {
 		if(received.getBloodUnits() > 5) {
 			return 1;   //"Not allowed to take blood more than 5 units";
 		}
-		List<Inventory> inventory = inventoryService.findByBloodGroup(received.getBloodGroup());
+		List<RegistrationDetails> saved2= service.getRegistrationDetailsByEmail(received.getEmail());
+		String bloodGroup=" ";
+		for(RegistrationDetails detail:saved2) {
+			bloodGroup=detail.getBloodGroup();
+		}
+		
+		List<Inventory> inventory = inventoryService.findByBloodGroup(bloodGroup);
 		int bloodUnits=0;
 		for (Inventory detail: inventory) {
 			if(detail.getQuantity() != 0) {
 				bloodUnits += 1;
 //				System.out.println("count: " + bloodUnits);.
-				
 			}
 		}
 		if (received.getBloodUnits() > bloodUnits)
@@ -279,6 +286,8 @@ public class UserService {
 			received.setFirstname(detail.getFirstname());
 			received.setGender(detail.getGender());
 			received.setLastname(detail.getLastname());
+			received.setCity(detail.getCity());
+			received.setBloodGroup(bloodGroup);
 		}
 		patientService.savePatientDetails(received);
 		

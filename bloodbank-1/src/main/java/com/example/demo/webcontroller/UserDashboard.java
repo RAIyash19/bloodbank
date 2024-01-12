@@ -8,7 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.demo.entity.RegistrationDetails;
+import com.example.demo.service.DonorDetailsService;
 import com.example.demo.service.RegistrationDetailsService;
+import com.example.demo.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -27,6 +29,28 @@ public class UserDashboard {
     
     @Autowired
     private RegistrationDetailsService service;
+    @Autowired
+    private UserService userService;
+    
+    @GetMapping("/userHome")
+	public String check(HttpSession session, Model model) {
+		 if (session.getAttribute("userEmail") != null) {
+	            // Session is valid, return the Thymeleaf template name for the user home page
+			 String email= (String) session.getAttribute("userEmail");
+			 	model.addAttribute("email", session.getAttribute("userEmail"));
+			 	int donationCount=userService.findBloodDonationsCount(email);
+			 	int bloodCount=userService.findBloodRequestsCount(email);
+			 	
+			 	model.addAttribute("donationCount", donationCount);
+			 	model.addAttribute("bloodCount", bloodCount);
+	            return "userHome";
+	        } else {
+	            // Session is not valid, redirect to the login page or perform other actions
+	            return "redirect:/userLogin"; // Adjust the URL as needed
+	        }
+
+	}
+	
     
     @GetMapping("/userProfile") 
 	public String userProfile(HttpSession session, Model model) {
@@ -72,6 +96,13 @@ public class UserDashboard {
     @GetMapping("/details")
     public String getMethodName() {
         return "details";
+    }
+    
+    @GetMapping("/userLogout")
+    public String userLogout(HttpSession session) {
+    	// Invalidate the session
+    	session.invalidate();
+    	return "userLogin";
     }
     
     

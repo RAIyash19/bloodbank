@@ -26,7 +26,7 @@ public class DonorDetails {
 //	private String state;
 //	private String pincode;
 	private String dateOfDonation;
-	//private String timeSlot;
+	private String timeSlot;
 	
 	
 	private byte status;
@@ -41,12 +41,12 @@ public String getUnits() {
 	public void setUnits(String units) {
 		this.units = units;
 	}
-	//	public String getTimeSlot() {
-//		return timeSlot;
-//	}
-//	public void setTimeSlot(String timeSlot) {
-//		this.timeSlot = timeSlot;
-//	}
+		public String getTimeSlot() {
+		return timeSlot;
+	}
+	public void setTimeSlot(String timeSlot) {
+		this.timeSlot = timeSlot;
+	}
 	public int getId() {
 		return id;
 	}

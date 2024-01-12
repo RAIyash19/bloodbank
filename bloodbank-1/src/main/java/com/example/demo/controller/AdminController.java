@@ -72,10 +72,10 @@ public class AdminController {
             int a=countDonor.get(0);
             System.out.println(a);
             
-            model.addAttribute("count", countDonor);
+            model.addAttribute("DonorCount", a);
 
             // Redirect to the admin home page
-            return "redirect:/adminHome";
+            return "adminHome";
         } else if (status == 0) {
             model.addAttribute("invalidMail", "This email is not admin");
             return "adminLogin";
