@@ -248,18 +248,18 @@ public class UserService {
 	
 
 
-	public String bloodRequestSelf(PatientDetails received) {
+	public int bloodRequestSelf(PatientDetails received) {
 		
 		List<PatientDetails> saved = patientService.getPatientDetailsByEmailAndStatus(received.getEmail(), (byte) 0);
 		
 		for (PatientDetails detail: saved) {
 			if (detail.getStatus() == 0)
-				return "You can't made blood request again until the last request being verified";
+				return 	0; //"You can't made blood request again until the last request being verified";
 		}
 		
 		
 		if(received.getBloodUnits() > 5) {
-			return "Not allowed to take blood more than 5 units";
+			return 1;   //"Not allowed to take blood more than 5 units";
 		}
 		List<Inventory> inventory = inventoryService.findByBloodGroup(received.getBloodGroup());
 		int bloodUnits=0;
@@ -271,7 +271,7 @@ public class UserService {
 			}
 		}
 		if (received.getBloodUnits() > bloodUnits)
-			return "There is no enough blood in the Inventory";
+			return 2;   //"There is no enough blood in the Inventory";
 		received.setStatus((byte) 0);
 		List<RegistrationDetails> saved1 = service.getRegistrationDetailsByEmail(received.getEmail());
 		for(RegistrationDetails detail:saved1) {
@@ -279,12 +279,41 @@ public class UserService {
 			received.setFirstname(detail.getFirstname());
 			received.setGender(detail.getGender());
 			received.setLastname(detail.getLastname());
-		
 		}
 		patientService.savePatientDetails(received);
 		
-		return "Blood is available, admin has to accept your request";
+		return 3;   //"Blood is available, admin has to accept your request";
 	}
+	
+	public int bloodRequestOthers(PatientDetails received) {
+		// TODO Auto-generated method stub
+		List<PatientDetails> saved = patientService.getPatientDetailsByEmailAndStatus(received.getEmail(), (byte) 0);
+		
+		for (PatientDetails detail: saved) {
+			if (detail.getStatus() == 0)
+				return 	0; //"You can't made blood request again until the last request being verified";
+		}
+		
+		
+		if(received.getBloodUnits() > 5) {
+			return 1;   //"Not allowed to take blood more than 5 units";
+		}
+		List<Inventory> inventory = inventoryService.findByBloodGroup(received.getBloodGroup());
+		int bloodUnits=0;
+		for (Inventory detail: inventory) {
+			if(detail.getQuantity() != 0) {
+				bloodUnits += 1;
+//				System.out.println("count: " + bloodUnits);
+			}
+		}
+		if (received.getBloodUnits() > bloodUnits)
+			return 2;   //"There is no enough blood in the Inventory";
+		received.setStatus((byte) 0);
+		patientService.savePatientDetails(received);
+		
+		return 3;   //"Blood is available, admin has to accept your request";
+	}
+	
 	
 	public int sendOtp(String email) { 
 	
@@ -354,6 +383,8 @@ public class UserService {
 			return 0;
 			
 		}
+
+
 
 //	public int getBloodRequestsCount(String email) {
 //		// TODO Auto-generated method stub
