@@ -114,7 +114,6 @@ public class UserController {
 	
 	@GetMapping("/viewDonateRequestDetails/{email}")//1------------------------------------------------------
 	public String getDonateRequestsDerails(@PathVariable("email") String email) {
-		
 		 loginService.getDonateRequestsDetails(email);
 		 return "userProfile";
 	}
@@ -130,7 +129,11 @@ public class UserController {
 	}
 	
 	@PostMapping("/bloodDonationRequest")//1
-	public String donateRequest(@ModelAttribute("received") DonorDetails received, Model model) {
+	public String donateRequest(@ModelAttribute("received") DonorDetails received,HttpSession session, Model model) {
+		if (session.getAttribute("userEmail") == null) {
+            // Session is valid, return the Thymeleaf template name for the user home page
+            return "userLogin";
+        } 
 //		System.out.println("donation request");
 //		System.out.println(received.getDateOfDonation() + " " + received.getCity());
 		int status = loginService.donateRequest(received);
@@ -155,13 +158,59 @@ public class UserController {
 		return "userHome";
 	}
 	
-//	@PostMapping("/bloodRequestSelf")  //1
-//	public String bloodRequestSelf(@ModelAttribute("received")  PatientDetails received, Model model) {
-//		System.out.println(received.getEmail()+ " " + received.getBloodGroup() + " " + received.getBloodUnits());
-////		return "userHome";
-//		loginService.bloodRequest(received);
+	@PostMapping("/bloodRequestSelf")  //1
+	public String bloodRequestSelf(@ModelAttribute("received")  PatientDetails received,HttpSession session, Model model) {
+		
+		if (session.getAttribute("userEmail") == null) {
+            // Session is valid, return the Thymeleaf template name for the user home page
+            return "userLogin";
+        } 
+		System.out.println(received.getEmail()+ " " + received.getBloodGroup() + " " + received.getBloodUnits());
 //		return "userHome";
-//	}
+		int status = loginService.bloodRequestSelf(received);
+		if (status==0) {
+			System.out.println("You can't made blood request again until the last request being verified");
+			model.addAttribute("bloodRequestStatus", "You can't made blood request again until the last request being verified");
+		}
+		else if (status ==1)
+			model.addAttribute("bloodRequestStatus", "Not allowed to take blood more than 5 units");
+		else if (status == 2)
+			model.addAttribute("bloodRequestStatus", "There is no enough blood in the Inventory");
+		else {
+			model.addAttribute("bloodRequestStatus", "Blood is available, admin has to accept your request");
+			return "userHome";
+		}
+		return "bloodRequest";
+	}
+	
+
+	@PostMapping("/bloodRequestOthers")  //1
+	public String bloodRequestOthers(@ModelAttribute("received")  PatientDetails received,HttpSession session, Model model) {
+		
+		System.out.println("inside others");
+		if (session.getAttribute("userEmail") == null) {
+            // Session is valid, return the Thymeleaf template name for the user home page
+            return "userLogin";
+        } 
+		
+		System.out.println("mmmm : " + received.getEmail());
+		System.out.println(received.getEmail()+ " " + received.getBloodGroup() + " " + received.getBloodUnits());
+//		return "userHome";
+		int status = loginService.bloodRequestOthers(received);
+		if (status==0) {
+			System.out.println("You can't made blood request again until the last request being verified");
+			model.addAttribute("bloodRequestStatus", "You can't made blood request again until the last request being verified");
+		}
+		else if (status ==1)
+			model.addAttribute("bloodRequestStatus", "Not allowed to take blood more than 5 units");
+		else if (status == 2)
+			model.addAttribute("bloodRequestStatus", "There is no enough blood in the Inventory");
+		else {
+			model.addAttribute("bloodRequestStatus", "Blood is available, admin has to accept your request");
+			return "userHome";
+		}
+		return "bloodRequest";
+	}
 	
 	
 	

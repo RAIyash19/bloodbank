@@ -22,6 +22,9 @@
     .patient-details {
       display: none;
     }
+    .error-message {
+        color: red;
+    }
   </style>
 </head>
 <body>
@@ -38,20 +41,17 @@
             <button type="button" class="btn btn-primary" onclick="receiverChoice('self')">Self</button>
             <button type="button" class="btn btn-primary" onclick="receiverChoice('others')">Others</button>
           </div>
+          
+          <center> <span th:if="${bloodRequestStatus}" class="error-message" th:text="${bloodRequestStatus}"></span></center>
 	
          <div class="address-input" style="display: none;">
     <form action="/bloodRequestSelf" th:object="${received}" method="post">
-    <div class="form-group mt-4">
+   <!--  <div class="form-group mt-4">
         <input type="hidden" id="email" name="email" th:value="${session.userEmail}">
         <label for="city">City:</label>
         <input type="text" id="address" class="form-control" name="city" required>
-    </div>
-
-    <div class="form-group mt-4">
-        <label for="bloodUnits">Blood Units:</label>
-        <input type="number" id="bloodUnits" class="form-control" name="bloodUnits" required>
-    </div>
-
+    </div> -->
+    
     <div class="form-group mt-4">
         <label for="bloodGroup">Blood Group:</label>
         <select id="bloodGroup" class="form-control" name="bloodGroup" required>
@@ -66,51 +66,101 @@
         </select>
     </div>
 
+    <div class="form-group mt-4">
+        <label for="bloodUnits">Blood Units:</label>
+        <input type="number" id="bloodUnits" class="form-control" name="bloodUnits" required>
+    </div>
+
+    <div class="form-group mt-4">
+    <label for="dateOfBlood">Select Date (mm-dd-yyyy):</label><br>
+    <input type="date" id="date" name="dateOfBlood" pattern="\d{4}-\d{2}-\d{2}" required>
+    </div>
+    
+    <div class="form-group mt-4">
+        <input type="hidden" id="email" name="email" th:value="${session.userEmail}">
+        <label for="city">City:</label>
+        <input type="text" id="address" class="form-control" name="city" required>
+    </div>
+    
+    <div class="form-group mt-4">
+    <label for="reason">Reason:</label>
+    <input type="text" id="reason" class="form-control" name="reason" required>
+</div>
+
     <button type="submit" class="btn btn-primary mt-2">Submit</button>
 </form>
 
 </div>
           </div>
      
+	<form action="/bloodRequestOthers" th:object="${received}" method="post">
+         <div class="patient-details" style="display: none;">
+    <h4 class="mb-3 mt-4">Patient Details</h4>
+    
+    <div class="form-group">
+        <label for="firstname">First Name:</label>
+        <input type="text" id="firstname" name="firstname" class="form-control">
+        
+        <input type="hidden" id="email" name="email" th:value="${session.userEmail}">
+    </div>
 
-          <div class="patient-details" style="display: none;">
-            <h4 class="mb-3 mt-4">Patient Details</h4>
-            <div class="form-group">
-              <label for="patientName">Name:</label>
-              <input type="text" id="patientName" class="form-control">
-            </div>
-             <div class="form-group">
-        <label for="age">Age:</label>
-        <input type="text" id="age" class="form-control mb-2" min="0" maxlength="3" required>
-            </div>
-            <div class="form-group">
-              <label for="dob">Date of Birth:</label>
-              <input type="date" id="dob" class="form-control mb-2">
-            </div>
-            <div class="form-group">
-              <label for="sex">Sex:</label>
-              <select class="form-control mb-2" id="sex">
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="transgender">Transgender</option>
-                <!-- Add more options as needed -->
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="email">Email:</label>
-              <input type="email" id="email" class="form-control mb-2">
-            </div>
-            <div class="form-group">
-        <label for="aadharNumber">Aadhar Number :</label>
-        <input type="text" id="aadharNumber" name="aadharNumber" class="form-control" pattern="\d{4}\s?\d{4}\s?\d{4}" maxlength="14" oninput="formatAadhar(this)" required>
-      </div>
-            <div class="form-group">
-        <label for="phoneNumber">Phone Number:</label>
-        <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control" pattern="[0-9]{10}" maxlength="10" required>
-            <button type="button" class="btn btn-primary mt-2" onclick="submitForm('patient')">Submit</button>
-          </div>
-        </div>
-      </div>
+    <div class="form-group">
+        <label for="lastname">Last Name:</label>
+        <input type="text" id="lastname" name="lastname" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label for="gender">Gender:</label>
+        <select class="form-control mb-2" id="gender" name="gender" >
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="Others">Others</option>
+            <!-- Add more options as needed -->
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="dateOfBirth">Date of Birth:</label>
+        <input type="date" id="dateOfBirth" name="dateOfBirth" class="form-control mb-2">
+    </div>
+
+    <div class="form-group">
+        <label for="bloodUnits">Blood Units:</label>
+        <input type="text" id="bloodUnits" name="bloodUnits" class="form-control mb-2" required>
+    </div>
+
+    <div class="form-group">
+        <label for="bloodGroup">Blood Group:</label>
+        <select class="form-control mb-2" id="bloodGroup" name="bloodGroup" required>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" class="form-control mb-2">
+    </div>
+
+    <div class="form-group">
+        <label for="reason">Reason:</label>
+        <input type="text" id="reason" name="reason" class="form-control mb-2">
+    </div>
+
+    <div class="form-group">
+        <label for="dateOfBlood">Date of Blood Donation:</label>
+        <input type="date" id="dateOfBlood" name="dateOfBlood" class="form-control mb-2">
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Submit</button>
+</div>
+</form>
     </div>
   </div>
 
