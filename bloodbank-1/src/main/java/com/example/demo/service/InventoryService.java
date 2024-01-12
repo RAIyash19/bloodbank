@@ -148,6 +148,16 @@ public class InventoryService {
 
         return bloodGroupCount;
     }
+
+	public int getBloodCount(String string) {
+		// TODO Auto-generated method stub
+		int count=0;
+		List<Inventory> list = repo.findByBloodGroup(string);
+		for(Inventory inv:list) {
+			count++;
+		}
+		return count;
+	}
     
 
 }

@@ -23,6 +23,7 @@ public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
 //	 @Query(value = "SELECT blood_group, SUM(quantity) FROM blood_inventory GROUP BY blood_group", nativeQuery = true)
 //	    List<Inventory> findQuantityByBloodGroup();
 	 @Query("SELECT bloodGroup, COUNT(bloodId) FROM Inventory GROUP BY bloodGroup")
+	 
 	    public Map<String, Long> getCountByBloodGroup();
 	
 	 
@@ -35,6 +36,8 @@ public interface InventoryRepository extends JpaRepository<Inventory, Integer> {
 //		@Query(value = "delete from Inventory where BloodId = ?1",nativeQuery = true)
 //		public void deleteByBloodId(Integer BloodId);
 	   public void deleteByBloodId(int bloodId);
+	   
+	   
 	   
 	   
 	}
