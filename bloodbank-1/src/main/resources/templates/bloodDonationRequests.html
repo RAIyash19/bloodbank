@@ -147,15 +147,14 @@
                                         <td th:text="${donor.email}"></td>
                                         <td th:text="${donor.bloodGroup}"></td>
                                         <td th:text="${donor.units}"></td>
-                                        <td th:text="${donor.dateOfDonation}"></td>
+                                        <td th:text="${donor.dateOfDonation}"></td>         
                                         <!-- ... (existing HTML code) ... -->
 <td class="action-cell">
                 <!--<button class="btn btn-success btn-accept"  th:data-onclick="'accept(\'' + ${donor.email} + '\')'">Accept</button>-->
                 <button class="btn btn-success btn-accept" th:attr="onclick='accept(\'' + ${donor.email} + '\')'">Accept</button>
 
 
-                <button class="btn btn-danger btn-reject">Reject</button>
-                <span class="status-label" style="display:none;"></span>
+                <button class="btn btn-danger btn-reject"th:attr="onclick='reject(\'' + ${donor.email} + '\')'">Reject</button>
                </td>
                
               
@@ -219,6 +218,42 @@
 
     
 </script>
+
+
+<script>
+	
+  
+    function reject(email) {
+		
+    console.log('Accept function called with email:', email);
+    // ... (rest of your code)
+
+    // Assuming you have an endpoint '/acceptDonationRequest/{email}' on the server to handle donation requests
+    fetch('/rejectBloodDonationRequest/' + email, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' // Add appropriate headers if needed
+        },
+        // You can include a request body if needed
+        // body: JSON.stringify({ /* data to send in the request body */ })
+    })
+    .then(response => {
+        // Handle the response as needed
+        if (response.ok) {
+            console.log('Donation request accepted successfully');
+        } else {
+            console.error('Failed to accept donation request:', response.statusText);
+        }
+    })
+    .catch(error => console.error('Error accepting donation request:', error));
+}
+
+    
+</script>
+
+
+
+
         <script>
         // Function to add a new row to the table
         function acceptDonationRequest(button) {

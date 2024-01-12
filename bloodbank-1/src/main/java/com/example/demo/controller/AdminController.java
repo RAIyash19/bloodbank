@@ -122,7 +122,7 @@ public class AdminController {
 	
 	
 
-  @GetMapping("/getInventoryDetails")
+  @GetMapping("/getInventory")
 	public List<Inventory> getDetails() {
 	  List<Inventory> a = new ArrayList<>();
 	  
@@ -188,10 +188,24 @@ public class AdminController {
 //	public List<PatientDetails> getPatientDetailsByEmail(@PathVariable String email) {
 //		return patientDetailsService.getPatientsDetailsByEmail(email);
 //	}
-	
   
-  @GetMapping("/clearExpiry")//1
+  @GetMapping("/getInventoryDetails")
+	public String getInventoryDetails(Model model) {
+	  List<Inventory> details = new ArrayList<>();
+	  
+		details= inventoryService.getInventoryDetails();
+		System.out.println(details.get(0));
+		model.addAttribute("blood", details);
+		
+		return "bloodExpiry";
+		
+	}
+	
+  @GetMapping("/clearExpiry")
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
   public List<Inventory> checkBlood() {
+	  System.out.println("inside clear expiry");
 	  List<Inventory> donors = inventoryService.getInventoryDetails();
 	  return inventoryService.checkForOldBloodSamples(donors);
   }
@@ -238,10 +252,19 @@ public class AdminController {
   	@GetMapping("/viewBloodRequestHistory")
   	public String viewBloodRequestHistory(Model model) {
   		List<PatientDetails> requestData= new ArrayList<>();
-  		requestData = patientDetailsService.getDonationRequestsHistory();
+  		requestData = patientDetailsService.getBloodRequestsHistory();
   		System.out.println(requestData.get(0));
   		model.addAttribute("recieve", requestData);
   		return "bloodRequestsViews";
+  	}
+  	
+  	@GetMapping("viewBloodRequest")
+  	public String viewBloodRequest(Model model) {
+  		List<PatientDetails> requestData = new ArrayList<>();
+  		requestData= service.getBloodRequest();
+  		System.out.println(requestData.get(0));
+  		model.addAttribute("recieve", requestData);
+  		return "bloodRequestAdmin";
   	}
   	
 
@@ -279,24 +302,42 @@ public class AdminController {
 		return  service.viewBloodRequest();
 	}
 	
-	@PostMapping("/acceptBloodRequest")//1
-	public String acceptBloodRequest(@RequestBody PatientDetails received) {
-		return service.acceptBloodRequest(received);
+	
+	@PostMapping("/acceptBloodRequest/{email}")
+  	@ResponseStatus(HttpStatus.OK)
+  	@ResponseBody
+	public void acceptBloodRequest(@PathVariable("email") String email, Model model) {
+		System.out.println("INside accept" + email);
+		String result = service.acceptBloodRequest(email);
+		
+		
+		   System.out.println("Request mapped for email: " + email);
 	}
 	
 
 	
 	
-	
-	 @PostMapping("/rejectBloodDonationRequest")//1
-	public String rejectDonationRequest(@RequestBody DonorDetails detail ) {
-		return service.rejectDonationRequest(detail);
+	 @PostMapping("/rejectBloodDonationRequest/{email}")
+	 @ResponseStatus(HttpStatus.OK)
+	 @ResponseBody
+	 public void rejectDonationRequest(@PathVariable("email") String email, Model model) {
+		 System.out.println("INside reject" + email);
+		 service.rejectDonationRequest(email);
+		 
+		 
+		 System.out.println("Request mapped for email: " + email);
 		
 	}
 	
-	@PostMapping("/rejectBloodRequest")//1
-	public String rejectBloodRequest(@RequestBody PatientDetails detail ) {
-		return service.rejectBloodRequest(detail);
+	 @PostMapping("/rejectBloodRequest/{email}")
+	 @ResponseStatus(HttpStatus.OK)
+	 @ResponseBody
+	public void rejectBloodRequest(@PathVariable("email") String email, Model model) {
+		 System.out.println("INside reject" + email);
+		service.rejectBloodRequest(email);
+		
+		
+		 System.out.println("Request mapped for email: " + email);
 		
 	}
 	

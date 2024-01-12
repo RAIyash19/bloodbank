@@ -137,17 +137,28 @@
                             <div class="table-responsive">
                                 <table class="table text-nowrap">
                                     <thead>
-                                        <tr>
-                                            <th class="border-top-0">S.No</th>
-                                            <th class="border-top-0">Blood Group</th>
-                                            <th class="border-top-0">Date of Storage</th>
-                                            <th class="border-top-0">Quantity</th>
-                                            <th class="border-top-0">Actions</th>
-                                        </tr>
+                                        <tr th:each="blood, iterStat : ${blood}">
+                            <td th:text="${iterStat.index + 1}"></td>
+                            <td th:text="${blood.bloodGroup}"></td>
+                            <td th:text="${blood.dateOfDonation}"></td>
+                            <td th:text="${blood.quantity}"></td>
+                            <!--<td> Add actions if needed </td>-->
+                            <!--<td class="action-cell">
+            <button class="btn btn-danger btn-clear-expiry" onclick="clearExpiry()">Clear Expiry</button>
+        </td>-->
+                            
+                        </tr>
                                     </thead>
                                     <tbody id="donationRequestsTableBody">
                                         <!-- Rows will be dynamically added here -->
                                     </tbody>
+                                    <tfoot>
+    <tr>
+        <td colspan="10" class="action-cell">
+            <button class="btn btn-danger btn-clear-expiry" onclick="clearExpiry()">Clear Expiry</button>
+        </td>
+    </tr>
+</tfoot>
                                 </table>
                             </div>
                         </div>
@@ -170,6 +181,41 @@
 
         <!-- Include Bootstrap JS -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+        
+        
+        <script>
+
+function clearExpiry() {
+    console.log('Clear Expiry function called');
+    // ... (rest of your code)
+
+    // Assuming you have an endpoint '/clearExpiry' on the server to handle clearing expiry
+    fetch('/clearExpiry', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json' // Add appropriate headers if needed
+        },
+        // You can include a request body if needed
+        // body: JSON.stringify({ /* data to send in the request body */ })
+    })
+    .then(response => {
+        // Handle the response as needed
+        if (response.ok) {
+            console.log('Expiry cleared successfully');
+        } else {
+            console.error('Failed to clear expiry:', response.statusText);
+        }
+    })
+    .catch(error => console.error('Error clearing expiry:', error));
+}
+
+</script>
+
+        
+        
+        
+        
+        
 
         <script>
         // Function to add a new row to the table
@@ -199,9 +245,7 @@
         }
 
         // Add a sample row when the page loads
-        $(document).ready(function () {
-            addTableRow('O+', '1-1-2023', '350 units');
-        });
+ 
         </script>
     </body>
 

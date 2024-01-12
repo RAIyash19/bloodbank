@@ -94,9 +94,14 @@ public class AdminService {
 		return donorService.getDonorDetails();
 	}
 	
-	public List<PatientDetails> getDonationRequestsHistory(){
-		return patientService.getDonationRequestsHistory();
+	public List<PatientDetails> getBloodRequestsHistory(){
+		return patientService.getBloodRequestsHistory();
 	}
+	
+	public List<PatientDetails> getBloodRequest(){
+		return patientService.getBloodRequestDetailsByStatus((byte) 0);
+	}
+	//public List<PatientDetails> getDo
 
 // reject status maake it null funcvtion
 	
@@ -128,9 +133,9 @@ public class AdminService {
 	}
 
 
-	public String acceptBloodRequest(PatientDetails received) {
+	public String acceptBloodRequest(String email) {
 //		String email=received.getEmail();
-		List<PatientDetails> saved = patientService.getPatientsDetailsByEmail(received.getEmail());
+		List<PatientDetails> saved = patientService.getPatientsDetailsByEmail(email);
 		
 		
 		for (PatientDetails detail: saved) {
@@ -157,13 +162,13 @@ public class AdminService {
 			patientService.savePatientDetails(detail);
 		}
 //		emailService.sendEmail(email,"this is to inform you", "your blood request is accepted");
-		return "Given " + received.getBloodUnits() + "units or blood successfully";
+		return "Given "  + "units or blood successfully";
 	}
 
 
-	public String rejectDonationRequest(DonorDetails detail) {
-		String email=detail.getEmail();
-		List<DonorDetails> saved= donorService.getDonorsDetailsByEmail(detail.getEmail());
+	public String rejectDonationRequest(String email) {
+		//String email=detail.getEmail();
+		List<DonorDetails> saved= donorService.getDonorsDetailsByEmail(email);
 		List<DonorDetails> donors = new ArrayList<>();
 		for (DonorDetails detail1: saved) {
 			if(detail1.getStatus()==0) {
@@ -186,9 +191,9 @@ public class AdminService {
 	}
 
 
-	public String rejectBloodRequest(PatientDetails detail) {
-		String email=detail.getEmail();
-		List<PatientDetails> saved= patientService.getPatientsDetailsByEmail(detail.getEmail());
+	public String rejectBloodRequest(String email) {
+		//String email=detail.getEmail();
+		List<PatientDetails> saved= patientService.getPatientsDetailsByEmail(email);
 		//List<DonorDetails> donors = new ArrayList<>();
 		for (PatientDetails detail1: saved) {
 			if(detail1.getStatus()==0) {

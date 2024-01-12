@@ -150,6 +150,34 @@
                                     </thead>
                                     <tbody id="donationRequestsTableBody">
                                         <!-- Rows will be dynamically added here -->
+                
+                                    <!-- Use Thymeleaf to iterate over the list of donorData from the controller -->
+                                    <tr th:each="recieve, rowStat : ${recieve}">
+                                        <td th:text="${rowStat.index + 1}"></td>
+                                        <td th:text="${recieve.firstname}"></td>
+                                        <td th:text="${recieve.lastname}"></td>
+                                        <td th:text="${recieve.email}"></td>
+                                        <td th:text="${recieve.bloodGroup}"></td>
+                                        <td th:text="${recieve.bloodUnits}"></td>
+                                        <td th:text="${recieve.dateOfBlood }"></td>
+                                        <td th:text="${recieve.reason}"></td>
+                                        <!-- ... (existing HTML code) ... -->
+<td class="action-cell">
+                <!--<button class="btn btn-success btn-accept"  th:data-onclick="'accept(\'' + ${donor.email} + '\')'">Accept</button>-->
+                <button class="btn btn-success btn-accept" th:attr="onclick='accept(\'' + ${recieve.email} + '\')'">Accept</button>
+
+
+                <button class="btn btn-danger btn-reject"th:attr="onclick='reject(\'' + ${recieve.email} + '\')'">Reject</button>
+               </td>
+               
+              
+
+
+<!-- ... (existing HTML code) ... -->
+
+                                    </tr>
+                                    <!-- ... (your existing table body) ... -->
+                                
                                     </tbody>
                                 </table>
                             </div>
@@ -173,6 +201,75 @@
 
         <!-- Include Bootstrap JS -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+        
+        <script>
+	
+  
+    function accept(email) {
+		
+    console.log('Accept function called with email:', email);
+    // ... (rest of your code)
+
+    // Assuming you have an endpoint '/acceptDonationRequest/{email}' on the server to handle donation requests
+    fetch('/acceptBloodRequest/' + email, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' // Add appropriate headers if needed
+        },
+        // You can include a request body if needed
+        // body: JSON.stringify({ /* data to send in the request body */ })
+    })
+    .then(response => {
+        // Handle the response as needed
+        if (response.ok) {
+            console.log('Donation request accepted successfully');
+        } else {
+            console.error('Failed to accept donation request:', response.statusText);
+        }
+    })
+    .catch(error => console.error('Error accepting donation request:', error));
+}
+
+    
+</script>
+
+
+        <script>
+	
+  
+    function reject(email) {
+		
+    console.log('Accept function called with email:', email);
+    // ... (rest of your code)
+
+    // Assuming you have an endpoint '/acceptDonationRequest/{email}' on the server to handle donation requests
+    fetch('/rejectBloodRequest/' + email, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' // Add appropriate headers if needed
+        },
+        // You can include a request body if needed
+        // body: JSON.stringify({ /* data to send in the request body */ })
+    })
+    .then(response => {
+        // Handle the response as needed
+        if (response.ok) {
+            console.log('Donation request accepted successfully');
+        } else {
+            console.error('Failed to accept donation request:', response.statusText);
+        }
+    })
+    .catch(error => console.error('Error accepting donation request:', error));
+}
+
+    
+</script>
+
+
+
+
+
+
 
         <script>
         // Function to add a new row to the table

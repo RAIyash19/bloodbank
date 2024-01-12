@@ -86,7 +86,11 @@ public class PatientDetailsService {
 }
 	
 	
-	public List<PatientDetails> getDonationRequestsHistory(){
+	public List<PatientDetails> getBloodRequestsHistory(){
 		return repo.findAll();
+	}
+	
+	public List<PatientDetails> getBloodRequestDetailsByStatus(byte status){
+		return repo.findByStatus(status);
 	}
 }
