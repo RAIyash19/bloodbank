@@ -140,7 +140,7 @@ public class UserService {
 		
 	}
 
-	public String findBloodDonationsCount(String email) {
+	public int findBloodDonationsCount(String email) {
 		List<DonorDetails> saved = donateService.getDonorsDetailsByEmail(email);
 		int count=0;
 		for (DonorDetails detail: saved) {
@@ -148,10 +148,10 @@ public class UserService {
 				count++;
 		}
 		System.out.println("count : "+count);
-		return "Blood Donation Count : " + count;
+		return count;
 	}
 	
-	public String findBloodRequestsCount(String email) {
+	public int findBloodRequestsCount(String email) {
 		
 		List<PatientDetails> saved = patientService.getPatientsDetailsByEmail(email);
 		int count=0;
@@ -159,7 +159,7 @@ public class UserService {
 			if (detail.getStatus()==1)
 				count++;
 		}
-		return "Blood requests count : " + count;
+		return  count;
 	}
 
 	public List<DonorDetails> getDonateRequestsDetails(String email) {

@@ -66,7 +66,7 @@
 
     <!-- Sidebar -->
     <div id="sidebar">
-        <a href="#" onclick="showContent('donation-content')">Request History</a>
+        <a href="/viewDonateRequestDetails" onclick="showContent('donation-content')">Donation History</a>
         <a href="userHome">Go Back</a>
     </div>
 
@@ -79,46 +79,61 @@
             <br>
             <br>
             <div>
-            <table id="example" class="table table-striped" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Serial No</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Date of Donation</th>
-                        <th>Blood Group</th>
-                        <th>No of Units</th>
-                        <th>Reason</th>
-                        <th>Status</th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td>Adityeshwar</td>
-                        <td>adityamallare@gmail.com</td>
-                        <td>1-7-2023</td>
-                        <td>RBC</td>
-                        <td>2</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>Serial No</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Date of Donation</th>
-                        <th>Blood Group</th>
-                        <th>No of Units</th>
-                        <th>Reason</th>
-                        <th>Status</th>
-        
-                    </tr>
-                </tfoot>
-            </table>
+            <!-- Inside the existing <table> structure -->
+<table id="example" class="table table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>Serial No</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Date of Birth</th>
+            <th>City</th>
+            <th>Date of Donation</th>
+            <th>Blood Group</th>
+            <th>No of Units</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <!-- Replace the existing <tbody> with the Thymeleaf block -->
+    <tbody>
+        <!-- Use Thymeleaf to iterate over the donation history list -->
+        <th:block th:each="donation, iterStat : ${donationRequestHistory}">
+            <tr>
+                <td th:text="${iterStat.count}"></td>
+                <td th:text="${donation.firstname}"></td>
+                <td th:text="${donation.lastname}"></td>
+                <td th:text="${donation.email}"></td>
+                <td th:text="${donation.dateOfBirth}"></td>
+                <td th:text="${donation.city}"></td>
+                <td th:text="${donation.dateOfDonation}"></td>
+                <td th:text="${donation.bloodGroup}"></td>
+                <td th:text="${donation.units}"></td>
+                <td>
+    <span th:if="${donation.status == 1}" class="text-success">Accepted</span>
+    <span th:if="${donation.status == 0}" class="text-warning">Pending</span>
+    <span th:if="${donation.status == -1}" class="text-danger">Rejected</span>
+</td>
+
+            </tr>
+        </th:block>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Serial No</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Date of Birth</th>
+            <th>City</th>
+            <th>Date of Donation</th>
+            <th>Blood Group</th>
+            <th>No of Units</th>
+            <th>Status</th>
+        </tr>
+    </tfoot>
+</table>
+
         </div>
                
             </body>

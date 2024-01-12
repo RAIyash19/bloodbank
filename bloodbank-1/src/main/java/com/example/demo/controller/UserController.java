@@ -107,25 +107,45 @@ public class UserController {
 //		
 //	}
 	
-	@GetMapping("/viewBloodRequestDetails/{email}")//1
-	public List<PatientDetails> viewBloodRequestsDetails(@PathVariable("email") String email) {
-		return loginService.getBloodRequestsDetails(email);
+	@GetMapping("/viewBloodRequestDetails")//1
+	public String viewBloodRequestsDetails(HttpSession session,Model model) {
+		if (session.getAttribute("userEmail") == null) {
+            // Session is valid, return the Thymeleaf template name for the user home page
+            return "userLogin";
+        }
+		
+		String email = (String) session.getAttribute("userEmail");
+		List<PatientDetails> list = loginService.getBloodRequestsDetails(email);
+		model.addAttribute("bloodRequestHistory", list);
+		return "userBloodRequestHistory";
 	}
 	
-	@GetMapping("/viewDonateRequestDetails/{email}")//1------------------------------------------------------
-	public String getDonateRequestsDerails(@PathVariable("email") String email) {
-		 loginService.getDonateRequestsDetails(email);
-		 return "userProfile";
+	@GetMapping("/viewDonateRequestDetails")//1------------------------------------------------------
+	public String getDonateRequestsDerails(HttpSession session, Model model) {
+		if (session.getAttribute("userEmail") == null) {
+            // Session is valid, return the Thymeleaf template name for the user home page
+            return "userLogin";
+        }
+		String email = (String) session.getAttribute("userEmail");
+			List<DonorDetails> list = loginService.getDonateRequestsDetails(email);
+			
+			for(DonorDetails detail:list) {
+				System.out.println(detail.toString());
+			}
+			model.addAttribute("donationRequestHistory", list);
+			return "userDonationRequestHistory";
 	}
 	
 	@GetMapping("/viewAcceptedBloodDonationCount/{email}")//1
 	public String getBloodDonationCount(@PathVariable("email") String email) {
-		return loginService.findBloodDonationsCount(email);
+		 loginService.findBloodDonationsCount(email);
+		 return null;
 	}
 	
 	@GetMapping("/viewAcceptedBloodRequestCount/{email}") // acepted requests
 	public String getBloodRequestCount(@PathVariable("email") String email) {
-		return loginService.findBloodRequestsCount(email);
+		 loginService.findBloodRequestsCount(email);
+		 return null;
 	}
 	
 	@PostMapping("/bloodDonationRequest")//1

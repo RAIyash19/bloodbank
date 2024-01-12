@@ -119,10 +119,10 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="userDonationRequestHistory">Donation Histroy</a>
+                            <a class="nav-link" href="/viewDonateRequestDetails">Donation Histroy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="userBloodRequestHistory">Request History</a>
+                            <a class="nav-link" href="/viewBloodRequestDetails">Request History</a>
                         </li>
 
                         <li class="nav-item">
@@ -204,14 +204,16 @@
                                 <div class="four col-md-3">
                                     <div class="counter-box">
                                         <i class="fa fa-group"></i>
-                                        <span class="counter">3275</span>
+                                        <!-- Print the donationCount if not equal to 0, otherwise print a default value -->
+<span class="counter" th:text="${donationCount}"></span>
+
                                         <p>Total Donations</p>
                                     </div>
                                 </div>
                                 <div class="four col-md-3">
                                     <div class="counter-box">
                                         <i class="fa  fa-shopping-cart"></i>
-                                        <span class="counter">289</span>
+                                       <span class="counter" th:text="${bloodCount}"></span>
                                         <p>Total Requests</p>
                                     </div>
                                 </div>

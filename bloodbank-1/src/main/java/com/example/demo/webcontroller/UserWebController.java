@@ -52,26 +52,6 @@ public class UserWebController {
 			return "forgetPasswordadmin";
 		}
 	
-	@GetMapping("/userHome")
-	public String check(HttpSession session, Model model) {
-		 if (session.getAttribute("userEmail") != null) {
-	            // Session is valid, return the Thymeleaf template name for the user home page
-			 	model.addAttribute("email", session.getAttribute("userEmail"));
-	            return "userHome";
-	        } else {
-	            // Session is not valid, redirect to the login page or perform other actions
-	            return "redirect:/userLogin"; // Adjust the URL as needed
-	        }
-//		int numberOfDonations = 5; // Fetch from backend;
-//		        int numberOfRequests = 10;// Fetch from backend;
-//		        String username ="raja"; // Fetch from backend;
-//
-//		        // Add data to the Thymeleaf model
-//		        model.addAttribute("username", username);
-//		        model.addAttribute("donations", numberOfDonations);
-//		        model.addAttribute("requests", numberOfRequests);
-
-	}
 	
 	
 	

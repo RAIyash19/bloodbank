@@ -13,6 +13,12 @@
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    
+    
     
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
@@ -66,7 +72,7 @@
 
     <!-- Sidebar -->
     <div id="sidebar">
-        <a href="#" onclick="showContent('donation-content')">Request History</a>
+        <a href="/viewBloodRequestDetails" onclick="showContent('donation-content')">Request History</a>
         <a href="userHome">Go Back</a>
     </div>
 
@@ -80,45 +86,69 @@
             <br>
             <div>
             <table id="example" class="table table-striped" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Serial No</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Date of Donation</th>
-                        <th>Blood Group</th>
-                        <th>No of Units</th>
-                        <th>Reason</th>
-                        <th>Status</th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td>Adityeshwar</td>
-                        <td>adityamallare@gmail.com</td>
-                        <td>1-7-2023</td>
-                        <td>RBC</td>
-                        <td>2</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>Serial No</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Date of Donation</th>
-                        <th>Blood Group</th>
-                        <th>No of Units</th>
-                        <th>Reason</th>
-                        <th>Status</th>
-        
-                    </tr>
-                </tfoot>
-            </table>
+                    <thead>
+                        <tr>
+                            <th>Serial No</th>
+                            <th>First Name</th>
+                             <th>Last Name</th>
+                              
+                            <th>Email</th>
+                              <th>Date of Birth</th>
+                                <th>Gender</th>
+                            <th>Blood Group</th>
+                             
+                            <th>No of Units</th>
+                            <th>Date of Blood</th>
+                           <th>City</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Iterate over donation records -->
+                        <tr th:each="request, rowStat : ${bloodRequestHistory}">
+                            <td th:text="${rowStat.index + 1}"></td>
+                            <td th:text="${request.firstname}"></td>
+                             <td th:text="${request.lastname}"></td>
+                              
+                            <td th:text="${request.email}"></td>
+                            <td th:text="${request.dateOfBirth}"></td>
+                            <td th:text="${request.gender}"></td>
+                             <td th:text="${request.bloodGroup}"></td>
+                             <td th:text="${request.bloodUnits}"></td>
+                            <td th:text="${request.dateOfBlood}"></td>
+                           <td th:text="${request.city}"></td>
+                            
+                            <td th:text="${request.reason}"></td>
+                            <td>
+                                <!-- Conditionally set status text based on the status value -->
+                                <span th:if="${request.status == 1}" class="text-success">Accepted</span>
+                                <span th:if="${request.status == 0}" class="text-warning">Pending</span>
+                                <span th:if="${request.status == -1}" class="text-danger">Rejected</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Serial No</th>
+                              <th>First Name</th>
+                             <th>Last Name</th>
+                             
+                            <th>Email</th>
+                            <th>Date of Birth</th>
+                            
+                                <th>Gender</th>
+                            <th>Blood Group</th>
+                             
+                            <th>No of Units</th>
+                            <th>Date of Blood</th>
+                                                       <th>City</th>
+                            
+                            <th>Reason</th>
+                            <th>Status</th>
+                        </tr>
+                    </tfoot>
+                </table>
         </div>
                
             </body>
