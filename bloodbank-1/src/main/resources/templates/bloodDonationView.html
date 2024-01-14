@@ -29,15 +29,31 @@
             font-weight: bold;
         }
     </style>
+    
+    <style>
+        .search-box {
+            margin-top: 10px;
+            margin-right: 15px; /* Added margin-right for spacing */
+        }
+    </style>
+    
 </head>
 
 <body>
+
+				
+				
     <div class="preloader">
         <div class="lds-ripple">
             <div class="lds-pos"></div>
             <div class="lds-pos"></div>
         </div>
     </div>
+    
+    
+        
+        
+        
 
     <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full" data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
         <header class="topbar" data-navbarbg="skin5">
@@ -63,57 +79,69 @@
             <div class="scroll-sidebar">
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
+                        <!-- User Profile-->
                         <li class="sidebar-item pt-2">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="adminHome" aria-expanded="false">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="adminHome"
+                                aria-expanded="false">
                                 <i class="far fa-clock" aria-hidden="true"></i>
                                 <span class="hide-menu">Dashboard</span>
+                                <!-- <li class="nav-item px-2"><a class="nav-link" href="#bloodproducts">Blood Products</a></li>
+                                -->
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="adminProfile" aria-expanded="false">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="viewProfileDetail"
+                                aria-expanded="false">
                                 <i class="fa fa-user" aria-hidden="true"></i>
                                 <span class="hide-menu">Profile</span>
+                                <!-- <li class="nav-item px-2"><a class="nav-link" href="adminProfile">Profile</a></li>-->
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="bloodDonationRequests" aria-expanded="false">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="viewDonationRequests"
+                                aria-expanded="false">
                                 <i class="fa fa-table" aria-hidden="true"></i>
-                                <span class="hide-menu">Blood Donation Requests</span>
+                                <span class="hide-menu">Blood Donation Request</span>
                             </a>
                         </li>
-                       <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="bloodDonationView" aria-expanded="false">
-                                <i class="fa fa-table" aria-hidden="true"></i>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="viewDonationHistory"
+                                aria-expanded="false">
+                                <i class="fa fa-font" aria-hidden="true"></i>
                                 <span class="hide-menu">Blood Donation Views</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="bloodRequestAdmin"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="viewBloodRequest"
                                 aria-expanded="false">
-                                <i class="fa fa-table" aria-hidden="true"></i>
-                                <span class="hide-menu">Blood Requests </span>
+                                <i class="fa fa-globe" aria-hidden="true"></i>
+                                <span class="hide-menu">Blood Request</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="bloodRequestsViews" aria-expanded="false">
-                                <i class="fa fa-table" aria-hidden="true"></i>
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="viewBloodRequestHistory"
+                                aria-expanded="false">
+                                <i class="fa fa-columns" aria-hidden="true"></i>
                                 <span class="hide-menu">Blood Request Views</span>
                             </a>
-                         </li>
-                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="bloodInventoryTable" aria-expanded="false">
-                                <i class="fa fa-table" aria-hidden="true"></i>
-                                <span class="hide-menu">Blood Inventory </span>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="getInventory"
+                                aria-expanded="false">
+                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                <span class="hide-menu">Blood Inventory</span>
                             </a>
                         </li>
-                       <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="bloodExpiry" aria-expanded="false">
+                         <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="getInventoryDetails" aria-expanded="false">
                                 <i class="fa fa-table" aria-hidden="true"></i>
                                 <span class="hide-menu">Blood Expiry Details</span>
                             </a>
                         </li>
-                        <li class="text-center p-20 upgrade-btn">
-                            <a href="adminLogin" class="btn d-grid btn-danger text-white" target="_blank">Sign out</a>
+                         <li class="text-center p-20 signout-btn">
+                            <a href="adminLogin"
+                                class="btn d-grid btn-danger text-white" target="_blank">
+                                Sign out</a>
                         </li>
                     </ul>
                 </nav>
@@ -128,6 +156,28 @@
                     </div>
                 </div>
             </div>
+            
+           <!--  <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+        data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+        <header class="topbar" data-navbarbg="skin5">
+            <nav class="navbar top-navbar navbar-expand-md navbar-skyblue">
+                 Your existing navbar content... 
+
+                 Add the search box to the right side of the navbar 
+                <form class="d-flex search-box ms-auto">
+                    <input class="form-control me-2" type="search" placeholder="Search by Email" aria-label="Search">
+                    <button class="btn btn-outline-light" type="submit">Search</button>   
+<td class="action-cell">
+                    <button class="btn btn-outline-light" th:attr="onclick='accept(\'' + ${donor.email} + '\')'">Search</button>
+                    
+                    </td>
+                    
+                </form>
+            </nav>
+        </header>-->
+            
+            
+            
 
             <div class="container-fluid">
                 <div class="row">
@@ -165,6 +215,18 @@
             <td th:if="${donor.status eq -1}" class="text-danger">Rejected</td>
         </tr>
     </tbody>
+    
+    
+   <!-- <tbody id="donationRequestsTableBody">
+                                     Use Thymeleaf to iterate over the list of donorData from the controller 
+                                    <tr th:each="donor, rowStat : ${donor}">
+                                        <td th:text="${rowStat.index + 1}"></td>
+                                        <td th:text="${donor.firstname}"></td>
+                                        <td th:text="${donor.lastname}"></td>
+                                        <td th:text="${donor.email}"></td>
+                                        <td th:text="${donor.bloodGroup}"></td>
+                                        <td th:text="${donor.units}"></td>
+                                        <td th:text="${donor.dateOfDonation}"></td> -->
                                     
                                     
                                     
@@ -192,6 +254,37 @@
 
         <!-- Include Bootstrap JS -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+        
+        <script>
+	
+  
+    function search(email) {
+		
+    console.log('Accept function called with email:', email);
+    // ... (rest of your code)
+
+    // Assuming you have an endpoint '/acceptDonationRequest/{email}' on the server to handle donation requests
+    fetch('/getDonorDetailsByEmial/' + email, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' // Add appropriate headers if needed
+        },
+        // You can include a request body if needed
+        // body: JSON.stringify({ /* data to send in the request body */ })
+    })
+    .then(response => {
+        // Handle the response as needed
+        if (response.ok) {
+            console.log('Donation request accepted successfully');
+        } else {
+            console.error('Failed to accept donation request:', response.statusText);
+        }
+    })
+    .catch(error => console.error('Error accepting donation request:', error));
+}
+
+    
+</script>
 
         
     </body>

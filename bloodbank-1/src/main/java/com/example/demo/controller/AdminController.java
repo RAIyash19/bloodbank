@@ -262,9 +262,15 @@ public class AdminController {
 	  return donorDetailsService.getDonorDetails();
   }
   
-  @GetMapping("/getDonorDetailsByEmial/{email}") 
-  public List<DonorDetails> getDonorDetailsByEmail(@PathVariable("email") String email){
-	  return donorDetailsService.findByemail(email);
+  
+  @GetMapping("/getDonorDetailsByEmial/{email}")
+  @ResponseStatus(HttpStatus.OK)
+  @ResponseBody 
+  public String getDonorDetailsByEmail(@PathVariable("email") String email, Model model){
+	  List<DonorDetails> donorSearch =  donorDetailsService.findByemail(email);
+	  model.addAttribute("search", donorSearch);
+	  //////////////////////////////////////////////////
+	  return "bloodDonationView";
   }
   
 //  @GetMapping("/getDonorDetailsByEmial/{email}")
@@ -314,8 +320,6 @@ public class AdminController {
   	public String viewDonationHistory(Model model) {
   		List<DonorDetails> donorData = new ArrayList<>();
   		donorData = service.getDonationHistory();
-  		System.out.println(donorData.get(0));
-  		System.out.println(donorData.get(1));
   		model.addAttribute("donor", donorData);
   		return "bloodDonationView";
   		
