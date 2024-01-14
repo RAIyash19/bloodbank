@@ -93,4 +93,9 @@ public class PatientDetailsService {
 	public List<PatientDetails> getBloodRequestDetailsByStatus(byte status){
 		return repo.findByStatus(status);
 	}
+
+	public List<PatientDetails> getTotalRequestCount() {
+		// TODO Auto-generated method stub
+		return repo.findByStatus((byte) 1);
+	}
 }

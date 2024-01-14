@@ -143,8 +143,8 @@
                                             <th class="border-top-0">Quantity</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="donationRequestsTableBody">
-                                        <!-- Rows will be dynamically added here -->
+                                    <!--<tbody id="donationRequestsTableBody">
+                                         Rows will be dynamically added here 
                                         <tr>
                                             <td>1</td>
                                             <td>O+</td>
@@ -155,7 +155,21 @@
                                             <td>A+</td>
                                             <td>200 units</td>
                                         </tr>
+                                    </tbody>-->
+                                    
+                                     <tbody>
+                                        <!-- Use Thymeleaf iteration to dynamically generate rows -->
+                                       <!-- Use Thymeleaf iteration to dynamically generate rows -->
+<!-- Use Thymeleaf iteration to dynamically generate rows -->
+<tr th:each="bloodGroupDetails, iterStat : ${bloodGroupDetailsList}">
+    <td th:text="${iterStat.count}"></td>
+    <td th:if="${bloodGroupDetails != null}" th:text="${bloodGroupDetails.bloodGroup} ?: ''"></td>
+    <td th:if="${bloodGroupDetails != null}" th:text="${bloodGroupDetails.count} ?: ''"></td>
+</tr>
+
                                     </tbody>
+                                    
+                                    
                                 </table>
                             </div>
                         </div>

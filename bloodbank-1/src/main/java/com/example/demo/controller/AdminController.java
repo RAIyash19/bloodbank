@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.entity.BloodGroupDetails;
 import com.example.demo.entity.DonorDetails;
 import com.example.demo.entity.Inventory;
 import com.example.demo.entity.LoggedInUser;
@@ -73,6 +74,11 @@ public class AdminController {
             System.out.println(a);
             
             model.addAttribute("DonorCount", a);
+            
+//            List<Integer> countRequest = countBloodRequest();
+            int b= countBloodRequest();
+            System.out.println(b);
+            model.addAttribute("requestCount", b);
 
             // Redirect to the admin home page
             return "adminHome";
@@ -122,24 +128,51 @@ public class AdminController {
 	
 	
 
-  @GetMapping("/getInventory")
-	public List<Inventory> getDetails() {
-	  List<Inventory> a = new ArrayList<>();
-	  	
-		a= inventoryService.getInventoryDetails();
-		int a_pos = inventoryService.getBloodCount("A+");
-		int a_neg = inventoryService.getBloodCount("A-");
-		int b_pos = inventoryService.getBloodCount("B+");
-		int b_neg = inventoryService.getBloodCount("B-");
-		int ab_pos = inventoryService.getBloodCount("AB+");
-		int ab_neg = inventoryService.getBloodCount("AB-");
-		int o_pos = inventoryService.getBloodCount("O+");
-		int o_neg = inventoryService.getBloodCount("O-");
-		System.out.println(a.get(0));
-		System.out.println("o+ :" + o_pos);
-		return a;
-		
+//  @GetMapping("/getInventory")
+//	public List<Inventory> getDetails() {
+//	  List<Inventory> a = new ArrayList<>();
+//	  	
+//		a= inventoryService.getInventoryDetails();
+//		int a_pos = inventoryService.getBloodCount("A+");
+//		int a_neg = inventoryService.getBloodCount("A-");
+//		int b_pos = inventoryService.getBloodCount("B+");
+//		int b_neg = inventoryService.getBloodCount("B-");
+//		int ab_pos = inventoryService.getBloodCount("AB+");
+//		int ab_neg = inventoryService.getBloodCount("AB-");
+//		int o_pos = inventoryService.getBloodCount("O+");
+//		int o_neg = inventoryService.getBloodCount("O-");
+//		System.out.println(a.get(0));
+//		System.out.println("o+ :" + o_pos);
+//		return a;
+//		
+//	}
+	
+	
+	
+	@GetMapping("/getInventory")
+	public String getDetails(Model model) {
+	    List<BloodGroupDetails> bloodGroupDetailsList = new ArrayList<>();
+
+	    bloodGroupDetailsList.add(new BloodGroupDetails("A+", inventoryService.getBloodCount("A+")));
+	    bloodGroupDetailsList.add(new BloodGroupDetails("A-", inventoryService.getBloodCount("A-")));
+	    bloodGroupDetailsList.add(new BloodGroupDetails("B+", inventoryService.getBloodCount("B+")));
+	    bloodGroupDetailsList.add(new BloodGroupDetails("B-", inventoryService.getBloodCount("B-")));
+	    bloodGroupDetailsList.add(new BloodGroupDetails("AB+", inventoryService.getBloodCount("AB+")));
+	    bloodGroupDetailsList.add(new BloodGroupDetails("AB-", inventoryService.getBloodCount("AB-")));
+	    bloodGroupDetailsList.add(new BloodGroupDetails("O+", inventoryService.getBloodCount("O+")));
+	    bloodGroupDetailsList.add(new BloodGroupDetails("O-", inventoryService.getBloodCount("O-")));
+	    
+	    
+	    System.out.println(bloodGroupDetailsList.get(0));
+	    System.out.println(bloodGroupDetailsList.get(1));
+	    System.out.println(bloodGroupDetailsList.get(3));
+
+	    model.addAttribute("bloodGroupDetailsList", bloodGroupDetailsList);
+
+	    return "bloodInventoryTable.html"; // Replace with the actual Thymeleaf template name
 	}
+
+	
 	
   
   @GetMapping("/getInventoryDetailsByBloodGroup/{BloodGroup}")
@@ -173,8 +206,16 @@ public class AdminController {
       System.out.println(countDonor);
       return countDonor;
      
-      
-      
+      }
+  
+  @GetMapping("countStatusBloodRequest")
+  public int countBloodRequest(){
+	  List<PatientDetails> saved = patientDetailsService.getTotalRequestCount();
+	  int count = saved.size();
+	  //List<Integer> countRequest= new ArrayList<>();
+	  System.out.println(count);
+	  return count;
+	  
   }
   
   
