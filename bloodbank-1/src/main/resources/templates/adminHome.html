@@ -282,66 +282,68 @@
                <div class="chart-container">
                   <canvas id="bloodChart"></canvas>
                </div>
-               <script>
-    // Data for blood inventory (replace with your actual data)
-    const bloodInventory = {
-      'A+': 50,
-      'A-': 30,
-      'B+': 40,
-      'B-': 20,
-      'AB+': 60,
-      'AB-': 10,
-      'O+': 100,
-      'O-': 25
-      // Add more blood groups and their quantities if needed
-    };
+                  <!-- The JavaScript code for Chart.js -->
+                  
+                  
+<script th:inline="javascript">
+	console.log('Blood Group Details:', bloodGroupDetailsList);
+
+    /*<![CDATA[*/
+    // Get blood group data from Thymeleaf model
+    var bloodGroupDetailsList = /*[[${bloodGroupDetailsList}]]*/ [];
+
+    // Create an array of blood groups and their quantities for the chart
+    const bloodGroups = bloodGroupDetailsList.map(function (item) {
+        return item.bloodGroup;
+    });
+    const quantities = bloodGroupDetailsList.map(function (item) {
+        return item.count;
+    });
+
+    // Determine colors for bars based on threshold
+    const colors = quantities.map(qty => qty < 3 ? 'red' : 'skyblue');
 
     // Get the canvas element to render the chart
     const ctx = document.getElementById('bloodChart').getContext('2d');
 
-    // Create an array of blood groups and their quantities for the chart
-    const bloodGroups = Object.keys(bloodInventory);
-    const quantities = Object.values(bloodInventory);
-
-    // Determine colors for bars based on threshold
-    const colors = quantities.map(qty => qty < 30 ? 'red' : 'skyblue');
-
     // Create a bar chart using Chart.js
     const chart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: bloodGroups,
-        datasets: [{
-          label: 'Blood Inventory',
-          data: quantities,
-          backgroundColor: colors, // Set colors based on threshold
-          borderWidth: 0 // Remove borders around bars
-        }]
-      },
-      options: {
-        indexAxis: 'x', // Display bars horizontally
-        plugins: {
-          legend: {
-            display: false // Hide legend
-          }
+        type: 'bar',
+        data: {
+            labels: bloodGroups,
+            datasets: [{
+                label: 'Blood Inventory',
+                data: quantities,
+                backgroundColor: colors, // Set colors based on threshold
+                borderWidth: 0 // Remove borders around bars
+            }]
         },
-        scales: {
-          x: {
-            beginAtZero: true,
-            grid: {
-              display: false // Remove grid lines on x-axis
+        options: {
+            indexAxis: 'x', // Display bars horizontally
+            plugins: {
+                legend: {
+                    display: false // Hide legend
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    grid: {
+                        display: false // Remove grid lines on x-axis
+                    }
+                },
+                y: {
+                    grid: {
+                        display: false // Remove grid lines on y-axis
+                    }
+                }
             }
-          },
-          y: {
-			  grid:{
-          
-              display: false // Remove grid lines on y-axis
-            }
-          }
         }
-      }
     });
-  </script>
+    /*]]>*/
+</script>
+
+
         
         <!-- ============================================================== -->
         <!-- End Page wrapper  -->

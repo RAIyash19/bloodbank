@@ -68,17 +68,24 @@ public class AdminController {
         if (status == 1) {
             // If login is successful, set the email as a session attribute
             session.setAttribute("loggedInUserEmail", received.getEmail());
-            
+            //totaldonation
             List<Integer> countDonor = countDonorsWithStatusOne();
             int a=countDonor.get(0);
             System.out.println(a);
             
             model.addAttribute("DonorCount", a);
             
-//            List<Integer> countRequest = countBloodRequest();
+            
+            //totalrequest
             int b= countBloodRequest();
             System.out.println(b);
             model.addAttribute("requestCount", b);
+            
+            //bloodcount
+           
+            List<BloodGroupDetails> bloodCount = getDetail();
+            model.addAttribute("bloodGroupDetailsList", bloodCount);
+            
 
             // Redirect to the admin home page
             return "adminHome";
@@ -170,6 +177,32 @@ public class AdminController {
 	    model.addAttribute("bloodGroupDetailsList", bloodGroupDetailsList);
 
 	    return "bloodInventoryTable.html"; // Replace with the actual Thymeleaf template name
+	}
+	
+	
+	
+	//@GetMapping("/getInventory")
+	public List<BloodGroupDetails> getDetail() {
+	    List<BloodGroupDetails> bloodGroupDetailsList = new ArrayList<>();
+
+	    bloodGroupDetailsList.add(new BloodGroupDetails("A+", inventoryService.getBloodCount("A+")));
+	    bloodGroupDetailsList.add(new BloodGroupDetails("A-", inventoryService.getBloodCount("A-")));
+	    bloodGroupDetailsList.add(new BloodGroupDetails("B+", inventoryService.getBloodCount("B+")));
+	    bloodGroupDetailsList.add(new BloodGroupDetails("B-", inventoryService.getBloodCount("B-")));
+	    bloodGroupDetailsList.add(new BloodGroupDetails("AB+", inventoryService.getBloodCount("AB+")));
+	    bloodGroupDetailsList.add(new BloodGroupDetails("AB-", inventoryService.getBloodCount("AB-")));
+	    bloodGroupDetailsList.add(new BloodGroupDetails("O+", inventoryService.getBloodCount("O+")));
+	    bloodGroupDetailsList.add(new BloodGroupDetails("O-", inventoryService.getBloodCount("O-")));
+	    
+	    
+	    System.out.println(bloodGroupDetailsList.get(0));
+	    System.out.println(bloodGroupDetailsList.get(1));
+	    System.out.println(bloodGroupDetailsList.get(3));
+
+	    //model.addAttribute("bloodGroupDetailsList", bloodGroupDetailsList);
+
+	    //return "bloodInventoryTable.html"; // Replace with the actual Thymeleaf template name
+	    return bloodGroupDetailsList;
 	}
 
 	
